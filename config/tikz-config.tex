@@ -1,0 +1,42 @@
+% -- TikZ libraries
+\usetikzlibrary{matrix,arrows,calc,shapes}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{decorations.pathreplacing}
+
+% -- TikZ styles to colour matrices.
+\tikzset{style green/.style={
+    set fill color=green!50!lime!60,
+    set border color=white,
+  },
+  style cyan/.style={
+    set fill color=cyan!90!blue!60,
+    set border color=white,
+  },
+  style orange/.style={
+    set fill color=orange!80!red!60,
+    set border color=white,
+  },
+  style red/.style={
+    set fill color=red!80!white!90,
+    set border color=white,
+  },
+  hor/.style={
+    above left offset={-0.15,0.31},
+    below right offset={0.15,-0.125},
+    #1
+  },
+  ver/.style={
+    above left offset={-0.1,0.3},
+    below right offset={0.1,-0.12},
+    #1
+  }
+}
+
+% -- Unit in node styles.
+\newcommand{\myunit}{0.25 cm}
+\tikzset{
+    node style sp/.style={draw,circle,minimum size=\myunit},
+    node style ge/.style={circle,minimum size=\myunit},
+    arrow style mul/.style={draw,sloped,midway,fill=white},
+    arrow style plus/.style={midway,sloped,fill=white},
+}

@@ -1,0 +1,40 @@
+\chapter*{Contributions}
+\phantomsection\addcontentsline{toc}{section}{Contributions}
+This short section humbly presents my contribution to the 
+literature in the form of both conference proceedings and 
+peer-reviewed journal articles. 
+
+\section*{Journal Articles}
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+\stepcounter{footnote}
+
+\begin{enumerate}
+ \item G. Painchaud-April\footnote{\label{note1}Both authors contributed equally to this work.}, 
+	\textbf{J. Dumont}\textsuperscript{\ref{note1}}, D. Gagnon and L. J. Dubé, 
+	``Scattering method for resonances in dielectric microcavities,'' \textit{in preparation}.
+  \item D. Gagnon, \textbf{J. Dumont}, J.-L. Déziel and L. J. Dubé, 
+	``Ab initio investigation of lasing thesholds in photonic molecules,'' \textit{submitted for publication.}
+	\href{http://arxiv.og/abs/1401.7305}{\texttt{arXiv:1401.7305}}.
+  \item D. Gagnon, \textbf{J. Dumont} and L. J. Dubé, 
+	``Multiobjective optimization in integrated photonics design,''
+	Opt. Lett \textbf{38}, 2181--2184 (2013). 
+	\href{http://dx.doi.org/10.1364/OL.38002181}{\texttt{doi:10.1364/OL.38002181}}.
+  \item D. Gagnon, \textbf{J. Dumont} and L. J. Dubé, 
+	``Beam shaping using genetically optimized two-dimensional photonic crystals,''
+	J. Opt. Soc. Am. A \textbf{29}, 2673--2678 (2012). 
+	\\\href{http://dx.doi.org/10.1364/JOSAA.29.002673}{\texttt{doi:10.1364/JOSAA.29.002673}}
+\end{enumerate}
+
+\section*{Conference Proceedings}
+\begin{enumerate}
+ \item D. Gagnon, \textbf{J. Dumont}, J.-L. Déziel and L. J. Dubé, 
+	``Adding SALT to coupled microcavities: the making of active photonic molecule lasers,''
+	in IEEE Proceedings of the 16th International Conference on Transparent Optical Networks (ICTON 2014).
+	\href{http://arxiv.org/abs/1405.0168}{\texttt{arXiv:1405.0168}}
+ \item G. Painchaud-April, \textbf{J. Dumont}\footnote{Speaker at this invited talk.}, D. Gagnon and L. J. Dubé, 
+	``$S$ and $Q$ matrices reloaded: applications to open, inhomogeneous, and complex cavities,''
+	in IEEE Proceedings of the 15th International Conference on Transparent Optical Networks (ICTON 2013).
+	\\\href{http://dx.doi.org/10.1109/ICTON.2013.6602811}{doi:ICTON.2013.6602811}.
+\end{enumerate}
+
+

@@ -1,0 +1,136 @@
+\subsection{Scattering in 3D and Antennae}
+Somewhat departing from the previous chapter, we here present
+three different methods to compute the current distribution on 
+an arbitrary antenna. First, we will state the usual result 
+from \cite{ELL2003} and then we will take the scattering viewpoint.
+
+From our previous
+viewpoint that sources generate electric and magnetic fields 
+and using Maxwell's equations outside the region where the sources 
+are, we can obtain \cite{ELL2003}
+  \begin{equation}
+    \mathop{\iiint}_V \mat{K}(\bo{r},\bo{r}')\bo{J}(\bo{r}')d\bo{r}' = i\omega\bo{E}(\bo{r})
+  \end{equation}
+where the kernel $\mat{K}(\bo{r},\bo{r}')$ is 
+  \begin{equation}
+    \mat{K}(\bo{r},\bo{r}') = \left(\nabla^2+k^2\right)\frac{e^{ik|\bo{r}-\bo{r}'|}}{4\pi|\bo{r}-\bo{r}'|}
+  \end{equation}
+For antennae made of perfect conductors ($\sigma\rightarrow\infty$), we must have $\bo{E}\rightarrow0$
+except in the feeding region. If $\bo{E}$ is known in the feeding region, this becomes an integral equation
+for the unknown current distribution. Specifically, it becomes a vectorial Fredholm equation of the first kind. 
+Its vectorial nature makes it more difficult to solve. 
+
+It is unknown to the author of this report why Elliott insists on separating the electric field and the current. 
+By using Ohm's law, we can arrive at integral equations which have a single unknown. This is the 
+scattering viewpoint. 
+  
+Consider an antenna of arbitrary geometry and arbitrary
+permittivity and conductivity but of  vacuum permeability embedded in an infinite
+medium of constant permittivity $\epsilon_B(\omega)$. For non-magnetic materials
+and harmonic time-dependence, 
+the curl equation for the electric field is 
+  \begin{align*}
+   \nabla\times\nabla\times\bo{E}	&=ik\left[\nabla\times\bo{H}\right]	\\
+					&=ik\left[-ik\epsilon_B(\omega)\bo{E}+\bo{J}\right]	\\
+					&=k^2\left[\epsilon_B(\omega)\bo{E}-\frac{\sigma}{ik}\bo{E}\right]	\\
+					&=k^2\epsilon_B(\omega)\bo{E}
+  \end{align*}
+where we used Ohm's law
+  \begin{equation}
+   \bo{J}=\sigma\bo{E}
+  \end{equation}
+and redefined 
+  \begin{equation}
+   \epsilon_B(\omega)\mapsto\epsilon_B(\omega)+i\sigma/k
+  \end{equation}
+
+For our antenna, the curl equation for 
+the electric field become
+  \begin{subequations}
+  \begin{align}
+   \nabla\times\nabla\times\bo{E}	&= k^2\epsilon_B(\omega)\bo{E}		& \bo{r}\notin V_\text{scat}	\\
+   \nabla\times\nabla\times\bo{E}	&= k^2\epsilon(\bo{r};\omega)\bo{E}	& \bo{r}\in V_\text{scat}
+  \end{align}
+  \end{subequations}
+By subtracting $k^2\epsilon_B(\omega)\bo{E}$ from both sides of the second equation, 
+we obtain an equation that is valid both inside and outside the antenna (or scatterer)
+  \begin{align}
+   \nabla\times\nabla\times\bo{E}-k^2\epsilon_B(\omega)\bo{E}	&= k^2\Delta\epsilon(\bo{r};\omega)\bo{E}	&\forall\bo{r} \label{eq:scattering.integral}
+  \end{align}
+where 
+  \begin{equation}
+    \Delta\epsilon(\bo{r};\omega)=\epsilon(\bo{r},\omega)-\epsilon_B(\omega).
+  \end{equation}
+
+The vector equation \eqref{eq:scattering.integral} has a formal solution in terms 
+of a dyadic Green's function \cite{NOV2012} and an incident field \cite{deL2013}
+  \begin{equation}
+   \bo{E}(\bo{r}) = \bo{E}_\text{inc}(\bo{r}) + k^2\mathop{\iiint}_{V_\text{scat}} \mat{G}(\bo{r},\bo{r}')\Delta\epsilon(\bo{r}')\bo{E}(\bo{r}')d\bo{r}'\label{eq:scattering.Fredholm2nd}
+  \end{equation}
+where the Green's function is given by, in coordinate-free representation
+  \begin{align}
+    \mat{G}(\bo{r},\bo{r}')	&= \left(\mat{I}+\frac{1}{k\sqrt{\epsilon_B}}\nabla\nabla\right)g(\bo{r},\bo{r}')	\\
+    g(\bo{r},\bo{r}')		&= \frac{\exp(i\sqrt{\epsilon_B}k|\bo{r}-\bo{r}'|)}{4\pi|\bo{r}-\bo{r}'|}.
+  \end{align}
+We note that this is a multidimensional, vector Fredholm integral equation of the second kind with
+singular kernel $\mat{G}(\bo{r},\bo{r}')\Delta\epsilon(\bo{r}')$.
+
+Let's take a moment to take in equation \eqref{eq:scattering.Fredholm2nd}. It is the general
+solution to the scattering of light on \textit{any} non-magnetic material. The material can be
+inhomogeneous, anisotropic, of arbitrary geometry and even non-linear. Moreover, it considers
+the complete vector field: we are not forced to set TM/TE polarization. This generality, however, 
+comes at a cost. While uni-dimensional Fredholm equation of the second type are usually easily solvable
+(even when the kernel is singular) \cite{DEL1985}, the multidimensional case is intractable unless
+we use basis function expansion to factor out the angular dependence of the 
+field and kernel. This is what is done in \cite{deL2013} in the case of linear, isotropic, 
+spherical scatterers.
+
+The situation  is 
+further complicated by the fact that the kernel of the integral equation is singular. 
+One way to remedy this problem is to embrace the singularity. Given the form
+of the Green dyadic, a way to construct an integration routine would be
+to notice that, if $r$ and $r'$ are the amplitudes of the vectors
+  \begin{equation}
+   \frac{1}{|\bo{r}-\bo{r}'|} = \frac{1}{r_>}\sum_{\ell=0}^\infty \left(\frac{r_<}{r_>}\right)^\ell P_\ell(\cos\gamma)
+  \end{equation}
+where $\gamma$ is the angle between $\bo{r}$ and $\bo{r}'$, $r_<=\text{min}(r,r')$, 
+$r_>=\text{max}(r,r')$. 
+This allows us to factor out the singular part of the kernel. There will 
+then be poles of orders up to $\ell+1$ which we can use
+as a weight for an integration routine.
+
+Experience tells us that multidimensional integration is never easy and 
+computationally costly. We will steer away from this method of solution
+from the time being. Of course, by expanding the solution in 
+vector spherical harmonics, we could factor the radial singularity
+and construct an appropriate single dimensional integration routine. 
+This will be the basis of our next, and adopted, solution.
+
+\subsection{Effective Index Approximation}
+In our last report, we derived general equations for the
+behaviour of light in bidimensional structures, approximating 
+the finite thickness resonator by an infinite thickness one. In 
+what follows, we will rigorously take into account the finite thickness
+of the bidimensional resonator. Having these exact equations might enable us
+to study the bidimensional limit of the electromagnetic theory. 
+
+Given the coordinate-free representation of the Green dyadic, we can solve
+the scattering problem in cylindrical coordinates. Say  we have
+a thin dielectric resonator of thickness $t_z$ whose boundary is given
+by the function $R(\phi)$. The refractive
+index inside the dielectric is given by $\epsilon=\epsilon(r,\phi)$ and
+is constant outside. We have (if the functional dependence is omitted, it is implicitly
+assumed to be on $\bo{r}$)
+  \begin{equation}
+   \bo{E} = \bo{E}_\text{inc}
+	  +k^2\int_{0}^{R(\phi)}\int_0^{2\pi}\int_{-t_z/2}^{t_z/2}\mat{G}(r,\phi,z|r',\phi',z')\Delta\epsilon(r',\phi')\bo{E}(r',\phi',z')dz'd\phi'dr'
+  \end{equation}
+Perhaps the simplest way to retain the simplicity of the integrals is to expand the fields and the dyadic Green's function
+in vector cylindrical harmonics. However, this expansion requires the evaluation of an integral \cite{BEN1968}, making 
+for intensive numerical work. 
+
+One other way to approach this would be to to evaluate the integrals in spherical coordinates. In that 
+case, we could separate the angular behaviour from the radial behaviour and end up with 
+a uni-dimensional Fredholm equation which we could solve by using either the resolvent formalism
+or linear algebra techniques. Using spherical coordinates does not exploit the symmetry of the problem
+and leads to complicated integration limits, however. 

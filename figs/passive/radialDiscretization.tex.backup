@@ -1,0 +1,15 @@
+\documentclass{standalone}
+\usepackage[percent]{overpic}
+\usepackage{tikz}
+
+\begin{document}
+
+\includegraphics[width=\textwidth]{arbitraryCavity.pdf}
+\begin{tikzpicture}[remember picture, overlay,shift={(-0.5\textwidth,0.5\textwidth)}]
+  \foreach \x in {1,2,...,0.9\textwidth}
+  {
+    \draw[thick,gray] (0,0) circle (\x);
+    \draw[thick,gray,dashed] (0,0) circle (0.5+\x);
+  }
+\end{tikzpicture}
+\end{document}

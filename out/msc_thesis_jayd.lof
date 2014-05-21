@@ -1,0 +1,32 @@
+\select@language {english}
+\select@language {english}
+\addvspace {10pt}
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Schematic representation of whispering-gallery modes}}{2}{figure.caption.16}
+\addvspace {10pt}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Schematic view of the reduction of Maxwell's equations from 3D to 2D}}{7}{figure.caption.21}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Geometry of a bidimensional cavity}}{10}{figure.caption.23}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Radial discretization for use in SQA}}{15}{figure.caption.34}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces General form of absolute value of the Hankel matrix $\mathcal {H}$}}{19}{figure.caption.38}
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Correspondance between the poles of the scattering matrix and the peaks of the time delay spectrum.}}{21}{figure.caption.42}
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Mirror symmetry of the scattering matrix}}{21}{figure.caption.43}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Convergence properties of SQA when applied on the homogeneous disk}}{22}{figure.caption.44}
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Delay spectrum and far-field.\relax }}{23}{figure.caption.47}
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Photon trajectories in a Gaussian deformation of the refractive index}}{25}{figure.caption.54}
+\addvspace {10pt}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Example of a 3-port network}}{35}{figure.caption.63}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces $S$-parameters of the RF21 fibre design}}{35}{figure.caption.64}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Geometry of the fibre-antenna\relax }}{37}{figure.caption.65}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces AFM pictures of silver deposited onto glass plates}}{39}{figure.caption.67}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Thickness ratios as a function of the silver concentration}}{41}{figure.caption.69}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Experimental and simulated $S_{11}$ parameter for the RF21 fibre}}{42}{figure.caption.71}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Pearson correlation coefficient as a function of the frequency shift of the data.\relax }}{42}{figure.caption.72}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Fourier Power Spectrum}}{42}{figure.caption.73}
+\addvspace {10pt}
+\addvspace {10pt}
+\addvspace {10pt}
+\addvspace {10pt}
+\contentsline {figure}{\numberline {C.1}{\ignorespaces Maximum deviation between the CFE and Amos' implementation as a function of the CFE tolerance}}{55}{figure.caption.75}
+\contentsline {figure}{\numberline {C.2}{\ignorespaces Performance of the CFE compared to Amos' library's.}}{55}{figure.caption.76}
+\contentsline {figure}{\numberline {C.3}{\ignorespaces Performance and precision of our numerical algorithms.\relax }}{59}{figure.caption.79}
+\contentsline {figure}{\numberline {C.4}{\ignorespaces Flowchart of the algorithm used to compute the coupling coefficients. SRHUGE is the square root of the biggest representable number in our floating point representation.\relax }}{60}{figure.caption.81}
+\contentsline {figure}{\numberline {C.5}{\ignorespaces Precision of our implementation of the algorithm that evaluates the spherical harmonics}}{64}{figure.caption.82}

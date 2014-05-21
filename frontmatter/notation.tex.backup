@@ -1,0 +1,125 @@
+\chapter*{Notation}
+\phantomsection\addcontentsline{toc}{section}{Notation}
+
+% Model
+% \begin{tabularx}{\textwidth}{lX}
+%   \hline\hline
+%   Symbol		& Definition	\\
+%   \hline\hline				
+%   \hline\hline				\\
+% \end{tabularx}
+
+\section*{Mathematical Operators}
+\begin{tabularx}{\textwidth}{lX}
+  \hline\hline
+  Symbol			& Definition	\\
+  \hline\hline				
+  $\displaystyle{\bigk_{m=1}^\infty\left(\frac{a_m}{b_m}\right)}$
+				& Continued fraction expansion with coefficients $a_m$ and $b_m$. \\
+  ${\sum_m}$			& Sum over all angular momenta in two dimensions, $m=-\infty\ldots\infty$.\\
+  ${\sum_{\ell,m}}$		& Sum over all angular momenta in three dimensions, $\ell=0\ldots\infty$, $m=-\ell\ldots\ell$. \\
+  ${\sum_{\sigma,\ell,m}}$	& Sum over all spinorial angular momenta in three dimensions.	\\
+  $\floor*{x}$			& Floor function. Maps $x$ to the largest previous integer.	\\
+  $\ceil*{x}$			& Ceiling function. Maps $x$ to the smallest following integer.	\\
+  \hline\hline				\\
+\end{tabularx}
+
+\section*{Vectors and Matrices}
+\begin{tabularx}{\textwidth}{lX}
+  \hline\hline
+  Symbol		& Definition	\\
+  \hline\hline				
+  $\bo{V}$, $\bo{v}$	& Vectors (bold and italic, uppercase and lowercase).	\\
+  $V_i, v_i$		& $i$th component of vector.	\\
+  $\mat{M}$		& Matrix (bold uppercase)	\\
+  $M_{ij}$		& Element on $i$th row and $j$th column. $(j+iN)$th element of matrix (row-major ordering) 
+			  where $N$ is the number of columns. The indices start at 0.\\
+  \hline\hline				\\
+\end{tabularx}
+
+\section*{Electromagnetism}
+
+\section*{Special Functions}
+\begin{tabularx}{\textwidth}{lX}
+  \hline\hline
+  Symbol		& Definition	\\
+  \hline\hline
+  $J_\nu(z)$		& Bessel function of the first kind of order $\nu$.	\\
+  $Y_\nu(z)$		& Bessel function of the second kind of order $\nu$.	\\
+  $H_\nu^{(\pm)}(z)$	& Hankel functions of the first and second kind, respectively, of order $\nu$.\\
+  $U(a,b,z)$		& Kummer's function, also known as the confluent hypergeometric function of the first kind, with parameters $a$, $b$. \\
+  \hline\hline				\\
+\end{tabularx}
+
+\section*{Angular Momentum}
+\begin{description}
+ \item[Ordering of angular momentum in 2D.] We consider both positive and angular momentum, so the matrices have size $2M+1\times2M+1$ where
+					    $M$ is the maximum angular momentum.
+  \begin{center}
+  \begin{tikzpicture}[>=latex]
+   \node at (-4.5,0) {$\mat{V}\bo{\psi} = $};
+   \matrix (A) [matrix of math nodes,%
+		%nodes = {node style ge},%
+		left delimiter=(,%
+		right delimiter=) ] at (0,0)
+  { \ddots		& \phantom{\ddots}	& \phantom{\ddots}	& \phantom{\ddots}	& \iddots	\\
+    \phantom{\ddots}	& V_{-1-1}		& V_{-10}		& V_{-11} 		& \phantom{\ddots}	\\
+    \phantom{\ddots}	& V_{0-1}		& V_{00}		& V_{01} 		& \phantom{\ddots}	\\
+    \phantom{\ddots}	& V_{1-1}		& V_{10}		& V_{11}		& \phantom{\ddots}	\\
+    \iddots		& \phantom{\ddots}	& \phantom{\ddots}	& \phantom{\ddots} 	& \ddots	\\
+  };
+  
+  \draw [thick,decorate,<->,>=stealth] ($(A-1-1.north west)+(0,\myunit)$) -- ($(A-1-5.north east)+(0,2*\myunit)$)
+	node[above=2.0*\myunit,midway] {$m'$}
+	node[above=0.5*\myunit,midway] {$0$}
+	node[above=0.5*\myunit,very near end] {$+$}
+	node[above=0.5*\myunit,very near start] {$-$};
+  \draw [thick,decorate,<->,>=stealth] ($(A-1-1.north west)-(2.25*\myunit,0)$) -- ($(A-5-1.south west)-(2.40*\myunit,0)$)
+	node[left=2.0*\myunit,midway] {$m$}
+	node[left=0.5*\myunit,midway] {$0$}
+	node[left=0.5*\myunit,very near end] {$+$}
+	node[left=0.5*\myunit,very near start] {$-$};
+  
+   \matrix (B) [matrix of math nodes,%
+		%nodes = {node style ge},%
+		left delimiter=(,%
+		right delimiter=),%
+		right=20pt] at (A.east)
+  { \vdots \\ \psi_{-1} \\ \psi_{0} \\ \psi_{1} \\ \vdots \\
+  };
+  \end{tikzpicture}
+  \end{center}
+
+\item[Ordering of angular momenta $\ell$, $m$ in 3D.] This block structure allows the product 
+						      \begin{equation*}\sum_{\ell'=0}^\infty\sum_{m'=-\ell'}^{\ell'} V_{\ell m,\ell' m'}\psi_{\ell'm'}\end{equation*} 
+						      to be written using a single index $\nu = (\ell,m)$. The matrices have size 
+						      $(\ell_\text{max}+1)^2\times(\ell_\text{max}+1)^2$.
+  \begin{center}
+  \begin{tikzpicture}[>=latex]
+   \node at (-6,0) {$\mat{V}\bo{\psi} = $};
+   \matrix (A) [matrix of math nodes,%
+		%nodes = {node style ge},%
+		left delimiter=(,%
+		right delimiter=) ] at (0,0)
+  { V_{\color{blue}{00},\color{red}{00}}	& V_{\color{blue}{00},\color{red}{1-1}}	& V_{\color{blue}{00},\color{red}{10}}	& V_{\color{blue}{00},\color{red}{11}}	\\
+    V_{\color{blue}{1-1},\color{red}{00}}	& V_{\color{blue}{1-1},\color{red}{1-1}}& \vdots				& \vdots	\\
+    V_{\color{blue}{10},\color{red}{00}}	& \ldots				& \ddots				& \vdots	\\
+    V_{\color{blue}{11},\color{red}{00}}	& \ldots				& \ldots				& \ddots	\\
+  };
+  
+  \draw [thick,decorate,decoration={brace,amplitude=5pt}] (A-1-1.north west) -- (A-1-1.north east) node [midway,above=\myunit] {\color{red}{$\ell'=0$}};
+  \draw [thick,decorate,decoration={brace,amplitude=5pt}] (A-1-2.north west) -- (A-1-4.north east) node [midway,above=\myunit] {\color{red}{$m'=-\ell',\ldots,\ell'$}};
+  \draw [thick,decorate,decoration={brace,mirror,amplitude=5pt}] ($(A-1-1.north west)-(1cm,0)$) -- ($(A-1-1.south west)-(1cm,0)$) node [midway,left=\myunit] {\color{blue}{$\ell=0$}};
+  \draw [thick,decorate,decoration={brace,mirror,amplitude=5pt}] ($(A-2-1.north west)-(0.9cm,0)$) -- ($(A-4-1.south west)-(1cm,0)$) node [midway,left=\myunit] {\color{blue}{$\ell=1$}};
+  
+   \matrix (B) [matrix of math nodes,%
+		%nodes = {node style ge},%
+		left delimiter=(,%
+		right delimiter=),%
+		right=20pt] at (A.east)
+  { \psi_{00} \\ \psi_{1-1} \\ \psi_{10} \\ \psi_{11} \\ \vdots \\
+  };
+  \end{tikzpicture}
+  \end{center}
+\end{description}
+

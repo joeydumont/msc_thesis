@@ -1,0 +1,18 @@
+\chapter*{Abstract}
+\phantomsection\addcontentsline{toc}{section}{Abstract}
+
+In recent years, outbursts in technology have changed the way 
+we view, and do, science. In the days of yore, when the rose
+that is physics had not yet been given its name, science
+was in major part an experimental endeavour. It took the great
+Werner Heisenberg to establish theoretical physics as its own field. 
+
+In this thesis, we seek to reverse the recent trend that purports
+that data is self-sufficient, that the throne of theory has been 
+usurped by the opulent and almight data. 
+
+We will first investigate the modelization of bidimensional dielectric
+cavities. The last decade has shown that this type of micron-sized device
+is ripe with applications ranging from biodetection to lasing action (more on that
+later). This has motivated the scientific community to investigate the behaviour
+of such cavities mostly as a function of their geometry. We will generalize 

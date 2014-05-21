@@ -1,0 +1,66 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Arch Linux)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: msc_thesis_jayd.aux
+A level-1 auxiliary file: frontmatter/abstract-fr.aux
+A level-1 auxiliary file: frontmatter/abstract-en.aux
+A level-1 auxiliary file: frontmatter/notation.aux
+A level-1 auxiliary file: frontmatter/preface.aux
+A level-1 auxiliary file: frontmatter/contributions.aux
+A level-1 auxiliary file: intro/intro.aux
+A level-1 auxiliary file: passive/passive.aux
+A level-1 auxiliary file: active/active.aux
+A level-1 auxiliary file: conclusion/conclusion.aux
+A level-1 auxiliary file: backmatter/app-besselFunctions.aux
+A level-1 auxiliary file: backmatter/app-basisEquations.aux
+A level-1 auxiliary file: backmatter/app-numericalTools.aux
+The style file: osajnl.bst
+Database file #1: memoir_jayd.bib
+Warning--empty year in GAP2013
+Warning--can't use both author and editor fields in TOP2005
+Warning--can't use both author and editor fields in ELL2003
+Warning--empty author in IEEE145-1993
+Warning--can't use both volume and number fields in LAN1978
+Warning--can't use both volume and number fields in LAN1978
+Warning--can't use both author and editor fields in YUT1962
+You've used 51 entries,
+            2587 wiz_defined-function locations,
+            954 strings with 11254 characters,
+and the built_in function-call counts, 15434 in all, are:
+= -- 1094
+> -- 404
+< -- 17
++ -- 156
+- -- 105
+* -- 982
+:= -- 1780
+add.period$ -- 84
+call.type$ -- 51
+change.case$ -- 54
+chr.to.int$ -- 30
+cite$ -- 58
+duplicate$ -- 1527
+empty$ -- 1706
+format.name$ -- 133
+if$ -- 3506
+int.to.chr$ -- 0
+int.to.str$ -- 51
+missing$ -- 407
+newline$ -- 157
+num.names$ -- 50
+pop$ -- 597
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 273
+stack$ -- 0
+substring$ -- 665
+swap$ -- 936
+text.length$ -- 7
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 7
+while$ -- 108
+width$ -- 53
+write$ -- 435
+(There were 7 warnings)

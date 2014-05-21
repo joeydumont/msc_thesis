@@ -1,0 +1,50 @@
+% -- Custom commands.
+\usepackage{mathtools}						% Used mostly for \coloneqq and DeclarePairedDelimiter.
+  \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}		% Floor function. 
+  \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}		% Ceiling function.
+
+\newcommand{\bo}[1]{\boldsymbol{#1}}				% Bold/italic vectors.
+\newcommand{\bou}[1]{\boldsymbol{\hat{#1}}}			% Bold/italic unit vectors.
+\newcommand{\mat}[1]{\mathbf{#1}}				% Bold matrices.
+\newcommand{\bigk}{\mathop{\raisebox{-5pt}{\HUGE K}}}		% Continued fraction expansion symbol.
+\renewcommand{\Re}[1]{\ensuremath{\text{Re}\left(#1\right)}}	% Real part of a complex number.
+\renewcommand{\Im}[1]{\ensuremath{\text{Im}\left(#1\right)}}	% Imaginary part of a complex number.
+
+% -- Custom drawing commands.
+\newcommand{\inscribedPolygon}[3]
+{
+	\def\radius{#1}
+	\def\number{#2}
+	\def\random{#3}
+	\pgfmathsetmacro{\limit}{\number-1}
+	\pgfmathsetmacro{\anglePoly}{360/\number}
+		
+	\foreach \x in {1,...,\number}
+	{
+		\coordinate (\x) at ($ (0,0) + (\x*\anglePoly+\random:\radius) $);
+	}
+	
+	\foreach \y in {1,...,\limit}
+	{
+		\pgfmathsetmacro{\z}{\y+1}
+		\draw (\y) -- (\z);
+	}
+		
+	\draw (1) -- (\number);
+}
+
+% -- Theorem-like environment definitions
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[chapter]
+\newtheorem{conj}{Conjecture}[chapter]
+\newtheorem{exmp}{Example}[chapter]
+
+\theoremstyle{remark}
+\newtheorem*{rem}{Remark}
+\newtheorem*{note}{Note}
+\newtheorem{case}{Case}

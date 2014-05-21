@@ -1,0 +1,188 @@
+% ------------------ MSC THESIS JAYD ------------------	%
+% We load the ulthese package along with some other		%
+% useful packages.										%
+% -----------------------------------------------------	%
+\documentclass[francais,english,nonatbib,MSc]{ulthese}
+
+% -- Loading packages.
+% Math symbols and such.
+\usepackage{amsthm,amsmath,amssymb}			% Math symbols and commands.
+\usepackage{units}					% Typographie des unités dans les équations.
+\usepackage{braket}					% Braket notation.
+\usepackage{mathdots}					% Better rendering of dots in math mode. 
+
+% Font packages.
+\usepackage[charter]{mathdesign}			% Font package (including math font).
+\usepackage[utf8]{inputenc}					% UTF8 encoding for accents.
+\usepackage[T1]{fontenc}					% Vectorial fonts.
+\renewcommand*\sfdefault{lmss}				% Latin Modern Sans Serif as default sans serif font
+
+% Style and PDF formatting options.
+\usepackage[compact,sf]{titlesec}			% Use sans serif fonts in section headings.
+\usepackage[bottom,multiple]{footmisc}			% Force les notes de bas de page à être en bas de la page.
+\usepackage{bibentry}\nobibliography*			% Inline bibliographic entries.
+\usepackage[unicode=true,
+	    pdfusetitle,
+	    bookmarks=true,
+	    bookmarksnumbered=true,
+	    bookmarksopen=true,
+	    bookmarksopenlevel=3,
+	    breaklinks=false,
+	    pdfborder={0 0 0},
+	    backref=false,
+	    colorlinks=true,
+	    linkcolor=black,
+	    citecolor=black,
+	    urlcolor=blue]
+ {hyperref}									% Defines the formatting of the PDF.
+
+% Custom environments
+\usepackage[ruled,vlined]{algorithm2e}		% Used to typeset pseudocode
+\usepackage{tabularx}				% Tools to format tables.
+\usepackage{multirow}				% More tools to format tables.
+\usepackage{dcolumn}				% Allows novel formatting for columns of tables, e.g. aligning numbers with decimal point.
+\usepackage{tikz}				% Drawing program. 
+\usepackage[customcolors]{hf-tikz}		% Extension of TikZ to highlight formulas and formula parts.
+\usepackage[labelformat=simple]{subcaption}	% Manages subfigure, subtables and subcaption environements.
+\usepackage{parnotes}				% Notes in tables.
+
+% Configuration of subcaptions.
+\renewcommand\thesubfigure{(\alph{subfigure})}
+  \captionsetup[figure]{width=0.95\textwidth,labelfont=sf,textfont=sf,font+=small}
+  \captionsetup[subfigure]{width=0.8\linewidth,parskip=0pt}
+
+% Index and glossary capabilities
+\usepackage{makeidx}						% Indexing capabilities.
+\usepackage[xindy,toc,acronym,section]{glossaries}	% Glossary and indexing capabilities.
+\usepackage{glossary-mcols}
+
+% Bibliography package.
+\usepackage[square,
+	    numbers,
+	    sort&compress,
+	    merge,
+	    elide]
+  {natbib}									% Bibliographie
+
+% To-Do notes. Used only in non-production runs.
+\usepackage{todonotes}						% Typesets to do notes and optially creates a list of them.
+
+% -- Configuration of several packages.
+\input{config/tikz-config.tex}				% Styles and configuration of TikZ.
+\input{config/commands.tex}					% Custom commands and theorem environments.
+\graphicspath{{figs/}}						% Searches recursively for images in this folder.
+
+% -- Preparing the index and glossary. 
+\makeindex
+\makeglossaries
+\input{config/glossary-entries.tex}
+
+% -- Custom lengths and formatting options
+\setlength\parindent{12pt}
+
+% -- Headers/footers customization
+\copypagestyle{jayd_headings}{ul}
+\nouppercaseheads
+\makeevenhead{jayd_headings}{\textbf{\thepage}\hspace{1cm}{\sffamily\leftmark}}{}{}
+\makeoddhead{jayd_headings}{}{}{{\sffamily\rightmark}\hspace{1cm}\textbf{\thepage}}
+\makeheadrule{jayd_headings}{\textwidth}{\normalrulethickness}
+\makeevenfoot{jayd_headings}{}{}{}
+\makeoddfoot{jayd_headings}{}{}{}
+
+% --------------- Document Information ----------------	%
+% We define the title, subtitles and other such info 	%
+% in this section. 										%
+% -----------------------------------------------------	%
+\titre{On the Modelization of Optical Devices}
+\soustitre{From Dielectric Cavities to Radiating Structures}
+\auteur{Joey Dumont}
+\annee{2014}
+\programme{Maîtrise en physique}
+\faculteUL{Faculté de Science et Génie}
+
+% -- Begin document
+\begin{document}
+
+% ------------------- Front Matter --------------------	%
+% Here lie the titlepage, abstracts, tables of contents	%
+% figures and tables and definition of notation.		%
+% -----------------------------------------------------	%
+\frontmatter
+
+% -- Title page
+\pagetitre
+
+% -- Abstracts
+\include{frontmatter/abstract-fr}
+\include{frontmatter/abstract-en}
+\cleardoublepage
+
+% -- Table of Contents and Lists.
+\phantomsection\addcontentsline{toc}{section}{Table of Contents}
+\renewcommand*{\contentsname}{\usefont{T1}{cmss}{m}{n}Table of Contents}
+\tableofcontents*
+\cleardoublepage
+
+\phantomsection\addcontentsline{toc}{section}{List of Figures}
+\renewcommand*{\listfigurename}{\usefont{T1}{cmss}{m}{n}List of Figures}
+\listoffigures*
+\cleardoublepage
+
+\phantomsection\addcontentsline{toc}{section}{List of Tables}
+\renewcommand*{\listtablename}{\usefont{T1}{cmss}{m}{n}List of Tables}
+\listoftables*
+\cleardoublepage
+
+
+% -- Dédicace
+\dedicace{Dedicated to a special collection of particles...}
+\cleardoublepage
+
+\epigraphe%
+{\textbf{education}, \textit{n}. That which discloses to the wise and disguises from the foolish their lack of understanding.}%
+{\textit{The Devil's Dictionary}\\Ambrose Bierce}
+\cleardoublepage
+
+\include{frontmatter/notation}
+
+\setlength{\glspagelistwidth}{2.5cm}
+\printglossary[style=super3colheader]
+\cleardoublepage
+\printacronyms[style=mcolindex]
+
+% -- A preface contains an explanation of the thesis' contents
+% -- and acknowledgements. 
+\include{frontmatter/preface}
+
+% -- Summary of Contributions
+\include{frontmatter/contributions}
+
+% -------------------- Main Matter --------------------	%
+% Here lies the body of the text. It is divided into	%
+% four chapters: an introduction, a chapter on 			%
+% scattering methods, a chapter on antenna theory and 	%
+% design and a conclusion. 								%
+% -----------------------------------------------------	%
+\mainmatter
+\pagestyle{jayd_headings}
+\include{intro/intro}
+\include{passive/passive}
+\include{active/active}
+\include{conclusion/conclusion}
+
+% -------------------- Appendices ---------------------	%
+% Due to the technical nature of the work done, the 	%
+% appendices mostly contain derivations and notes on 	%
+% numerical implementations of algorithms.				%
+% -----------------------------------------------------	%
+\appendix
+\include{backmatter/app-besselFunctions}
+\include{backmatter/app-basisEquations}
+\include{backmatter/app-numericalTools}
+
+\bibliographystyle{osajnl}
+\bibliography{memoir_jayd}
+
+\printindex
+
+\end{document}
