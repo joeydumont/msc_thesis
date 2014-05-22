@@ -310,18 +310,51 @@ In most applications (see the Introduction), we wish to find the \textit{resonan
 cavity. This is usually done by enforcing Sommerfeld radiation conditions
 on Helmholtz's equation and looking for solutions of
   \begin{equation}
+   \label{eq:passive.formalism.resonanceCondition}
    \mat{S}^{-1}\bo{B}=0;
   \end{equation}
-i.e. an infinitesimal input provides an infinite output. 
-A solution exists only if $|\det{\mat{S}(k)}|\rightarrow\infty$, 
+a solution exists only if $|\det{\mat{S}(k)}|\rightarrow\infty$, 
 at a pole of the \gls{sMatrix}. 
 For real potentials, there cannot exist a solution on the real $k$ line because
 of the flux conservation (unitarity) property of the \gls{sMatrix}. We 
 must extend the search to the complex $k$ plane.
 
-\todo[inline]{Non-renormalizable QB states.}
-\todo[inline]{Complex potentials -> trajectory of poles in $k$ plane to real line. Freddy
-	      foreshadowing for next part.}
+Equation \eqref{eq:passive.formalism.resonanceCondition} shows that the cavity 
+\textit{creates} energy from nothing. In more physical terms, the cavity
+has an infinite response to an infinitesimal energy input. This definition
+of a resonance implies that we should look in the $\Im{k}<0$ half-plane
+for the poles of the \gls{sMatrix}. The solutions to this equation 
+are known as quasi-bound states, as their intensity is usually larger
+in the vicinity of the cavity and, contrary to their truly bound counterparts, 
+have a small but non-zero value outside it. The ever so slowly decaying wavefunction
+is thus non-normalizable (i.e. $\psi\notin L^2$). In this formulation, the field
+has the following non-physical behaviour in the far-field
+  \begin{align*}
+   \psi_\text{FF}(\bo{r},t) 			&= \psi(\bo{r})e^{-i\omega t}	\\
+						&\propto \exp\left[i(k'-ik'')\right]\exp\left[-ic(k'-ik'')t\right]\exp[im\theta]	\\
+   \left|\psi_\text{FF}(\bo{r},t)\right|^2 	&\propto e^{2k''r}e^{-2ck''t} 
+  \end{align*}
+where $k=k'-ik''$. The field thus exponentially increases with $r$, 
+but exponentially \textit{decreases} with $t$. We can see, however, 
+that the time scale of the exponential decrease is linked to the
+imaginary part of the wavenumber by $\tau=\left(2k''c\right)^{-1}$.
+We will use this relationship later in this thesis.
+
+It is interesting to note that the kind of resonances supported
+by dielectric cavities are of the same kind as those supported
+by a forced, undamped harmonic oscillator. The incoming wave field
+plays the part of the applied force. In the treatment of 
+harmonic oscillators, it is usually noticed that adding a friction 
+term in the equations curbs the infinities that the model otherwise 
+yields. A parallel situation occurs in dielectric cavities. When there
+is no absorption losses (friction), the response of the cavity 
+to an incoming wave field is a result of the cumulative effect 
+of the experimentally unattainable complex poles of the scattering matrix. 
+However, when losses/gain are added into the model, the poles of the scattering
+matrix begin to move in the complex plane; loss of unitarity implies that
+it is possible that these poles may eventually move to the real $k$-line, 
+making them experimentally possible. This is in fact the backbone 
+of the \gls{salt} \cite{GE2010a,GE2010b}.
 
 We will proceed a different way. It is possible to find the signatures
 of these poles on the real $k$ line by computing the \textit{energy}
@@ -486,10 +519,16 @@ and
    \mat{Q}^\dagger = i\frac{d\mat{S}^\dagger}{dk}\mat{S} = -i\mat{S}^\dagger\frac{d\mat{S}}{dk} = \mat{Q}
   \end{equation}
 The delays associated with the potential are thus always real
-and the delay eigenstates form a complete basis. 
-
-\todo[inline]{Lorentzian form of the delay.}
-
+and the delay eigenstates form a complete basis. Perhaps the
+most interesting, and important, result concerning the 
+\gls{qMatrix} is its connection with the complex poles of the
+scattering matrix. It can be shown (see \cite{SHI2011,SHI2012,GAP2013})
+that we can seperate the scattering matrix in \textit{resonance channels}
+and arrive at Simonius's form \cite{SIM1974}
+  \begin{equation}
+   \mathbf{S}(k)=\prod_{j=1}^\infty \mathbf{S}_j(k)
+  \end{equation}
+  
 In the complex case, the phase shifts become complex, as do the 
 time delays. The imaginary part can be interpreted as an 
 emission/absorption time scale. 
