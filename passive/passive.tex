@@ -523,12 +523,23 @@ and the delay eigenstates form a complete basis. Perhaps the
 most interesting, and important, result concerning the 
 \gls{qMatrix} is its connection with the complex poles of the
 scattering matrix. It can be shown (see \cite{SHI2011,SHI2012,GAP2013})
-that we can seperate the scattering matrix in \textit{resonance channels}
+that we can seperate the scattering matrix in \textit{resonance channels} $\{\ket{p_j}\}$
 and arrive at Simonius's form \cite{SIM1974}
   \begin{equation}
    \mathbf{S}(k)=\prod_{j=1}^\infty \mathbf{S}_j(k)
   \end{equation}
-  
+where
+  \begin{equation}
+   \mat{S}_j(k)\Ket{p_j} = \frac{k-k_j^*}{k-k_j}\Ket{p_j}.
+  \end{equation}
+From the definition of the \gls{qMatrix}, we can obtain that
+the eigendelays $q_p$ of each resonance channel have the form
+  \begin{equation}
+   q_p \propto \sum_j \frac{\Gamma_j}{\left(k-\Re{k_j}\right)^2-\Gamma_j^2/4}
+  \end{equation}
+
+
+
 In the complex case, the phase shifts become complex, as do the 
 time delays. The imaginary part can be interpreted as an 
 emission/absorption time scale. 
@@ -631,48 +642,8 @@ with
   \begin{equation}
     L_{mm'}^j = m^2\delta_{mm'}-\frac{k^2r_j^2}{2\pi}\int_0^{2\pi}n^2(r_j,\theta)e^{i(m-m')\theta}d\theta.
   \end{equation}
-In the TE case, we must take $n\mapsto n_\text{eff}$. This leads us to evaluate the 
-extra integral
-  \begin{equation}
-   I = \frac{1}{2\pi}\int_0^{2\pi}\left[\frac{1}{n}\frac{d^2n(r_j,\theta)}{d\theta^2}-\frac{2}{n^2}\left(\frac{dn(r_j,\theta)}{d\theta}\right)^2\right]e^{i(m-m')\theta}d\theta.
-  \end{equation}
-The numerical cost of this integral can be lessened 
-if we notice that if we write it as a function of $n^2$ we obtain
-  \begin{equation}
-   I = \frac{1}{2\pi}\int_0^{2\pi}\left[\frac{1}{2n^2}\frac{d^2n^2(r_j,\theta)}{d\theta^2}-\frac{3}{4n^4}\left(\frac{dn^2(r_j,\theta)}{d\theta}\right)^2\right]e^{i(m-m')\theta}d\theta
-  \end{equation}
-which, in turn, can be rewritten as
-  \begin{equation}
-   I = \frac{1}{2\pi}\int_0^{2\pi}\left[\frac{1}{2}\frac{d^2\log n^2(r_j,\theta)}{d\theta^2}-\left(\frac{1}{2}\frac{d\log n^2(r_j,\theta)}{d\theta}\right)^2\right]e^{i(m-m')\theta}d\theta.
-  \end{equation}
-Integrating by parts twice yields
-  \begin{equation}
-   I = \frac{1}{2\pi}\int_0^{2\pi}\left[-\frac{(m-m')^2}{2}\log n^2(r_j,\theta)-\left(\frac{1}{2}\frac{d\log n^2(r_j,\theta)}{d\theta}\right)^2\right]e^{i(m-m')\theta}d\theta.
-  \end{equation}
-The second term cannot be integrated out, but this final result means that
-we will only need to numerically evaluate the first derivative of the 
-refractive index (although its analytical form could be provided).
-
-Notice the form of the $\mat{L}^j$ matrix. As can be seem from inspection, 
-the value of the elements depend only on their distance from the diagonal.
-Taking a closer look reveals the form
-  \begin{equation}
-   \mat{L}^j = \mat{M}^2 +\begin{pmatrix} 
-		  n_0 & n_{-1} & \cdots & \cdots & n_{-2M}	\\
-		  n_1	  & n_0& \cdots & \cdots & n_{-2M-1}\\
-		  n_2	  & n_1	   & n_0& \cdots & n_{-2M-2}\\
-		  \vdots  & n_2    & n_1    & \ddots & \vdots   \\
-		  n_{2M}  & \cdots & \cdots & \cdots & n_0
-		\end{pmatrix}
-  \end{equation}
-which is manifestly Toeplitz. When the potential is real, the Fourier
-series has the property $n_{-j}=n_j^*$, which makes the $\mat{L}^j$ 
-matrix Hermitian. In the general case, however, it is not. Because
-we will need to use orthogonality relations in what follows, we must
-compute both the left and right eigenvectors\index{left eigenvectors}. 
-We will note the left (covariant) basis by $\Ket{\tilde{\Phi}_\mu^j}$.
-This is not sufficient, however, because we are not guaranteed that
-both sets of eigenvectors will form a complete basis. 
+The particular form and additional properties of this matrix are discussed in 
+Appendix \ref{sec:app.numTools.scatMat}.
 
 Now that we know the set of eigenvalues $\{\xi_\mu^j\}$, we can solve the radial
 equation \eqref{eq:passive.formalism.radialDiffEqn}. It is instantly recognized as 
@@ -748,18 +719,108 @@ $||\mat{S}||<1$ and we can approximate
   \begin{equation}
    W \sim 1 + \frac{4\lambda_\text{max}\epsilon}{r_j}.
   \end{equation}
-The $\lambda_\text{max}$ parameter depends solely on the 
-Fourier components of the refractive index. Given that most 
-cavities that will study will be mildly inhomogenous, 
-i.e. that $|n_0|\geq|n_m|$, we posit the upper bound 
-$|\lambda_\text{max}| < 3nkR_0$. A good choice of 
-$\epsilon$ is thus
+To evaluate the $\lambda_\text{max}$ parameter, we will
+have to take a detour and introduce the concept 
+of \textit{\glspl{gerschgorin}}.
+\paragraph{Gerschgorin Circles}
+A better way to bound $\lambda_\text{max}$ would be to 
+use the \textit{\glspl{gerschgorin}} associated with the $\mat{L}^j$
+matrix.
+
+\begin{thm}[Gerschgorin circles \protect{\cite[p.~498]{MEY2001}}]
+ The eigenvalues of a matrix $\mat{A}\in\mathbb{C}^{n\times n}$ are
+ contained within the intersection $\mathcal{G}_r\cap\mathcal{G}_c$
+ of the sets of row and column Gerschgorin circles, defined respectively as
+  \begin{align*}
+   \mathcal{G}_r	&= \left\{|z-a_{ii}| \leq \sum_{\stackrel{j=0}{j\neq i}}^{n-1} |a_{ij}|; \quad \forall i\right\}
+  & \mathcal{G}_c	&= \left\{|z-a_{jj}| \leq \sum_{\stackrel{i=0}{i\neq j}}^{n-1} |a_{ij}|; \quad \forall j\right\},
+  \end{align*}
+ or, in a slightly more algorithmically-friendly form:
+  \begin{equation}
+   \mathcal{G}_r\cap\mathcal{G}_c = \left\{|z-a_{ii}| \leq \min\left(\sum_{\stackrel{j=0}{j\neq i}}^{n-1} |a_{ij}|,\sum_{\stackrel{j=0}{j\neq i}}^{n-1} |a_{ji}|\right)
+				     ;\quad \forall i\right\}.
+  \end{equation}
+\end{thm}
+
+\begin{corr}\label{corr:passive.numerical.diagDominantMatrices}
+ Diagonally dominant matrices are non-singular.
+\end{corr}
+
+ \begin{proof}
+  Diagonally dominant matrices, by definition, have 
+    \begin{equation}
+     |a_{ii}| > \max\left(\sum_{\stackrel{j=0}{j\neq i}}^{n-1} |a_{ij}|, \sum_{\stackrel{j=0}{j\neq i}}^{n-1} |a_{ji}|\right)
+    \end{equation}
+  and, by Gerschgorin's theorem, do not have 0 as an eigenvalue, $0\notin\sigma(\mat{A})$, and therefore is 
+  non-singular.
+ \end{proof}
+
+\begin{exmp}
+  Consider the matrix \cite[p.~499]{MEY2001}
+  \begin{equation}
+    \label{eq:passive.numerical.exampleMatrixGerschgorin}
+    \mat{A} = \begin{pmatrix} 5 & 1 & 1 \\ 0 & 6 & 1 \\ 1 & 0 & -5 \end{pmatrix}.
+  \end{equation}
+  Its associated Gerschgorin circles are plotted in Figure \ref{fig:passive.numerical.gerschgorinCircles}. 
+  We see that the row and column circles give different bounds on the eigenvalues and their intersection 
+  yields the best possible approximations for the eigenvalues. 
+\end{exmp}
+
+\begin{figure}
+ \begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics{figs/passive/gerschgorin-row.pdf}
+  \caption{Row Gerschgorin circles}
+ \end{subfigure}
+ 
+ \begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics{figs/passive/gerschgorin-col.pdf}
+  \caption{Column Gerschgorin circles}
+ \end{subfigure}
+ 
+ \begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics{figs/passive/gerschgorin-full.pdf}
+  \caption{Intersection of both previous sets}
+ \end{subfigure}
+ \caption[Gerschgorin circles for an example matrix]
+	 {Gerschgorin circles of the matrix defined in \eqref{eq:passive.numerical.exampleMatrixGerschgorin}.
+	 Notice that the matrix is non-singular by Corrolary \ref{corr:passive.numerical.diagDominantMatrices}.}
+ \label{fig:passive.numerical.gerschgorinCircles}
+\end{figure}
+
+We now apply the Gerschgorin circles to our $\mat{L}^j$ matrix. 
+Remember that we have chosen our matrix size as to respect the Nyquist frequency, 
+i.e. $M=2kR_0\sqrt{\mathop{\max}_{(r,\theta)}\left(n^2(r,\theta)\right)}$. The biggest
+diagonal element (the farthest Gerschgorin circle) will corresponding
+to the highest angular momentum and have a magnitude of 
+$4\mathop{\max}_{(r,\theta)}\left(n^2(r,\theta)\right)k^2R_0^2-k^2R_0^2n^2(r,\theta)\sim3k^2R_0^2n^2$.
+The radius is more complicated to estimate, as it is given by 
+  \begin{equation}
+   r = \sum_{m=1}^M |n_m|.
+  \end{equation}
+It can be shown that there exists an upper bound for the value of the
+Fourier coefficients \cite{JAC1920}
+  \begin{equation}
+   |n_m| \leq \frac{V}{2m\pi}
+  \end{equation}
+where $V$ is the variation of the refractive index. A good upper bound
+for the radius is thus $r\leq V/\pi$. Taking the annular
+cavity as an example, the variation is approximately given by 
+$2n^2$. Pulling everything together, this yields an approximate upper
+bound for the largest eigenvalue as
+  \begin{equation}
+   |\lambda_\text{max}| < 3nkR_0
+  \end{equation}
+A good choice of $\epsilon$ is thus
   \begin{equation}
    \epsilon \ll \frac{1}{12nk} \ll \frac{\lambda}{2n}
   \end{equation}
 which mirrors the conventional wisdom. This empirical rule
-is applied in every computation in this thesis. 
-\todo[inline]{Introduction to Gerschgorin circles and possibility of inversion problems of $\mat{K}$.}
+is applied in every computation in this thesis.
+
+
 
 \subsubsection{Hadamard Product}
 Like Frodo before Mount Doom, we must face a final challenge
@@ -810,14 +871,26 @@ high angular momenta. The maximum angular momentum it can affect,
 $M_\text{max}$ is a function of its ``degree of inhomogeity'', 
 characterized by the absolute size of the Fourier components
 of the refractive index (which also depend on the geometry
-of the cavity). This gives the \gls{sMatrix} a banded form 
-\todo{Show the S-matrix of the quadrupolar cavity}. The width of
+of the cavity). This gives the \gls{sMatrix} a banded form . The width of
 this band could be detected in $\mat{S}^{0,N}_{22}$ before
 taking the Hadamard product. After the product, all elements
 outside this band could be set to zero. The interested 
 reader might want to go through Türeci's discussion of
 the banded form and the numerical problems associated 
 with the Hankel matrices \cite[\S 3.4]{TUR2003}.
+
+\begin{figure}
+ \centering
+ \includegraphics{figs/passive/sMatrixEllipseMag.pdf}
+ \caption[Banded form of the scattering matrix of the elliptical cavity]
+	 {Scattering matrix of the elliptical cavity with $n_c=3.3$, $a=1$
+	 and $b=0.53477$, giving $e=0.845$. Recall that $r(\theta)=ab/\sqrt{(b\cos\theta)^2+(a\sin\theta)^2}$.
+	 Notice that the non-vanishing elements have a banded form: they decrease with the distance
+	 from the diagonal and eventually go to zero. Beyond a particular value of the angular momentum 
+	 ($M=6$, in this case), the scattering matrix is diagonal: there is no mixing of angular momenta.
+	 The value of $M$ depends on the inhomogeneity of both the boundary of the cavity and that of its
+	 refractive index. It could be inferred from the Fourier transform of the refractive index.}
+\end{figure}
 
 We have, however, chosen a different path. 
 It turns out that relation \eqref{eq:passive.formalism.timeReversalSymmetryReal}
@@ -830,6 +903,12 @@ One of the most important step in algorithmic creation
 is the \textit{\gls{calPhase}}. Ours was calibrated
 against two cavities: the homogeneous circular cavity and 
 the annular cavity. Their analytical form is given below.
+We will use 
+  \begin{equation}
+   E = \max\left[\mat{S}_\text{ana}-\mat{S}_\text{SQA}\right] 
+  \end{equation}
+as a function of the discretization size $kR_02\epsilon$ to measure
+the error. 
 
 The scattering matrix of the homogeneous circular cavity
 is trivially obtained. Assuming that the refractive index inside
@@ -847,6 +926,10 @@ $A_m$ and $B_m$ sets, \textit{viz.} the scattering matrix
 				{\eta_{co}J_m'(Z_c)H_m^{(+)}(Z_o)-J_m(Z_c){H^{(+)}_m}'(Z_o)}\delta_{mm'}.
   \end{equation}
 where $Z_c = n_ckR_0$, $Z_o=n_okR_0$ and $\eta_{co}= n_c/n_o\; (n_o/n_c)$ in TM (TE) polarization.
+
+In Fig. \ref{fig:passive.numerical.convergenceHomogeneousDisk}, we compare the analytical scattering
+matrix to the one computed via SQA.
+
 
 \todo[inline]{Calibration with homogeneous circular cavity. Identification of zeroes with peaks of delay matrix.
 	      Computation of the zeros in the complex plane.}

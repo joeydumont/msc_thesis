@@ -1,6 +1,48 @@
 \chapter{Numerical Tools}
 
 \section{Numerical Computation of the Scattering Matrix}\label{sec:app.numTools.scatMat}
+In the TE case, we must take $n\mapsto n_\text{eff}$. This leads us to evaluate the 
+extra integral
+  \begin{equation}
+   I = \frac{1}{2\pi}\int_0^{2\pi}\left[\frac{1}{n}\frac{d^2n(r_j,\theta)}{d\theta^2}-\frac{2}{n^2}\left(\frac{dn(r_j,\theta)}{d\theta}\right)^2\right]e^{i(m-m')\theta}d\theta.
+  \end{equation}
+The numerical cost of this integral can be lessened 
+if we notice that if we write it as a function of $n^2$ we obtain
+  \begin{equation}
+   I = \frac{1}{2\pi}\int_0^{2\pi}\left[\frac{1}{2n^2}\frac{d^2n^2(r_j,\theta)}{d\theta^2}-\frac{3}{4n^4}\left(\frac{dn^2(r_j,\theta)}{d\theta}\right)^2\right]e^{i(m-m')\theta}d\theta
+  \end{equation}
+which, in turn, can be rewritten as
+  \begin{equation}
+   I = \frac{1}{2\pi}\int_0^{2\pi}\left[\frac{1}{2}\frac{d^2\log n^2(r_j,\theta)}{d\theta^2}-\left(\frac{1}{2}\frac{d\log n^2(r_j,\theta)}{d\theta}\right)^2\right]e^{i(m-m')\theta}d\theta.
+  \end{equation}
+Integrating by parts twice yields
+  \begin{equation}
+   I = \frac{1}{2\pi}\int_0^{2\pi}\left[-\frac{(m-m')^2}{2}\log n^2(r_j,\theta)-\left(\frac{1}{2}\frac{d\log n^2(r_j,\theta)}{d\theta}\right)^2\right]e^{i(m-m')\theta}d\theta.
+  \end{equation}
+The second term cannot be integrated out, but this final result means that
+we will only need to numerically evaluate the first derivative of the 
+refractive index (although its analytical form could be provided).
+
+Notice the form of the $\mat{L}^j$ matrix. As can be seem from inspection, 
+the value of the elements depend only on their distance from the diagonal.
+Taking a closer look reveals the form
+  \begin{equation}
+   \mat{L}^j = \mat{M}^2 +\begin{pmatrix} 
+		  n_0 & n_{-1} & \cdots & \cdots & n_{-2M}	\\
+		  n_1	  & n_0& \cdots & \cdots & n_{-2M-1}\\
+		  n_2	  & n_1	   & n_0& \cdots & n_{-2M-2}\\
+		  \vdots  & n_2    & n_1    & \ddots & \vdots   \\
+		  n_{2M}  & \cdots & \cdots & \cdots & n_0
+		\end{pmatrix}
+  \end{equation}
+which is manifestly Toeplitz. When the potential is real, the Fourier
+series has the property $n_{-j}=n_j^*$, which makes the $\mat{L}^j$ 
+matrix Hermitian. In the general case, however, it is not. Because
+we will need to use orthogonality relations in what follows, we must
+compute both the left and right eigenvectors\index{left eigenvectors}. 
+We will note the left (covariant) basis by $\Ket{\tilde{\Phi}_\mu^j}$.
+This is not sufficient, however, because we are not guaranteed that
+both sets of eigenvectors will form a complete basis. 
 
 \section{Computation of the Logarithmic Derivative $[H^{(\pm)}_\nu(z)]'/H^{(\pm)}_\nu(z)$}\label{sec:app.numTools.logDeriv}
 
