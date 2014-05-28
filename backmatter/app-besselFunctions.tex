@@ -3,13 +3,13 @@ This appendix contains some results concerning the
 Bessel functions. Given our redution of Maxwell's equations 
 from 3D to 2D using cylindrical coordinates, the 
 Bessel functions will form the basis of our analysis, 
-as the Bessel functions are the eigenfunctions of
+as they are the eigenfunctions of
 Helmholtz's equation in those coordinates.
 
 We thus wish to collect some of their most important
 properties here for easy reference. Most of them come from the celebrated
 volume by Abromowitz \& Stegun \cite{ABR1965}, while a few
-come from \cite{CUY2008}. Proper reference will be given. 
+come from \cite{CUY2008}. Proper reference will be given when needed. 
 
 In what follows, $\nu,z\in\mathbb{C}$ and $n\in\mathbb{N}$ unless explicitly
 stated otherwise.
@@ -50,7 +50,7 @@ We will alternatively use the notation
   \begin{equation}
    H_\nu^{(\omega)} = J_\nu(z)+i\omega Y_\nu(z)\qquad (\omega=\pm)
   \end{equation}
-to describe both functions at the same time.
+to denote both functions at the same time.
 
 \subsection{Recurrence Relations}
 From the differential equation itself, we can derive multiple
@@ -95,6 +95,9 @@ analysis.
   \end{subequations}
 \end{description}
 
+The last of these equations is of particular importance in establishing
+symmetries of the scaattering matrix.
+
 \section{Asymptotic and Limiting Forms}
 \subsection{Expansions for Small Arguments and Fixed $\nu$}\label{sec:app.Bessel.smallArguments}
 From the first few terms of the power series \eqref{eq:app.Bessel.diffEquation}, 
@@ -102,7 +105,7 @@ From the first few terms of the power series \eqref{eq:app.Bessel.diffEquation},
     J_\nu(z) = \frac{1}{\Gamma(\nu+1)}\left(\frac{z}{2}\right)^\nu\left[1-\frac{1}{\nu+1}\left(\frac{z}{2}\right)^2\right]+\mathcal{O}(z^{\nu+4}).
   \end{equation}
   
-Using the first terms of the ascending series \cite[\S9.1.11]{ABR1965}
+Using the first terms of the ascending series for integer orders $n$ \cite[\S9.1.11]{ABR1965}
   \begin{multline}
    Y_n(z)=-\frac{1}{\pi}\left(\frac{z}{2}\right)^{-n}\sum_{k=0}^{n-1}\frac{(n-k-1)!}{k!}\left(\frac{z}{2}\right)^{2k}
       +\frac{2}{\pi}\ln\frac{z}{2}J_n(z)
@@ -135,3 +138,4 @@ try to mimic them when their arguments get large. We have
    H_\nu^{(\omega)}(z)	&\approx \sqrt{\frac{2}{\pi z}}e^{i\omega\left(z-\frac{\nu\pi}{2}-\frac{\pi}{4}\right)}\label{eq:app.Bessel.asymptoticHankel}
   \end{align}
   \end{subequations}
+The last of these makes the respect of Sommerfeld's radiation condition a breeze in cylindrical coordinates.

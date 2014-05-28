@@ -493,6 +493,13 @@ we can obtain the relation
 which reduces to the unitarity condition when 
 the values are real. 
 
+\begin{figure}
+ \centering
+ \includegraphics[width=0.8\textwidth]{figs/passive/determinantSmatrix2D.eps}
+ \caption[Mirror symmetry of the scattering matrix]
+	 {Mirror symmetry of the scattering matrix.}
+\end{figure}
+
 Following \cite{GAP2013}, we set up the following scattering
 ``experiment'':
   \begin{align*}
@@ -537,8 +544,6 @@ the eigendelays $q_p$ of each resonance channel have the form
   \begin{equation}
    q_p \propto \sum_j \frac{\Gamma_j}{\left(k-\Re{k_j}\right)^2-\Gamma_j^2/4}
   \end{equation}
-
-
 
 In the complex case, the phase shifts become complex, as do the 
 time delays. The imaginary part can be interpreted as an 
@@ -820,8 +825,6 @@ A good choice of $\epsilon$ is thus
 which mirrors the conventional wisdom. This empirical rule
 is applied in every computation in this thesis.
 
-
-
 \subsubsection{Hadamard Product}
 Like Frodo before Mount Doom, we must face a final challenge
 before conquering upon all evil, or, in our case, computing
@@ -927,12 +930,22 @@ $A_m$ and $B_m$ sets, \textit{viz.} the scattering matrix
   \end{equation}
 where $Z_c = n_ckR_0$, $Z_o=n_okR_0$ and $\eta_{co}= n_c/n_o\; (n_o/n_c)$ in TM (TE) polarization.
 
-In Fig. \ref{fig:passive.numerical.convergenceHomogeneousDisk}, we compare the analytical scattering
-matrix to the one computed via SQA.
-
+Before, we showed the correspondance between the poles of the scattering matrix and its associated
+time delay spectrum analytically. In Fig.~\ref{fig:passive.numerical.correspondanceRoots}, we show the
+time delay spectrum of the homogeneous disk. The corresponding poles of the \gls{sMatrix} are denoted
+by squares. There seems to be a problem with the very high-$Q$ ones, but this is only due to the fact
+that we have not used a proper discretization $\Delta k$. The other ones line up perfectly with the peaks
+of the time delay. 
 
 \todo[inline]{Calibration with homogeneous circular cavity. Identification of zeroes with peaks of delay matrix.
 	      Computation of the zeros in the complex plane.}
+
+In Fig.~\ref{fig:passive.numerical.convergenceHomogeneousDisk}, we compare the analytical scattering
+matrix to the one computed via SQA. Notice that the convergence speed is the same for all curves, 
+regardless of the value of $kR_0$. Since the truncature size $M$ was chosen as to respect
+the Nyquist criterion, we can conclude that the convergence does not depend on it. This is 
+simply due to the fact that the homogeneous, circular cavity has a diagonal scattering matrix. 
+
 
 \begin{figure}
   \centering
@@ -942,15 +955,8 @@ matrix to the one computed via SQA.
 	  {Time delay spectrum of a circular cavity with $n_c=3.2$ and $n_o=1$. The squares
 	  represent the complex position of the poles of the scattering matrix. The equivalent
 	  time delay is computed using $c\tau/R_0=-\Re{kR_0}/2\Im{kR_0}$.}
+  \label{fig:passive.numerical.correspondanceRoots}
 \end{figure}
-
-\begin{figure}
- \centering
- \includegraphics[width=0.8\textwidth]{figs/passive/determinantSmatrix2D.eps}
- \caption[Mirror symmetry of the scattering matrix]
-	 {Mirror symmetry of the scattering matrix.}
-\end{figure}
-
 
 
 \begin{figure}
@@ -978,9 +984,40 @@ where
 A proper derivation can be found in \cite{HEN2002}; an improved
 one can be found in \cite[Appendix D]{GAP2013}.
 
-
 \todo[inline]{Calibration with annular cavity.}
-\todo[inline]{Comparison with results in the literature.}
+
+To make sure we can blindly accept the results of our numerical
+technique, we apply it to non-integrable geometries that have been
+studied by other means in the literature. 
+
+\begin{table}
+  \newcolumntype{d}{D{.}{.}{3}}
+  \begin{tabular*}{\columnwidth}{l@{\extracolsep{\fill}}ddddc}
+  \hline\hline
+  \multirow{2}{*}{Cavity}	& \multicolumn{2}{c}{SQA}					& \multicolumn{2}{c}{Emission Viewpoint}				& \multirow{2}{*}{Source}	\\
+				& \multicolumn{1}{c}{$kR_0$}	& \multicolumn{1}{c}{$2R_0/c\tau$}	& \multicolumn{1}{c}{$\text{Re}\{kR_0\}$}&\multicolumn{1}{c}{$|\text{Im}\{kR_0\}|$}	&\\
+\hline\hline
+  Square			& 4.53				& \multicolumn{1}{c}{$1.06\times10^{-4}$}& 4.54					&\multicolumn{1}{c}{$1.05\times10^{-4}$}&\cite{GUO2003}\\
+  Stadium			& 4.89				& 0.052					& 4.89					&0.055					&\cite{LEE2004}\\
+  Ellipse			& 6.499				& 0.029					& 6.50					&0.032					&\cite{UNT2008}\\
+  Annular			& 10.266			& 0.083					& 10.268				&0.081					&\cite{GAP2013}\\
+  \hline\hline
+  \end{tabular*}
+  \caption[Comparison of SQA results with results from the literature]
+	  {Real and imaginary parts of the resonant frequencies computed with SQA compared
+	  with results from the literature.}
+  \label{tab:passive.numerical.comparisonLiterature}
+\end{table}
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{figs/passive/spectrum_square_inset.pdf}
+ \caption[Delay spectrum of the square cavity]
+	 {Delay spectrum of the square cavity. The highlighted mode 
+	 has a high $Q$-factor, which can be explained by its 
+	 WGM-like field recirculation.}
+ \label{fig:passive.numerical.squareSpectrum}
+\end{figure}
 
 \section{Case Study: Gaussian Deformation of the Refractive Index}
 As an academic demonstration of the power of the method, 
@@ -1014,23 +1051,67 @@ the circular symmetry in such a way as to minimize the degradation of the
 finesse ($Q$-factor) and maximizing the output directionality. Historically, 
 this goal has spawned the research field of \glspl{arc} wherein the boundary
 of the circular cavity is parametrically deformed to yield limaçon, stadium, 
-elliptical, quadrupolar, etc. shapes. 
+elliptical, quadrupolar, and other shapes. 
+
+In our case, we do deform the boundary, leaving it a perfect circle, 
+but instead use an asymmetric refractive index. This particular deformation
+is of theoretical and practical interest, as it can easily be induced
+by shining light on the dielectric from above. This refractive
+index profile is also obtained when pumping a microcavity laser
+with another laser.
 
 \subsection{Numerical Results}
+Fig.~\ref{fig:passive.gaussian.numericalResults.farField} shows our primary
+result, i.e. that loss of symmetry may introduce directionality
+in the far-field. The directionality is mild in our example, but the 
+cavity serves as a proof-of-concept. In Fig.~\ref{fig:passive.gaussian.numericalResults.spectrum}, 
+the dotted blue lines show the delay spectrum of the centered Gaussian (CG) deformation, 
+an integrable cavity, and the full red lines the spectrum of the non-centered Gaussian
+(NG) deformation. Notice that the higher-delay modes are barely affected by 
+the inhomogeneity. While we do not know the field profile\todo{Compute field with integral method.}, 
+it is safe to assume the two high-delay modes behave like WGMs. Although it is not shown, 
+both modes have isotropic far-fields. The rather small shift in wavenumber can be
+understood by the slight rarefication of the medium near the deformation. 
+The field must ``evade'' being caught by the deformation to retain
+its WGM properties, which results in slight positive increase in $k$ (smaller wavelength). 
+
 \begin{figure}
  \centering
- \begin{subfigure}[t]{0.6\textwidth}
+ \begin{subfigure}{0.6\textwidth}
   \centering
   \includegraphics[width=\textwidth]{figs/passive/spectrum_gaussian_inset.pdf}
-  \caption{Delay spectrum of the gaussian microcavity.}
+  \caption[Delay spectrum of the gaussian microcavity]
+	  {Delay spectrum of the gaussian microcavity. The dotted blue lines show the spectrum
+	  for the integrable case of the deformation, i.e. $d=\Theta=0$ (CG mode). The full red lines
+	  show the spectrum for the deformation centered at $d=0.3R_0$ and $\Theta=0$ (NG mode).}
+  \label{fig:passive.gaussian.numericalResults.spectrum}
  \end{subfigure}
- \begin{subfigure}[t]{0.39\textwidth}
+ \begin{subfigure}{0.39\textwidth}
   \centering
   \includegraphics[width=\textwidth]{figs/passive/farField_gaussian.pdf}
-  \caption{Far-field}
+  \caption{Far-fields of both CG (dotted blue) and NG (full red) modes. The isotropy is broken 
+	  when the potential loses its circular symmetry. The NG mode has mild directionality
+	  in the directions $\theta=\pm65^\circ$, owing to the diverging lens effect of the deformation.}
+  \label{fig:passive.gaussian.numericalResults.farField}
  \end{subfigure}
- \caption{Delay spectrum and far-field.}
+ \caption[Delay spectrum of the Gaussian cavity and the far-fields of two chosen modes]
+	  {Delay spectrum and far-field. \textbf{\subref{fig:passive.gaussian.numericalResults.spectrum}} 
+	  Delay spectrum of cavity with the gaussian deformation with parameters $n_0=2$, $\delta n=-1$ and $w=0.2R_0$.
+	  \textbf{\subref{fig:passive.gaussian.numericalResults.farField}} shows the far-field of the both the CG and NG modes.
+	  Notice the mild directionality of the NG mode.}
+ \label{fig:passive.gaussian.numericalResults}
 \end{figure}
+
+The lower delay modes, the highlighted ones in \ref{fig:passive.gaussian.numericalResults.spectrum}
+are more affected by the inhomogeneity, as their field must be more
+extended in the dielectric. The field thus ``feels'' a greater
+rarefication of the medium and the mode suffers both a greater $\Delta k$
+and a pronounced change in its emission properties. The angular momentum
+mixing is such that that the ``backscattering'' $|\psi_\text{FF}(\theta=\pi)|$
+is minimized and that the scattering in directions $\theta\sim\pm3\pi/8$
+is favoured. This directionality may somewhat be explained by a
+ray analysis of the system, as the deformation acts as a diverging
+lens. The next section will explain this in more detail. 
 
 \subsection{Geodesics and Ray Analysis}
 While our numerical method allows us tu perform full-wave
@@ -1044,17 +1125,19 @@ by using the metric
   \begin{equation}
    (dt)^2=g_{\mu\nu}dx^\mu dx^\nu. 
   \end{equation}
+For photons, the metric is simply given by the optical length 
+of the medium, $g_{\mu\nu}=n^2(\bo{r})\delta_{\mu\nu}$. 
 The time it takes to travel a particular trajectory is given by
   \begin{equation}
    t = \int_{\lambda_0}^{\lambda_1} \sqrt{g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu}\,d\lambda
   \end{equation}
-where $\lambda$ is a parameter of the curve. Applying the Euler-Lagrange
+where $\lambda$ is a parameter of the curve. By Fermat's principle, photon 
+trajectories minimize the time of flight. We thus apply the Euler-Lagrange
 equation 
   \begin{align}
    \frac{\partial L}{\partial x^\alpha}-\frac{d}{d\lambda}\frac{\partial L}{\partial\dot{x}^\alpha}=0
   \end{align}
-on the functional $L=\sqrt{w}=\sqrt{g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu}\,d\lambda$ minimizes the time it takes to travel
-from one point to another. Evaluating the derivatives
+on the functional $L=\sqrt{w}=\sqrt{g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu}\,d\lambda$ Evaluating the derivatives
   \begin{align*}
   0	&=\frac{\partial\left(\sqrt{w}\right)}{\partial x^\alpha}-\frac{d}{d\lambda}\frac{\partial\left(\sqrt{w}\right)}{\partial\dot{x}^\alpha}	\\
   {}	&=\frac{\partial w}{\partial x^\alpha}+\frac{1}{2\sqrt{w}}\frac{dw}{d\lambda}\frac{\partial w}{\partial\dot{x}^\alpha}-\frac{d}{d\lambda}\frac{\partial w}{\partial\dot{x}^\alpha}
@@ -1075,6 +1158,39 @@ This finally yields the equation
   \end{equation}
 where ${\Gamma^\sigma}_{\mu\nu}$ are the Christoffel symbols of the second kind. 
 
+This last equation describes the trajectories of classical photons in any media. 
+At interfaces, where the optical parameters have a jump discontinuity, one must use
+Fresnel's laws, and possibly their generalization for curved interfaces \cite{HEN2002}.
+
+We will now obtain the equations for our Gaussian deformation. The author of this essay
+would have expected that an analytical solution be available for the central Gaussian
+potential, but the non-linearity of the equations spoil the symmetry and the hopes 
+of finding a solution. We will thus solve the equations in Cartesian coordinates
+for the centered formation:
+  \begin{equation}
+   n(x,y) = n_0 + \delta n \exp\left[-\frac{x^2+y^2}{2w^2}\right].
+  \end{equation}
+In Cartesian coordinates, the six independent Christoffel symbols have
+value
+  \begin{align*}
+   {\Gamma^x}_{xx}			&= \frac{n_x}{n}	&	{\Gamma^y}_{xx}	&=-\frac{n_y}{n}\\
+   {\Gamma^x}_{xy}={\Gamma^x}_{yx} 	&= \frac{n_y}{n}	&	{\Gamma^y}_{xy}={\Gamma^y}_{yx}&=\frac{n_x}{n}\\
+   {\Gamma^x}_{yy}			&= -\frac{n_x}{n}	&	{\Gamma^y}_{yy}	&=\frac{n_y}{n}
+  \end{align*}
+which yield the equations
+  \begin{subequations}
+  \begin{align}
+   \ddot{x}	&= \frac{x/w^2}{1+\frac{n_0}{\delta n}\exp\left[\frac{x^2+y^2}{2w^2}\right]}\left(\dot{x}^2-\dot{y}^2\right)
+	    +\frac{2y/w^2}{1+\frac{n_0}{\delta n}\exp\left[\frac{x^2+y^2}{2w^2}\right]}\dot{x}\dot{y}				\\
+   \ddot{y}	&= \frac{y/w^2}{1+\frac{n_0}{\delta n}\exp\left[\frac{x^2+y^2}{2w^2}\right]}\left(\dot{y}^2-\dot{x}^2\right)
+		  +\frac{2x/w^2}{1+\frac{n_0}{\delta n}\exp\left[\frac{x^2+y^2}{2w^2}\right]}\dot{x}\dot{y}.
+  \end{align}
+  \end{subequations}
+We seperate the two second-order equations in four first-order equations by defining $p_x=\dot{x}$ and $p_y=\dot{y}$. 
+We solve the equations for photons coming in from $x(0)\rightarrow-\infty$ with $p_x(0)=\text{const}$
+and $p_y(0)=0$ for different values of the impact parameters $y(0)=b$. The results are shown in 
+Fig.~\ref{fig:passive.gaussian.geodesics} and from this simple analysis we see that 
+the deformation acts as a diverging lens. 
 \begin{figure}
  \centering
  \includegraphics[width=0.75\textwidth]{figs/passive/geodesics-1.eps}
@@ -1083,11 +1199,14 @@ where ${\Gamma^\sigma}_{\mu\nu}$ are the Christoffel symbols of the second kind.
 	  the geodesics of the relevant ``optical spacetime'', where the curvature of 
 	  space represents the optical distance that the photon has to traverse. The central
 	  region, where the refractive index is lower, acts as a diverging lens.}
+ \label{fig:passive.gaussian.geodesics}
 \end{figure}
 
-
-\todo[inline]{Discuss the results.}
-\todo[inline]{Discuss the geodesics in this geometry.}
+From these equations, a more sophisticated algorithm could be developed to study
+the associated classical mechanics of inhomogeneous billiard systems, as was done
+in \cite{SAI2005}. The algorithm would need to include collision detection with the 
+boundary of the billiard as well as formulas for the reflection and transmission coefficients
+at this boundary.
 
 \section{Perspectives}
 
