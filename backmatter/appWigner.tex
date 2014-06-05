@@ -213,7 +213,9 @@ initial condition and normalize the two coefficients obtained.
  \newcommand{\B}{$\begin{aligned}B(j_1) &=-(2j_1+1)\\&\phantom{=}\times\left[j_2(j_2+1)m_1\right.\\&\phantom{=\times}-j_3(j_3+1)m_1\\&\phantom{=\times}\left.-j_1(j_1+1)(m_3-m_2)\right]\end{aligned}$}
  \newcommand{\E}{$\begin{aligned}E(j_1) &=\left\{\left[j_1^2-(j_2-j_3)^2\right]\right.\\&\phantom{=}\times\left[(j_2+j_3+1)^2-j_1^2\right]\\&\phantom{=}\times\left[j_1^2-(j_5-j_6)^2\right]\\&\phantom{=}\times\left.\left[(j_5+j_6+1)^2-j_1^2\right]\right\}^{1/2}\end{aligned}$}
  \newcommand{\F}{$\begin{aligned}F(j_1) &= (2j_1+1)\\&\phantom{=}\times\left\{j_1(j_1+1)\left[--+\right]\right.\\&\phantom{=\times}+j_5(j_5+1)\left[++-\right]\\&\phantom{=\times}+j_6(j_6+1)\left[+-+\right]\\&\phantom{=\times}\left.-2j_1(j_1+1)l_1(l_1+1)\right\}\end{aligned}$}
- \caption{Parameters and coefficients of the three-term recursion relations satisfied
+ \caption[Parameters and coefficients of the three-term recursion relations satisfied
+	  by the $3j$- and $6j$-symbols.]
+	 {Parameters and coefficients of the three-term recursion relations satisfied
 	  by the $3j$- and $6j$-symbols.
 	  The expression $[++-]$ represents the coefficient $[j_1(j_1+1)+j_2(j_2+1)-j_3(j_3+1)]$ and similarly for other signs in the bracket.}
  \label{tab:app.wigner.coeffsRecursion}
@@ -288,7 +290,8 @@ initial condition and normalize the two coefficients obtained.
  \path [line] (size2.south) -- ($(size2.south)-(0,1)$) -- ++(-2,0) -- ($(lambda.south)-(2,1)$) -- ++(3,0) -- (normalization.south west);
 \end{tikzpicture}
 \end{center}
-\caption{Flowchart of the algorithm used to compute the coupling coefficients. SRHUGE is the 
+\caption[Flowchart of the algorithm used to compute the Wigner $3j$- and $6j$-symbols and Clebsch-Gordan coefficients.]
+	{Flowchart of the algorithm used to compute the coupling coefficients. SRHUGE is the 
 	  square root of the biggest representable number in our floating point representation.}
 \label{fig:app.wigner.flowchart}
 \end{figure}

@@ -13,8 +13,8 @@
 
 % Font packages.
 \usepackage[charter]{mathdesign}			% Font package (including math font).
-\usepackage[utf8]{inputenc}					% UTF8 encoding for accents.
-\usepackage[T1]{fontenc}					% Vectorial fonts.
+\usepackage[utf8]{inputenc}				% UTF8 encoding for accents.
+\usepackage[T1]{fontenc}				% Vectorial fonts.
 \renewcommand*\sfdefault{lmss}				% Latin Modern Sans Serif as default sans serif font
 
 % Style and PDF formatting options.
@@ -54,7 +54,7 @@
   \captionsetup[subtable]{width=0.8\linewidth,parskip=0pt}
 
 % Index and glossary capabilities
-\usepackage{makeidx}						% Indexing capabilities.
+\usepackage{makeidx}					% Indexing capabilities.
 \usepackage[xindy,toc,acronym,section]{glossaries}	% Glossary and indexing capabilities.
 \usepackage{glossary-mcols}
 
@@ -64,15 +64,15 @@
 	    sort&compress,
 	    merge,
 	    elide]
-  {natbib}									% Bibliographie
+  {natbib}						% Bibliographie
 
 % To-Do notes. Used only in non-production runs.
-\usepackage{todonotes}						% Typesets to do notes and optially creates a list of them.
+\usepackage{todonotes}					% Typesets to do notes and optially creates a list of them.
 
 % -- Configuration of several packages.
 \input{config/tikz-config.tex}				% Styles and configuration of TikZ.
-\input{config/commands.tex}					% Custom commands and theorem environments.
-\graphicspath{{figs/}}						% Searches recursively for images in this folder.
+\input{config/commands.tex}				% Custom commands and theorem environments.
+\graphicspath{{figs/}}					% Searches recursively for images in this folder.
 
 % -- Preparing the index and glossary. 
 \makeindex
@@ -80,6 +80,8 @@
 \input{config/glossary-entries.tex}
 
 % -- Custom lengths and formatting options
+\setsecnumdepth{paragraph}
+\renewcommand\theparagraph{(\alph{paragraph})}
 \setlength\parindent{12pt}
 
 % -- Headers/footers customization
@@ -93,7 +95,7 @@
 
 % --------------- Document Information ----------------	%
 % We define the title, subtitles and other such info 	%
-% in this section. 										%
+% in this section. 					%
 % -----------------------------------------------------	%
 \titre{On the Modelization of Optical Devices}
 \soustitre{From Dielectric Cavities to Radiating Structures}
@@ -161,12 +163,13 @@
 
 % -------------------- Main Matter --------------------	%
 % Here lies the body of the text. It is divided into	%
-% four chapters: an introduction, a chapter on 			%
+% four chapters: an introduction, a chapter on 		%
 % scattering methods, a chapter on antenna theory and 	%
-% design and a conclusion. 								%
+% design and a conclusion. 				%
 % -----------------------------------------------------	%
 \mainmatter
 \pagestyle{jayd_headings}
+\renewcommand*{\thefootnote}{\arabic{footnote}}
 \include{intro/intro}
 \include{passive/passive}
 \include{active/active}
@@ -175,7 +178,7 @@
 % -------------------- Appendices ---------------------	%
 % Due to the technical nature of the work done, the 	%
 % appendices mostly contain derivations and notes on 	%
-% numerical implementations of algorithms.				%
+% numerical implementations of algorithms.		%
 % -----------------------------------------------------	%
 \appendix
 \include{backmatter/app-besselFunctions}
