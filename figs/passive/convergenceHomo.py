@@ -1,7 +1,7 @@
 # -------------------- Information -------------------- #
 # Author:       Joey Dumont <joey.dumont@gmail.com>     #
 # Date created: Mar. 22nd, 2014							#
-# Date mod.:    Mar. 22nd, 2014							#
+# Date mod.:    Jun. 6th, 2014							#
 # Description:  We show the convergence properties of	#
 #				SQA in the case of an homogeneous disk. #
 # ----------------------------------------------------- #
@@ -24,7 +24,7 @@ rcParams['legend.numpoints'] = 3
 X = loadtxt("convergenceHomo.dat")
 
 # -------------------- Plot Data ---------------------- #
-fig1 = figure(figsize=(4,2))
+fig1 = figure(figsize=(7,3))
 k = array([2.5, 5.0, 10.0, 20.0, 40.0, 80.0, 120.0])
 
 for i in range(int(X.shape[1]/2)):
@@ -32,7 +32,7 @@ for i in range(int(X.shape[1]/2)):
 
   # We elide part of the data.
   imin = int(X.shape[0]/4)
-  print(polyfit(log(X[:,2*i]),log(X[:,2*i+1]), 1))
+  print(polyfit(log(X[imin:-imin,2*i]),log(X[imin:-imin,2*i+1]), 1))
 
 xlabel("$kR_02\epsilon$")
 ylabel("Maximum error")

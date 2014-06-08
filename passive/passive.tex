@@ -496,9 +496,11 @@ the values are real.
 
 \begin{figure}
  \centering
- \includegraphics[width=0.8\textwidth]{figs/passive/determinantSmatrix2D.eps}
+ \includegraphics[width=0.8\textwidth]{figs/passive/determinantSmatrix.pdf}
  \caption[Mirror symmetry of the scattering matrix]
-	 {Mirror symmetry of the scattering matrix.}
+	 {Mirror symmetry of the scattering matrix. For this example, 
+	 we computed $\log\det\mat{S}(k)$ for the scattering matrix of the
+	 circular, homogeneous cavity with $n_c=3.2$ and $n_o=1$.}
   \label{fig:passive.formalism.symmetrySmatrix}
 \end{figure}
 
@@ -1000,7 +1002,7 @@ as the homogeneous, circular cavity has a diagonal scattering matrix.
 
 \begin{figure}
  \centering
- \includegraphics[width=0.9\textwidth]{figs/passive/convergenceHomo.pdf}
+ \includegraphics{figs/passive/convergenceHomo.pdf}
  \caption[Convergence properties of SQA when applied on the homogeneous disk]
 	  {Calibration of \gls{sqa} against the homogeneous disk. The cavity 
 	  has refractive index $n_c=1.5$ and is embedded in air $n_o=1$. The exterior
@@ -1060,6 +1062,7 @@ one can be found in \cite[Appendix D]{GAP2013a}.
 	  The circular inclusion has position $\color{BurntOrange}(d,\Theta)$
 	  in the main coordinates and its refractive index is $n_h$. It isually is the same
 	  as $n_0$, the refractive index of the environment.}
+  \label{fig:passive.numerical.annularCavityGeometry}
 \end{figure}
 
 
@@ -1067,7 +1070,14 @@ one can be found in \cite[Appendix D]{GAP2013a}.
 
 To make sure we can blindly accept the results of our numerical
 technique, we apply it to non-integrable geometries that have been
-studied by other means in the literature. 
+studied by other means in the literature. Table \ref{tab:passive.numerical.comparisonLiterature}
+shows a comparison of the positions of the certain resonances 
+for a set of selected geometries. Fig. \ref{fig:passive.numerical.squareSpectrum}
+shows the time delay spectrum of the square cavity. The higher-delay mode, 
+highlighted in the figure, has a field profile (inset) that resembles
+a WGM. The localization of light in square cavities has since been 
+confirmed experimentally \cite{BIT2013} and observed in other geometries
+\cite{SON2013}.
 
 \begin{table}
   \newcolumntype{d}{D{.}{.}{3}}
@@ -1090,11 +1100,13 @@ studied by other means in the literature.
 
 \begin{figure}
  \centering
- \includegraphics[width=0.7\textwidth]{figs/passive/spectrum_square_inset.pdf}
+ \includegraphics{figs/passive/spectrum_square_inset.pdf}
  \caption[Delay spectrum of the square cavity]
 	 {Delay spectrum of the square cavity. The highlighted mode 
 	 has a high $Q$-factor, which can be explained by its 
-	 WGM-like field recirculation.}
+	 WGM-like field recirculation. The inset of the figure shows
+	 the actual field profile of the mode. It was computed 
+	 using COMSOL by G.P.-A. \cite{GAP2013a}.}
  \label{fig:passive.numerical.squareSpectrum}
 \end{figure}
 
@@ -1112,7 +1124,7 @@ its position relative to the center of the cavity.
 As previously noted by G.~P-A. \cite{GAP2013a}, a peculiar
 duality exists between high-$Q$ resonances and directional emission.
 Working with a cavity similar to the annular one, it stands to reason
-that we will recover the same pattern. However, this study will be used
+that we will recover the same pattern. This study will be used
 as a stepping stone for our inquiries in the realm of non-uniformly
 pumped active microcavities. 
 
@@ -1132,8 +1144,16 @@ this goal has spawned the research field of \glspl{arc} wherein the boundary
 of the circular cavity is parametrically deformed to yield limaçon, stadium, 
 elliptical, quadrupolar, and other shapes. 
 
-In our case, we do deform the boundary, leaving it a perfect circle, 
-but instead use an asymmetric refractive index. This particular deformation
+The underlying classical mechanics of \glspl{arc} follow the KAM scenario 
+as the geometry is perturbed away from a perfect circle. In phase space, 
+regularity yields to the chaotic sea, dividing it into regions of regular
+motion and regions of ergodic motion. The Hamiltonian nature of the 
+dynamics has been thoroughly studied and has been used to tame the 
+animosity of directionality and high-$Q$ emission \cite{KWA2013,KIM2013}
+
+In our case, we do not deform the boundary, leaving it a perfect circle, 
+but use a deformation of the refractive index. This particular deformation
+-- the Gaussian one -- 
 is of theoretical and practical interest, as it can easily be induced
 by shining light on the dielectric from above. This refractive
 index profile is also obtained when pumping a microcavity laser
@@ -1192,7 +1212,10 @@ is favoured. This directionality may somewhat be explained by a
 ray analysis of the system, as the deformation acts as a diverging
 lens. The next section will explain this in more detail. 
 
-\subsection{Geodesics and Ray Analysis}
+\subsection{Geodesics and Ray Analysis\footnote{We use Schutz's \cite{SCH2009} notation in this section.
+Repeated indices are summed over; $g_{\alpha\beta}$ is the metric tensor; the notation 
+$M_{\alpha\beta,\gamma}$ indicates differentiation with respect to $\gamma$. The contravariant
+tensor $g^{\alpha\beta}$ is the inverse of $g_{\alpha\beta}$, i.e. $g^{\alpha\beta}g_{\beta\gamma}={\delta^\alpha}_\gamma$}}
 While our numerical method allows us tu perform full-wave
 simulations of cavities, it is often useful to consider the associated
 billiard system, which is the small wavelength approximation of 
@@ -1287,16 +1310,45 @@ in \cite{SAI2005}. The algorithm would need to include collision detection with 
 boundary of the billiard as well as formulas for the reflection and transmission coefficients
 at this boundary.
 
-\section{Perspectives}
+\section{Conclusion and Perspectives}
+This section solved the scattering problem of bidimensional
+dielectric cavities. Using information on the real $k$-line,
+the \gls{qMatrix} allows for the computation of the complex poles
+of the scattering matrix, which in turn correspond to the resonances
+of the scatterer. The eigenvectors of the \gls{qMatrix} define 
+a set of modes that exist each real value of $k$. The eigenvectors
+which correspond to peaks in the time delay spectrum can be associated
+with the complex poles of $\mat{S}(k)$.
 
-Optimization of refractive index profile and geometry
-for specific purposes. 
+the formalism is coupled to a numerical method that computes 
+the scattering matrix for inhomogeneous bidimensional cavities.
+The method is based on an onion-like discretization scheme
+where the solution of Helmholtz's equation can be reduced to an 
+eigenvalue problem. This leads to the construction of local, or 
+``shell scattering matrices''. The boundary conditions allow to fuse
+the shells of the onion and compute the effect of the whole scatterer, 
+viz. the scattering matrix.
 
-Optmization of pump profile, refractive index profile
-and geometry for specific purposes. 
+The method is fast enough that it is possible to consider
+an optimization problem with one or several cost functions
+that quantify the performance of the scatterer for a
+given application. A few examples spring to mind, such as
+a dielectric optical switch, beam splitters, biosensors and others. 
+If the material is active, one cold optimize the form of the pump 
+profile to minimize thresholds and maximing, for instance, output
+directionality and power. 
 
-Use of integral methods to numerically solve scattering
-problem (may load to more stable algorithms). 
+One subject we have failed to mention in the main text is the 
+fragility of the generalization of the \gls{sqa} to complex
+energies $k$ and potentials $n$; it also becomes computationally
+heavy. The details of the fragility are discussed in Appendix
+\ref{sec:app.numTools.scatMat}. This, coupled to the instabilities
+related to the reconstruction of the field inside the scatterer
+has been a motivation to look for other numerical methods. In 
+the next chapter, we will develop an \textit{integral} method
+for the computation of the scattering matrix. This flexible
+method will be use of great use in discussing active material 
+and 3D geometries. 
 
 % %From the general to the specific, scattering methods to solve
 % %Maxwell's equations. 

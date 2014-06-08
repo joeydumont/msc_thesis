@@ -1,6 +1,6 @@
 % ------------------ MSC THESIS JAYD ------------------	%
-% We load the ulthese package along with some other		%
-% useful packages.										%
+% We load the ulthese package along with some other	%
+% useful packages.					%
 % -----------------------------------------------------	%
 \documentclass[francais,english,nonatbib,MSc]{ulthese}
 
@@ -19,7 +19,7 @@
 
 % Style and PDF formatting options.
 \usepackage[compact,sf]{titlesec}			% Use sans serif fonts in section headings.
-\usepackage[bottom,multiple]{footmisc}			% Force les notes de bas de page à être en bas de la page.
+\usepackage[bottom,multiple,stable]{footmisc}		% Force les notes de bas de page à être en bas de la page.
 \usepackage{bibentry}\nobibliography*			% Inline bibliographic entries.
 \usepackage[unicode=true,
 	    pdfusetitle,
@@ -50,7 +50,7 @@
 \renewcommand\thesubfigure{(\alph{subfigure})}
   \captionsetup[figure]{width=0.95\textwidth,labelfont=sf,textfont=sf,font+=small}
   \captionsetup[subfigure]{width=0.8\linewidth,parskip=0pt}
-  \captionsetup[table]{labelfont=sf,textfont=sf}
+  \captionsetup[table]{labelfont=sf,textfont=sf,font+=small}
   \captionsetup[subtable]{width=0.8\linewidth,parskip=0pt}
 
 % Index and glossary capabilities
@@ -82,6 +82,9 @@
 % -- Custom lengths and formatting options
 \setsecnumdepth{paragraph}
 \renewcommand\theparagraph{(\alph{paragraph})}
+\makeatletter
+\@addtoreset{paragraph}{subsection}
+\makeatother
 \setlength\parindent{12pt}
 
 % -- Headers/footers customization
