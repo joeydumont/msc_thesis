@@ -1,3 +1,4 @@
+% !TeX root = ../msc_thesis_jayd.tex
 \chapter*{Notation}
 \phantomsection\addcontentsline{toc}{section}{Notation}
 
@@ -12,52 +13,52 @@
 \section*{Mathematical Operators}
 \begin{tabularx}{\textwidth}{lX}
   \hline\hline
-  Symbol			& Definition	\\
+  Symbol				& Definition	\\
   \hline\hline				
   $\displaystyle{\bigk_{m=1}^\infty\left(\frac{a_m}{b_m}\right)}$
-				& Continued fraction expansion with coefficients $a_m$ and $b_m$. \\
+						& Continued fraction expansion with coefficients $a_m$ and $b_m$. \\
   ${\sum_m}$			& Sum over all angular momenta in two dimensions, $m=-\infty\ldots\infty$.\\
   ${\sum_{\ell,m}}$		& Sum over all angular momenta in three dimensions, $\ell=0\ldots\infty$, $m=-\ell\ldots\ell$. \\
   ${\sum_{\sigma,\ell,m}}$	& Sum over all spinorial angular momenta in three dimensions.	\\
   $\floor*{x}$			& Floor function. Maps $x$ to the largest previous integer.	\\
   $\ceil*{x}$			& Ceiling function. Maps $x$ to the smallest following integer.	\\
-  $\avg{x}$			& Average value of quantity between brackets.			\\
+  $\avg{x}$				& Average value of quantity between brackets.			\\
   \hline\hline				\\
 \end{tabularx}
 
 \section*{Vectors and Matrices}
 \begin{tabularx}{\textwidth}{lX}
   \hline\hline
-  Symbol		& Definition	\\
+  Symbol				& Definition	\\
   \hline\hline				
   $\bo{V}$, $\bo{v}$	& Vectors (bold and italic, uppercase and lowercase).	\\
-  $V_i, v_i$		& $i$th component of vector.	\\
-  $\Bra{\alpha}$, $\Ket{\beta}$ & Bra-ket notation. Roughly equivalent to row and column vectors, respectively.	\\ 
-  $\mat{M}$		& Matrix (bold uppercase)	\\
-  $M_{ij}$		& Element on $i$th row and $j$th column. $(j+iN)$th element of matrix (row-major ordering) 
-			  where $N$ is the number of columns. The indices start at 0.\\
+  $V_i, v_i$			& $i$th component of vector.	\\
+  $\Bra{\alpha}$, $\Ket{\beta}$ 
+  						& Bra-ket notation. Roughly equivalent to row and column vectors, respectively.	\\ 
+  $\mat{M}$				& Matrix (bold uppercase)	\\
+  $M_{ij}$				& Element on $i$th row and $j$th column. $(j+iN)$th element of matrix (row-major ordering) 
+			 				where $N$ is the number of columns. The indices start at 0.\\
   $S_{mm'}$, $Q_{mm'}$	& Element of matrices in the 2D angular momentum basis. Indices span $m,m'\in\left\{-M_\text{max}\ldots M_\text{max}\right\}$.	\\
-  $g_{\mu\nu}$		& Metric tensor. Indices span only the spatial coordinates, i.e. no time coordinate. \\
+  $g_{\mu\nu}$			& Metric tensor. Indices span only the spatial coordinates, i.e. no time coordinate. \\
   $[\alpha\beta,\gamma]$& Christoffel symbol of the first kind.	\\
   ${\Gamma^{\alpha}}_{\beta\gamma}$
-			& Christoffel symbol of the second kind. \\
+						& Christoffel symbol of the second kind. \\
   \hline\hline				\\
 \end{tabularx}
 
 \section*{Electromagnetism}
 \begin{tabularx}{\textwidth}{lX}
  \hline\hline
- Symbol					& Definition 	\\
+ Symbol								& Definition 	\\
  \hline\hline
  $\bo{E}$, $\bo{D}$, $\bo{P}$		& Electric field, electric displacement and polarization.	\\
  $\bo{H}$, $\bo{B}$, $\bo{M}$		& Magnetic field, magnetic induction and magnetization.	\\
- $\bo{j}$, $\rho$			& Current and charge densities.	\\
+ $\bo{j}$, $\rho$					& Current and charge densities.	\\
  $\bo{\chi}_{e,m}(\bo{r},\bo{r}',t,t')$	& Electric/magnetic tensorial susceptibility. 	\\
  $\epsilon=\epsilon'+i\epsilon''$	& Electric permittivity of a material. We often separate its real and imaginary parts as shown.	\\
- $\mu$					& Magnetic permeability of a material. \\
- $n=\sqrt{\epsilon\mu}$			& Refractive index of a material. 	\\
- $\sigma_e$				& Electric conductivity of a material. \\
- 
+ $\mu$								& Magnetic permeability of a material. \\
+ $n=\sqrt{\epsilon\mu}$				& Refractive index of a material. 	\\
+ $\sigma_e$							& Electric conductivity of a material. \\
  \hline\hline
 \end{tabularx}
 
@@ -65,7 +66,7 @@
 \section*{Special Functions}
 \begin{tabularx}{\textwidth}{lX}
   \hline\hline
-  Symbol		& Definition	\\
+  Symbol			& Definition	\\
   \hline\hline
   $J_\nu(z)$		& Bessel function of the first kind of order $\nu$.	\\
   $Y_\nu(z)$		& Bessel function of the second kind of order $\nu$.	\\
@@ -86,11 +87,11 @@
 		%nodes = {node style ge},%
 		left delimiter=(,%
 		right delimiter=) ] at (0,0)
-  { \ddots		& \phantom{\ddots}	& \phantom{\ddots}	& \phantom{\ddots}	& \iddots	\\
-    \phantom{\ddots}	& V_{-1-1}		& V_{-10}		& V_{-11} 		& \phantom{\ddots}	\\
-    \phantom{\ddots}	& V_{0-1}		& V_{00}		& V_{01} 		& \phantom{\ddots}	\\
-    \phantom{\ddots}	& V_{1-1}		& V_{10}		& V_{11}		& \phantom{\ddots}	\\
-    \iddots		& \phantom{\ddots}	& \phantom{\ddots}	& \phantom{\ddots} 	& \ddots	\\
+  { \ddots				& \phantom{\ddots}	& \phantom{\ddots}	& \phantom{\ddots}	& \iddots	\\
+    \phantom{\ddots}	& V_{-1-1}			& V_{-10}			& V_{-11} 			& \phantom{\ddots}	\\
+    \phantom{\ddots}	& V_{0-1}			& V_{00}			& V_{01} 			& \phantom{\ddots}	\\
+    \phantom{\ddots}	& V_{1-1}			& V_{10}			& V_{11}			& \phantom{\ddots}	\\
+    \iddots				& \phantom{\ddots}	& \phantom{\ddots}	& \phantom{\ddots} 	& \ddots	\\
   };
   
   \draw [thick,decorate,<->,>=stealth] ($(A-1-1.north west)+(0,\myunit)$) -- ($(A-1-5.north east)+(0,2*\myunit)$)
@@ -126,9 +127,9 @@
 		left delimiter=(,%
 		right delimiter=) ] at (0,0)
   { V_{\color{blue}{00},\color{red}{00}}	& V_{\color{blue}{00},\color{red}{1-1}}	& V_{\color{blue}{00},\color{red}{10}}	& V_{\color{blue}{00},\color{red}{11}}	\\
-    V_{\color{blue}{1-1},\color{red}{00}}	& V_{\color{blue}{1-1},\color{red}{1-1}}& \vdots				& \vdots	\\
-    V_{\color{blue}{10},\color{red}{00}}	& \ldots				& \ddots				& \vdots	\\
-    V_{\color{blue}{11},\color{red}{00}}	& \ldots				& \ldots				& \ddots	\\
+    V_{\color{blue}{1-1},\color{red}{00}}	& V_{\color{blue}{1-1},\color{red}{1-1}}& \vdots								& \vdots	\\
+    V_{\color{blue}{10},\color{red}{00}}	& \ldots								& \ddots								& \vdots	\\
+    V_{\color{blue}{11},\color{red}{00}}	& \ldots								& \ldots								& \ddots	\\
   };
   
   \draw [thick,decorate,decoration={brace,amplitude=5pt}] (A-1-1.north west) -- (A-1-1.north east) node [midway,above=\myunit] {\color{red}{$\ell'=0$}};

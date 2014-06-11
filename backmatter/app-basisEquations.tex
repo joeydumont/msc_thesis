@@ -1,12 +1,110 @@
+% !TeX root = ../msc_thesis_jayd.tex
 \chapter{Basic Equations of Scattering}\label{app:basicEquations}
+In this monastic appendix, we derive the main equations with which
+this essay concerns itself. While most of the results are
+obtained via a mechanistic application of mathematical operations, 
+some sections have interesting tidbits, such as the relation
+between the weak form of differential equations and their 
+explicit one.
 
 \section{SALT Equations for TE and TM Polarizations}
+This section presents the main equations for the scattering
+of light waves on bidimensional cavities. We will write
+down the equations for active microcavities, as they contain
+the passive ones as a special case. 
 
-\section{Specialization to Dielecric Cavities}
+Recall that the starting equations are 
+  \begin{align*}
+   \nabla\times\bo{E}+ik\mu\bo{H}	&=0	\\
+   \nabla\times\bo{H}-ik\epsilon\bo{E}	&=ik\bo{P}_{NL}
+  \end{align*}
+where $\bo{P}_{NL}$ is the possibly non-linear part 
+of the polarization that is due to the gain medium.
+Making the usual approximations for bidimensional cavities, 
+such as $\left\{\bo{E}(r,\theta),\bo{H}(r,\theta)\right\}e^{i\beta z}$, 
+we obtain
+  \begin{subequations}
+  \begin{align}
+   \left[\nabla^2+k^2n^2\left(1-\left(\frac{\beta}{kn}\right)^2\right)\right]H_z	
+      &=
+	  \frac{1}{1-\left(\frac{\beta}{kn}\right)^2}\left[\frac{1}{\mu}\nabla H_z\cdot\nabla\mu+\frac{1}{\epsilon}\nabla H_z\cdot\nabla\epsilon
+							  -\frac{ik}{\mu}\bo{P}^{NL}\times\nabla\mu-\frac{ik}{\epsilon}\bo{P}^{NL}\times\nabla\epsilon\right]\nonumber\\
+	  &\qquad -\frac{1}{\mu}\nabla H_z\cdot\nabla\mu+\frac{ik}{\mu}\bo{P}^{NL}\times\nabla\mu-ik\nabla\times\bo{P}^{NL}\\
+  \left[\nabla^2+k^2n^2\left(1-\left(\frac{\beta}{kn}\right)^2\right)\right]E_z
+      &= \frac{1}{1-\left(\frac{\beta}{kn}\right)^2}\left[\frac{1}{\epsilon}\nabla E_z\cdot\nabla\epsilon+\frac{1}{\mu}+\frac{i\beta}{\epsilon^2}\bo{P}^{NL}\times\nabla\epsilon
+							  +\frac{i\beta}{n^2}\bo{P}^{NL}\times\nabla\mu+\left(\frac{\beta^2}{\epsilon}-k^2\mu\right)\bo{P}^{NL}\right]\nonumber\\
+	  &\qquad -\frac{i\beta}{\epsilon}\nabla\cdot\bo{P}^{NL}+\frac{\beta^2}{\epsilon}P_z-\frac{1}{\epsilon}\nabla E_z\cdot\nabla\epsilon
+  \end{align}
+  \end{subequations}
+As usual, we will be interested in the $\beta=0$ case of these equations.
+This will lead us to the simpler equations
+  \begin{align}
+    \left[\nabla^2+k^2n^2\right]H_z	&= \frac{1}{\epsilon}\nabla H_z\cdot\nabla\epsilon\nonumber\\&\qquad-\frac{ik}{\epsilon}\bo{P}^{NL}\cdot\nabla\epsilon-ik\nabla\times\bo{P}^{NL}\\
+    \left[\nabla^2+k^2n^2\right]E_z	&= \frac{1}{\mu}\nabla E_z\cdot\nabla\mu-k^2\mu P_z.
+  \end{align}
+We can now simulate the SALT equations using the calculated value of $\bo{P}^{NL}$
+in Ref. \cite{GE2010a,GE2010b}, or compute our own set of $\bo{P}^{NL}$ \cite{BOY2003}. 
+
 
 \section{Vector Scattering and the Variable Phase Method}
+The \gls{vpm} is based upon an eigenfunction expansion of the 
+angular part of the scattering equations. This reduces \gls{pde}
+to a matrix \gls{ode} for the scattering amplitudes. In what
+follows, we will derive those matrix \glspl{ode} for both 
+2D scalar and 3D vector scatering. 
 
-\section{Green's Function Methods}
+\subsection{2D Scalar Scattering}
+
+\subsection{3D Vector Scattering}
+In the electromagnetic case, we start with the curl-curl equation
+  \begin{equation}
+    \nabla\times\nabla\times\bo{E}-k^2\epsilon(\bo{r})\bo{E}=0.
+  \end{equation}
+Expanding the field in a tensor spherical harmonics (to be discussed later) yields
+an implicit differential equation. In their paper, F+G argue that if they rather
+use the equation
+  \begin{equation}
+   \label{eq:vpm.modCurlCurl}
+   \nabla\times\nabla\times\bo{E}(\bo{r})-\epsilon(\bo{r})\nabla\left\{\nabla\cdot\left[\epsilon(\bo{r})\bo{E}(\bo{r})\right]\right\}
+      =k^2\epsilon(\bo{r})\bo{E}(\bo{r})
+  \end{equation}
+which yields the same eigenstates, the resulting differential equation is explicit. 
+Interestingly enough, this is exactly the extra term that is used to remove
+spurious solutions that appear in variational treatments. 
+
+Recall that we can write Maxwell's equations as the minimization of the energy-like functional
+  \begin{equation}
+   F\left[\bo{E}\right]=\mathop{\iiint}_V\left[\left(\nabla\times\bo{E}^*\right)\left(\nabla\times\bo{E}\right)-k^2\bo{E}^*\cdot\epsilon(\bo{r})\bo{E}\right]dV.
+  \end{equation}
+In the variational treatment, this leads to spurious solutions which can provably be removed \cite{KON1976,KOS1984,KOS1985} that adding the null term
+$\left(\nabla\cdot\bo{E}^*\right)\left(\nabla\cdot\epsilon(\bo{r})\bo{E}\right)$ in the integrand. 
+Taking the first variation of the new functional leads to \eqref{eq:vpm.modCurlCurl}.
+  
+We now expand both the permittivity $\epsilon(\bo{r})$ and the field in
+spherical harmonics. Because the electric field is a vector field, 
+we will need to use \textit{vector} spherical harmonics, given by
+  \begin{equation}
+    \bo{Y}_{jm}^\ell=\sum_{\sigma=-1}^{+1}\sum_{m'=\ell}^{+\ell}C^{jm}_{\ell m'1\sigma}Y_{\ell}^{m'}(\theta,\varphi)\bou{e}_\sigma
+  \end{equation}
+where $\ell=j,j\pm1$ for the three vector spherical harmonics, $C^{nm}_{n_1m_1,n_2m_2}$
+is a Clebsch-Gordan coefficient and the spherical basis vectors $\bou{e}_\sigma$ 
+are
+  \begin{align}
+    \bou{e}_1	&= -\frac{e^{i\varphi}}{\sqrt{2}}\left(\sin\theta\bou{r}+\cos\theta\bou{\theta}+i\bou{\varphi}\right)	\nonumber\\
+    \bou{e}_0	&= \cos\theta\bou{r}-\sin\theta\bou{\theta}								\\
+    \bou{e}_{-1}&= -\bou{e}_1^*												\nonumber
+  \end{align}
+Before going any further, let us state the capabilities of this approach. This kind of method
+can theoretically deal with arbitrary potentials (permittivities). However, it is best used
+when the scale of variations of the potential is not too big compared to the size
+of the scatterer. The size of the transforms and matrix ODEs, or in other words the resolution
+must be fixed beforehand. For fast variations of the potential, a smaller resolution must be used
+and this leads to overall large matrices. For highly non-uniform structures, finite element methods
+might be preferable. Radial inhomogeneities can be dealt with variable-step integrators. 
+Magnetic materials can be considered by substituting the curl-curl operator $\nabla\times\nabla\cdots$
+by $\nabla\times\frac{1}{\mu(\bo{r})}\nabla\times\cdots$. 
+
+\section{Green's Function Methods}\label{sec:app.basisEqn.greenFunction}
 
 \subsection{Scattering in 3D and Antennae}
 Somewhat departing from the previous chapter, we here present

@@ -1,3 +1,4 @@
+% !TeX root = ../msc_thesis_jayd.tex
 \chapter{Passive Media}
 This chapter is devoted to the study of light propagation in 
 dielectric bidimensional cavities. Starting from Maxwell's equations, 
@@ -131,7 +132,7 @@ on $z$.
 \end{figure}
 
 To this effect, it will be useful to separate the field 
-in tranverse and longitudinal components. Following \cite{JAC1962,SCH2004}, 
+in transverse and longitudinal components. Following \cite{JAC1962,SCH2004b}, 
 we suppose the fields can be written as 
   \begin{equation}
     \begin{Bmatrix}\bo{E}(\bo{r}_\perp,z)\\\bo{H}(\bo{r}_\perp,z)\end{Bmatrix} = \begin{Bmatrix}\bo{E}(\bo{r}_\perp)\\\bo{H}(\bo{r}_\perp)\end{Bmatrix}e^{i\beta z}
@@ -168,7 +169,7 @@ yields the six boundary conditions
   \end{align*}
 We seek to write the boundary conditions as a function of $H_z$ and $E_z$,
 given that they are the fundamental fields. This can be done by taking
-the projections of the tranverse fields:
+the projections of the transverse fields:
   \begin{subequations}
   \begin{align}
    E_t	&= \bou{t}\cdot\bo{E}_\perp = \frac{i}{\gamma^2}\left[\beta\partial_tE_z-k\mu\partial_nH_z\right]	\\
@@ -177,11 +178,11 @@ the projections of the tranverse fields:
    H_n	&= \bou{n}\cdot\bo{H}_\perp = \frac{i}{\gamma^2}\left[-k\epsilon\partial_tE_z+\beta\partial_nH_z\right]	
   \end{align}
   \end{subequations}
-where $\partial_{t,n}$ are the tranverse and normal derivatives, respectively, and $\gamma^2=k^2n^2-\beta^2$.
-Substituting these results in the boundary conditions for the tranverse and normal components, we can 
+where $\partial_{t,n}$ are the transverse and normal derivatives, respectively, and $\gamma^2=k^2n^2-\beta^2$.
+Substituting these results in the boundary conditions for the transverse and normal components, we can 
 derive the conditions $\partial_tE_{z1}=\partial_tE_{z2}$, $\partial_tH_{z1}=\partial_tH_{z2}$, which can 
 shown to be equivalent to the continuity of the longitudinal components, 
-\textit{viz.} \eqref{eq:passive.formalism.contLongComponents} \cite{SCH2004}.
+\textit{viz.} \eqref{eq:passive.formalism.contLongComponents} \cite{SCH2004b}.
 Combining all our previous results yields the four independent 
 boundary conditions:
   \begin{subequations}
@@ -207,7 +208,7 @@ The numerical implementation of the method, being somewhat problematic, will
 be discussed at length. 
 
 \subsection{$\mat{S}$ and $\mat{Q}$ Matrices Reloaded}
-In dielectic cavities, we need to solve the following equations
+In dielectric cavities, we need to solve the following equations
   \begin{multline}
     \left\{\nabla^2+k^2n^2\left[1-\left(\frac{\beta}{kn}\right)^2\right]\right\}\begin{Bmatrix} H_z \\ E_z \end{Bmatrix}
       = \frac{1}{1-\left(\frac{\beta}{kn}\right)^2}
@@ -220,7 +221,7 @@ where $\beta$ is the propagation constant in the longitudinal direction.
 Inhomogeneous cavities do not obey Helmholtz's equation like homogeneous
 cavities do, but depend upon the first-order derivatives of the fields and 
 physical properties of the medium. The two longitudinal fields
-couple through the last term, where an antidiagonal matrix appears.
+couple through the last term, where an anti-diagonal matrix appears.
 
 %Modes with finite $\beta$ correspond, in the semiclassical limit, to
 %rays that spiral up and down the cavity and refract out through 
@@ -240,7 +241,7 @@ could be reached via perturbation methods. This approximation
 has the much appreciated benefit of decoupling both the field
 equations and the boundary conditions (see \eqref{eq:passive.formalism.cylindricalBoundaryConditions}).
 
-Additionnally exploiting the fact that we will only consider
+Additionally exploiting the fact that we will only consider
 non-magnetic media ($\mu=1$, $\epsilon=n^2$), our equation set becomes
   \begin{subequations}
   \label{eq:passive.formalism.fieldEquations}
@@ -374,7 +375,7 @@ We form the energy matrix
    \mathcal{E}^V_{mm'} = \frac{1}{2}\mathop{\iiint}_V\left[\epsilon\bo{E}^*_m\cdot\bo{E}_{m'}+\mu\bo{H}^*_m\cdot\bo{H}_{m'}\right]d^3\bo{r}.
   \end{equation}
 We will carry out the rest of the computation for the TM mode ($H_z=E_r=E_\theta=0$);
-the argument holds for TE polariation \textit{mutatis mutandis} because of the
+the argument holds for TE polarization \textit{mutatis mutandis} because of the
 $k$-independence of the additional potential term in \eqref{eq:passive.formalism.TEequationPrime}
 and also because $\bo{h}\propto\bo{H}$ for $r>R_0$. We thus have 
   \begin{align*}
@@ -446,7 +447,7 @@ cavity \cite{GAP2013a}. In matrix notation, we have
   \end{equation}
 This result coincides with the \gls{qMatrix} of quantum 
 mechanics \cite{SMI1960}. The interpretation of this 
-matrix is facilited by \eqref{eq:passive.formalism.centralPotentialField}. 
+matrix is facilitated by \eqref{eq:passive.formalism.centralPotentialField}. 
 Using the central potential, we can write
   \begin{equation}
     Q_{mm} = -ie^{-i\delta_m}\left(i\frac{\partial\delta_m}{\partial k}\right)e^{i\delta_m} = \frac{\partial\delta_m}{\partial k}.
@@ -676,7 +677,7 @@ as \cite[p.~118-119]{GRE98}
     \mathcal{R}_\mu^j(r) =  a_\mu^j\rho_j^{+\sqrt{\xi_\mu^j}}+b_\mu^j\rho_j^{-\sqrt{\xi_\mu^j}}.
   \end{equation}
   
-Solving the $N$ eiganvalue problems \eqref{eq:passive.numerical.eigenvalue} gives
+Solving the $N$ eigenvalue problems \eqref{eq:passive.numerical.eigenvalue} gives
 the solution in all space. We can now apply the boundary conditions \eqref{eq:passive.formalism.cylindricalBoundaryConditions}
 at the interface of each shell $j\rightarrow j+1$. The process generates two sets of equations
   \begin{subequations}
@@ -690,7 +691,7 @@ at the interface of each shell $j\rightarrow j+1$. The process generates two set
   \end{align}
   \end{subequations}
 where $\eta_j = 1\, (1/n(r_j,\theta))$ in TM (TE) polarization. The interior scattering matrices
-are constructed via premultiplying by the left eigenvectors $\Bra{\tilde{\Phi}_\mu^j}$ on each side. 
+are constructed via pre-multiplying by the left eigenvectors $\Bra{\tilde{\Phi}_\mu^j}$ on each side. 
 Combining both resulting equations leads to the linear system 
   \begin{equation}
     \begin{pmatrix}\mat{A} & \mat{B} \\ \mat{C} & \mat{D} \end{pmatrix} \begin{pmatrix} \bo{a}^j \\ \bo{a}^{j+1}\end{pmatrix}
@@ -878,7 +879,7 @@ exponentially with $|m'|-|m|$. This wouldn't be an issue
 if the corresponding elements of the block scattering
 matrix $\mat{S}^{0,N}_{22}$ were exponentially decreasing (as
 we physically expect them to); however, the numerical construction
-of this matrix implies the addition and substraction of $\mathcal{O}(1)$
+of this matrix implies the addition and subtraction of $\mathcal{O}(1)$
 floating-point numbers, limiting their range to about $10^{-15}$, the decimal
 accuracy associated with \texttt{double} precision arithmetic. Consequently, 
 the final Hadamard product yields scattering matrices with unphysically
@@ -904,7 +905,7 @@ to work at higher precision.}, even though it could help stabilize the
 numerical algorithm \cite[\S 5.8.4]{MIS2002}. The use of matrix masks is 
 made possible by noting that the cavity cannot convert arbitrarily
 high angular momenta. The maximum angular momentum it can affect, 
-$M_\text{max}$ is a function of its ``degree of inhomogeity'', 
+$M_\text{max}$ is a function of its ``degree of inhomogeneity'', 
 characterized by the absolute size of the Fourier components
 of the refractive index (which also depend on the geometry
 of the cavity). This gives the \gls{sMatrix} a banded form 
@@ -973,7 +974,7 @@ $A_m$ and $B_m$ sets, \textit{viz.} the scattering matrix
   \end{equation}
 where $Z_c = n_ckR_0$, $Z_o=n_okR_0$ and $\eta_{co}= n_c/n_o\; (n_o/n_c)$ in TM (TE) polarization.
 
-Before, we showed the correspondance between the poles of the scattering matrix and its associated
+Before, we showed the correspondence between the poles of the scattering matrix and its associated
 time delay spectrum analytically (see p.~\pageref{eq:passive.formalism.lorentzianDelays}). 
 In Fig.~\ref{fig:passive.numerical.correspondanceRoots}, we show the
 time delay spectrum of the homogeneous disk. The corresponding poles of the \gls{sMatrix} are denoted
@@ -991,7 +992,7 @@ as the homogeneous, circular cavity has a diagonal scattering matrix.
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{figs/passive/correspondanceRootsPeaks.pdf}
-  \caption[Correspondance between the poles of the scattering matrix and the peaks
+  \caption[Correspondence between the poles of the scattering matrix and the peaks
 	  of the time delay spectrum.]
 	  {Time delay spectrum of a circular cavity with $n_c=3.2$ and $n_o=1$. The squares
 	  represent the complex position of the poles of the scattering matrix. The equivalent
@@ -1026,7 +1027,7 @@ where
   \begin{align}
    \mat{F} &= \mat{H}^{(-)}(Z_c)+\mat{H}^{(+)}(Z_c)\mat{S}^\text{HD} & \mat{G} = {\mat{H}^{(-)}}'(Z_c)+{\mat{H}^{(+)}}'(Z_c)\mat{S}^\text{HD}.
   \end{align}
-A proper derivation can be found in \cite{HEN2002}; an improved
+A proper derivation can be found in \cite{HEN2002b}; an improved
 one can be found in \cite[Appendix D]{GAP2013a}.
 
 \begin{figure}
@@ -1170,7 +1171,7 @@ an integrable cavity, and the full red lines the spectrum of the non-centered Ga
 the inhomogeneity. While we do not know the field profile\todo{Compute field with integral method.}, 
 it is safe to assume the two high-delay modes behave like WGMs. Although it is not shown, 
 both modes have isotropic far-fields. The rather small shift in wavenumber can be
-understood by the slight rarefication of the medium near the deformation. 
+understood by the slight rarefaction of the medium near the deformation. 
 The field must ``evade'' being caught by the deformation to retain
 its WGM properties, which results in slight positive increase in $k$ (smaller wavelength). 
 
@@ -1179,7 +1180,7 @@ its WGM properties, which results in slight positive increase in $k$ (smaller wa
  \begin{subfigure}{0.6\textwidth}
   \centering
   \includegraphics[width=\textwidth]{figs/passive/spectrum_gaussian_inset.pdf}
-  \caption[Delay spectrum of the gaussian microcavity]
+  \caption[Delay spectrum of the Gaussian microcavity]
 	  {Delay spectrum of the gaussian microcavity. The dotted blue lines show the spectrum
 	  for the integrable case of the deformation, i.e. $d=\Theta=0$ (CG mode). The full red lines
 	  show the spectrum for the deformation centered at $d=0.3R_0$ and $\Theta=0$ (NG mode).}
@@ -1195,7 +1196,7 @@ its WGM properties, which results in slight positive increase in $k$ (smaller wa
  \end{subfigure}
  \caption[Delay spectrum of the Gaussian cavity and the far-fields of two chosen modes]
 	  {Delay spectrum and far-field. \textbf{\subref{fig:passive.gaussian.numericalResults.spectrum}} 
-	  Delay spectrum of cavity with the gaussian deformation with parameters $n_0=2$, $\delta n=-1$ and $w=0.2R_0$.
+	  Delay spectrum of cavity with the Gaussian deformation with parameters $n_0=2$, $\delta n=-1$ and $w=0.2R_0$.
 	  \textbf{\subref{fig:passive.gaussian.numericalResults.farField}} shows the far-field of the both the CG and NG modes.
 	  Notice the mild directionality of the NG mode.}
  \label{fig:passive.gaussian.numericalResults}
@@ -1204,7 +1205,7 @@ its WGM properties, which results in slight positive increase in $k$ (smaller wa
 The lower delay modes, the highlighted ones in \ref{fig:passive.gaussian.numericalResults.spectrum}
 are more affected by the inhomogeneity, as their field must be more
 extended in the dielectric. The field thus ``feels'' a greater
-rarefication of the medium and the mode suffers both a greater $\Delta k$
+rarefaction of the medium and the mode suffers both a greater $\Delta k$
 and a pronounced change in its emission properties. The angular momentum
 mixing is such that that the ``backscattering'' $|\psi_\text{FF}(\theta=\pi)|$
 is minimized and that the scattering in directions $\theta\sim\pm3\pi/8$
@@ -1221,7 +1222,7 @@ simulations of cavities, it is often useful to consider the associated
 billiard system, which is the small wavelength approximation of 
 Helmholtz's equation. In homogeneous ARCS, photons follow straight path
 trajectories and are specularly reflected at the interfaces. In inhomogeneous
-ARCs, photons follow curved trajectories that obey Fermat's principle. 
+\glspl{arc}, photons follow curved trajectories that obey Fermat's principle. 
 The general equations defining those \textit{geodesic} paths can be found
 by using the metric
   \begin{equation}
@@ -1262,7 +1263,7 @@ where ${\Gamma^\sigma}_{\mu\nu}$ are the Christoffel symbols of the second kind.
 
 This last equation describes the trajectories of classical photons in any media. 
 At interfaces, where the optical parameters have a jump discontinuity, one must use
-Fresnel's laws, and possibly their generalization for curved interfaces \cite{HEN2002}.
+Fresnel's laws, and possibly their generalization for curved interfaces \cite{HEN2002a}.
 
 We will now obtain the equations for our Gaussian deformation. The author of this essay
 would have expected that an analytical solution be available for the central Gaussian
@@ -1335,7 +1336,7 @@ that quantify the performance of the scatterer for a
 given application. A few examples spring to mind, such as
 a dielectric optical switch, beam splitters, biosensors and others. 
 If the material is active, one cold optimize the form of the pump 
-profile to minimize thresholds and maximing, for instance, output
+profile to minimize thresholds and maximizing, for instance, output
 directionality and power. 
 
 One subject we have failed to mention in the main text is the 

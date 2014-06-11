@@ -1,25 +1,25 @@
 % ------------------ MSC THESIS JAYD ------------------	%
-% We load the ulthese package along with some other	%
-% useful packages.					%
+% We load the ulthese package along with some other		%
+% useful packages.										%
 % -----------------------------------------------------	%
 \documentclass[francais,english,nonatbib,MSc]{ulthese}
 
 % -- Loading packages.
 % Math symbols and such.
-\usepackage{amsthm,amsmath,amssymb}			% Math symbols and commands.
-\usepackage{units}					% Typographie des unités dans les équations.
-\usepackage{braket}					% Braket notation.
-\usepackage{mathdots}					% Better rendering of dots in math mode. 
+\usepackage{amsthm,amsmath,amssymb}				% Math symbols and commands.
+\usepackage{units}								% Typographie des unités dans les équations.
+\usepackage{braket}								% Braket notation.
+\usepackage{mathdots}							% Better rendering of dots in math mode. 
 
 % Font packages.
-\usepackage[charter]{mathdesign}			% Font package (including math font).
-\usepackage[utf8]{inputenc}				% UTF8 encoding for accents.
-\usepackage[T1]{fontenc}				% Vectorial fonts.
-\renewcommand*\sfdefault{lmss}				% Latin Modern Sans Serif as default sans serif font
+\usepackage[charter]{mathdesign}				% Font package (including math font).
+\usepackage[utf8]{inputenc}						% UTF8 encoding for accents.
+\usepackage[T1]{fontenc}						% Vectorial fonts.
+\renewcommand*\sfdefault{lmss}					% Latin Modern Sans Serif as default sans serif font
 
 % Style and PDF formatting options.
-\usepackage[compact,sf]{titlesec}			% Use sans serif fonts in section headings.
-\usepackage[bottom,multiple,stable]{footmisc}		% Force les notes de bas de page à être en bas de la page.
+\usepackage[compact,sf]{titlesec}				% Use sans serif fonts in section headings.
+\usepackage[bottom,multiple,stable]{footmisc}	% Force les notes de bas de page à être en bas de la page.
 \usepackage{bibentry}\nobibliography*			% Inline bibliographic entries.
 \usepackage[unicode=true,
 	    pdfusetitle,
@@ -34,17 +34,17 @@
 	    linkcolor=black,
 	    citecolor=black,
 	    urlcolor=blue]
- {hyperref}									% Defines the formatting of the PDF.
+ {hyperref}										% Defines the formatting of the PDF.
 
 % Custom environments
-\usepackage[ruled,vlined]{algorithm2e}		% Used to typeset pseudocode
-\usepackage{tabularx}				% Tools to format tables.
-\usepackage{multirow}				% More tools to format tables.
-\usepackage{dcolumn}				% Allows novel formatting for columns of tables, e.g. aligning numbers with decimal point.
-\usepackage{tikz}				% Drawing program. 
-\usepackage[customcolors]{hf-tikz}		% Extension of TikZ to highlight formulas and formula parts.
-\usepackage[labelformat=simple]{subcaption}	% Manages subfigure, subtables and subcaption environements.
-\usepackage{parnotes}				% Notes in tables.
+\usepackage[ruled,vlined]{algorithm2e}			% Used to typeset pseudocode
+\usepackage{tabularx}							% Tools to format tables.
+\usepackage{multirow}							% More tools to format tables.
+\usepackage{dcolumn}							% Allows novel formatting for columns of tables, e.g. aligning numbers with decimal point.
+\usepackage{tikz}								% Drawing program. 
+\usepackage[customcolors]{hf-tikz}				% Extension of TikZ to highlight formulas and formula parts.
+\usepackage[labelformat=simple]{subcaption}		% Manages subfigure, subtables and subcaption environements.
+\usepackage{parnotes}							% Notes in tables.
 
 % Configuration of subcaptions.
 \renewcommand\thesubfigure{(\alph{subfigure})}
@@ -54,8 +54,11 @@
   \captionsetup[subtable]{width=0.8\linewidth,parskip=0pt}
 
 % Index and glossary capabilities
-\usepackage{makeidx}					% Indexing capabilities.
-\usepackage[xindy,toc,acronym,section]{glossaries}	% Glossary and indexing capabilities.
+\usepackage{makeidx}							% Indexing capabilities.
+\usepackage[xindy,
+			toc,
+			acronym,
+			section]{glossaries}				% Glossary and indexing capabilities.
 \usepackage{glossary-mcols}
 
 % Bibliography package.
@@ -64,15 +67,15 @@
 	    sort&compress,
 	    merge,
 	    elide]
-  {natbib}						% Bibliographie
+  {natbib}										% Bibliographie
 
 % To-Do notes. Used only in non-production runs.
-\usepackage{todonotes}					% Typesets to do notes and optially creates a list of them.
+\usepackage{todonotes}							% Typesets to do notes and optially creates a list of them.
 
 % -- Configuration of several packages.
-\input{config/tikz-config.tex}				% Styles and configuration of TikZ.
-\input{config/commands.tex}				% Custom commands and theorem environments.
-\graphicspath{{figs/}}					% Searches recursively for images in this folder.
+\input{config/tikz-config.tex}					% Styles and configuration of TikZ.
+\input{config/commands.tex}						% Custom commands and theorem environments.
+\graphicspath{{figs/}}							% Searches recursively for images in this folder.
 
 % -- Preparing the index and glossary. 
 \makeindex
@@ -80,6 +83,7 @@
 \input{config/glossary-entries.tex}
 
 % -- Custom lengths and formatting options
+\settocdepth{subsection}
 \setsecnumdepth{paragraph}
 \renewcommand\theparagraph{(\alph{paragraph})}
 \makeatletter
@@ -98,7 +102,7 @@
 
 % --------------- Document Information ----------------	%
 % We define the title, subtitles and other such info 	%
-% in this section. 					%
+% in this section. 										%
 % -----------------------------------------------------	%
 \titre{On the Modelization of Optical Devices}
 \soustitre{From Dielectric Cavities to Radiating Structures}
@@ -166,9 +170,9 @@
 
 % -------------------- Main Matter --------------------	%
 % Here lies the body of the text. It is divided into	%
-% four chapters: an introduction, a chapter on 		%
+% four chapters: an introduction, a chapter on 			%
 % scattering methods, a chapter on antenna theory and 	%
-% design and a conclusion. 				%
+% design and a conclusion. 								%
 % -----------------------------------------------------	%
 \mainmatter
 \pagestyle{jayd_headings}
@@ -181,7 +185,7 @@
 % -------------------- Appendices ---------------------	%
 % Due to the technical nature of the work done, the 	%
 % appendices mostly contain derivations and notes on 	%
-% numerical implementations of algorithms.		%
+% numerical implementations of algorithms.				%
 % -----------------------------------------------------	%
 \appendix
 \include{backmatter/app-besselFunctions}

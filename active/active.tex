@@ -1,3 +1,4 @@
+% !TeX root = ../msc_thesis_jayd.tex
 \chapter{Active Media and Radiation}
 While the previous chapter dealt with the modelization
 of passive dielectric structures, this one will attempt
@@ -35,22 +36,291 @@ and seems to be more stable than the other methods.
 
 \subsection{Primer on Steady State ab initio Laser Theory (SALT)}
 Our exposition of \gls{salt} will be divided into two main sections:
-the first will descrive the details of the interaction of light with
+the first will describe the details of the interaction of light with
 the quantum gain medium and provide a steady-state solution
 of the resulting Maxwell-Bloch equations. The second
 will discuss the constant-flux states and their computation
 using the aforementioned numerical methods. 
 
 \paragraph{Solving the Matter Equations}
+Our starting point, as always, is
+  \begin{align}
+   \nabla\times\bo{E}	&= ik\mu\bo{H};	&	\nabla\times\bo{H}	&= -ik\epsilon\bo{E}-ik\bo{P}^{NL}
+  \end{align}
+where $\bo{P}^{NL}$ now represents the possibly non-linear response
+of the underlying quantum gain medium to the electric field $\bo{E}$.
+To show the main features of the theory, we assume a two-level quantum 
+system as the gain medium, although the method is generalizable to 
+multi-level systems \cite[\S2.3]{GE2010b}. 
+
+\begin{figure}
+ \begin{center}
+ \begin{tikzpicture}[scale=1.5]
+  % -- Draw quantum system. 
+  \draw[very thick] (0,0) -- (2,0) node[right] {$\Ket{1}$};
+  \draw[very thick] (0,2) -- (2,2) node[right] {$\Ket{2}$};
+  \draw[thick,->,>=stealth] (1,2) -- (1,0) node[near end,right] {$\Gamma_{21}$};
+  
+  % -- Draw incoming light.
+  \draw[decorate,decoration={snake,amplitude=0.5cm,segment length=0.5cm}] (-3,1) -- (-0.25,1);
+  \draw[->,>=stealth] (-2.5,1.8) -- (-.75,1.8) node[midway,above] {$\bo{E}$};
+ \end{tikzpicture}
+ \end{center}
+ \caption[Pictorial representation of the quantum gain medium]
+	 {Pictorial representation of the interaction between the
+	 quantum gain medium and the incoming field. The quantum system has 
+	 two levels, the wavefunction being either $\Ket{1}$ or $\Ket{2}$. The relaxation
+	 rate from level 2 to level 1 is given by $1/\Gamma_{21}$.}
+ \label{fig:active.salt.twoLevelSystem}
+\end{figure}
+
+Notice that the two-level system has solution
+  \begin{equation}
+   H_0\Ket{\psi}=\omega_j\Ket{\psi}	\qquad j=0,1
+  \end{equation}
+and corresponding eigenfunctions $\Ket{1}$ and $\Ket{2}$. 
+The perturbation caused by the incoming light field is of the
+form 
+  \begin{equation}
+   H_1 = e\bo{\mu}\cdot\bo{E}
+  \end{equation}
+where $e$ is the electric charge and $\bo{\mu}$ is the 
+dipole moment tensor of the material.  We expand the solution 
+of the perturbed in the states of the unperturbed system
+  \begin{equation}
+   \Ket{\psi_1(t)}=C_1(t)\Ket{1}+C_2(t)\Ket{2}
+  \end{equation}
+and form the density matrix
+  \begin{equation}
+   \rho(t) = \Ket{\psi_1(t)}\Bra{\psi_1(t)}.
+  \end{equation}
+Using the well-known evolution equations of the density
+matrix \cite[\S6.2]{BOY2008} and defining
+$D=\rho_{22}-\rho_{11}$, we obtain the equations
+\cite[\S5.3]{HAK1985b}
+  \begin{align}
+   \dot{\bo{P}}^{NL}	&= -\left(i\omega+\gamma_\perp\right)\bo{P}^{NL}+\frac{g^2}{i\hbar}\bo{E}D	\\
+   \dot{D}		&= \gamma_\parallel\left(D_0-D\right)-\frac{2}{i\hbar}\bo{E}\cdot\bo{P}^{NL}
+  \end{align}
+Assuming that $\dot{D}=0$ (stationary inversion approximation) 
+and expanding the field and polarization in Fourier series
+leads to the relationship
+  \begin{equation}
+   \bo{p}_\mu = \frac{g^2}{\hbar}\frac{1}{k_\mu-k+i\gamma_\perp}\frac{D(\bo{r})}{1+\sum\frac{4g^2}{\gamma_\perp\gamma_\parallel}\Gamma(k_\mu)\left|\Psi_\mu(\bo{r})\right|^2}\bo{\Psi}_\mu(\bo{r}).
+  \end{equation}
+which leads to the equation
+  \begin{equation}
+   \left[\nabla^2+k^2\left(\epsilon(\bo{r})+\frac{g^2}{\hbar}\frac{1}{k_\mu-k+i\gamma_\perp}\frac{D(\bo{r})}{1+\sum\frac{4g^2}{\gamma_\perp\gamma_\parallel\Gamma(k_\mu)}\left|\Psi_\mu(\bo{r})\right|^2}\right)\right]\Psi_\mu(\bo{r})=0
+  \end{equation}
+This is what we will solve in the next two sections.
 
 \paragraph{Constant-flux States and Scattering}    
 
 \subsection{Methods of Solution}
 \paragraph{Variable Phase Method}
+This elegant method has its roots deep in the literature of quantum-mechanical
+scattering. It is based on the fact that, for central potentials, the 
+\gls{sMatrix} is diagonal and that its elements can be written as
+$e^{i\delta_k}$, where $\delta_k$ is the phase shift suffered by the 
+$k$th partial wave. One can thus find a first order, non-linear differential
+equation \cite{CAL1967} for each $\delta_k$. The method transforms the \gls{bcp} to an \gls{ivp}, as the phase shift
+is bounded. In our present case, the potential is not a central one and the
+\gls{sMatrix} is not diagonal. We will need to solve a coupled system 
+of differential equations to represent the coupling between the different
+partial waves. The \gls{vpm} will give rise to an \gls{ivp} matrix \gls{ode}.
+
+The initial motivation for the use of \gls{vpm} was the computation 
+of the field inside the scatterer. In the \gls{sqa}, modifying 
+the linear algebra operations of the reduction phase yields
+an algorithm that computes the field from given $\bo{A}$ and $\bo{B}$
+coefficients. It is unfortunately highly unstable, to the point 
+of being unusable. The authors of \cite{FOR2012} suggested that
+the \gls{vpm} was stable, suggesting its use over the onion
+discretization of \gls{sqa}. While the \gls{vpm} has some inherent
+issues and our implementation is far from complete, we present
+here the main development both for the interested reader and for 
+future reference. 
+
+We recall that the bidimensional equations in the 
+dielectric case are
+  \begin{subequations}
+  \begin{align}
+   \left[\nabla^2+k^2n^2\right]H_z	&= \frac{2}{n}\nabla H_z\cdot\nabla n	\tag{\theequation.TE}\\
+   \left[\nabla^2+k^2n^2\right]E_z	&=0					\tag{\theequation.TM}
+  \end{align}
+  \end{subequations}
+We will start with the TE equation, as it contains the TM one. We use
+the expansions
+  \begin{subequations}
+  \begin{align}
+   H_z(r,\theta)	&= \frac{1}{\sqrt{2\pi}}\sum_{m=-\infty}^\infty \frac{1}{\sqrt{r}}\psi_m(r)e^{im\theta}	\\
+   n(r,\theta)		&= \frac{1}{\sqrt{2\pi}}\sum_{m'=-\infty}^\infty n_{m'}(r)e^{im'\theta}.
+  \end{align}
+  \end{subequations}
+Before applying the expansions, we will multiply the equation through 
+by $n$ and write the derivatives explicitly
+  \begin{equation}
+    \left[n\left(\frac{\partial^2}{\partial r^2}+\frac{1}{r}\frac{\partial}{\partial r}+\frac{1}{r^2}\frac{\partial^2}{\partial\theta^2}\right)+k^2n^3\right]H_z
+    =
+    2\frac{\partial H_z}{\partial r}\frac{\partial n}{\partial r}+\frac{2}{r^2}\frac{\partial H_z}{\partial\theta}\frac{\partial n}{\partial\theta}.
+  \end{equation}
+Expanding this equation yields (after some simplification)
+  \begin{multline}
+   \sum_{m,m'}
+    \left\{\frac{n_{m'}}{2\pi}\left(\frac{\psi_{m}''}{r^{1/2}}-\frac{(m^2-1/4)}{r^{5/2}}\psi_m\right)e^{i(m+m')\theta}\right\}
+	+\left(\frac{k}{2\pi}\right)^2\left(\sum_{m'}n_{m'}e^{im'\theta}\right)^3\left(\sum_m\frac{\psi_m}{r^{1/2}}e^{im\theta}\right)\\
+	=\frac{2}{2\pi}\sum_{m,m'}\left\{n_{m'}'\left[\frac{\psi_m'}{r^{1/2}}-\frac{\psi_m}{2r^{3/2}}\right]-\frac{mm'}{r^2}\frac{\psi_mn_{m'}}{r^{1/2}}\right\}e^{i(m+m')\theta}
+  \end{multline}
+Projecting onto $\sqrt{r}e^{-im''\theta}/\sqrt{2\pi}$
+  \begin{multline}
+    \sum_{m,m'}\int_0^{2\pi}\left\{\frac{n_{m'}}{(2\pi)^{3/2}}\left(\psi_m''-\frac{(m^2-1/4)\psi_m}{r^2}\right)+\frac{k^2c_{m'}\psi_m}{(2\pi)^{3/2}}\right\}e^{i(m+m'-m'')\theta}d\theta\\
+    \frac{2}{(2\pi)^{3/2}}\int_0^{2\pi}\left\{n_{m'}'\left[\psi_m'-\frac{\psi_m}{2r}\right]-\frac{mm'}{r^2}\psi_mn_{m'}\right\}e^{i(m+m'-m'')\theta}d\theta
+  \end{multline}
+where
+  \begin{equation}
+   c_{m'} = \sum_{m}\sum_{m''}n_mn_{m''}n_{m'-m''-m}.
+  \end{equation}
+Integrating, introducing the matrices
+  \begin{subequations}
+  \begin{align}
+   \left[\mat{N}(r)\right]_{mm''}	&= \sum_{m'}n_{m'}\delta_{m+m',m''}	\\
+   \left[\mat{Z}(r)\right]_{mm''}	&= \sum_{m'}mm'n_{m'}'\delta_{m+m',m''},
+  \end{align}
+  \end{subequations}
+we obtain the matrix ODE
+  \begin{equation}
+  \label{eq:vpm.TE.GeneralCase}
+  \bo{\psi}''-\frac{\mat{M^2}-\mat{I}/4}{r^2}\bo{\psi}+\frac{k^2}{2\pi}\mat{N}^2\bo{\psi}
+    =
+   2\mat{N}^{-1}\mat{N}'\left[\bo{\psi}'-\frac{\psi}{2r}\right]-\frac{2}{r^2}\mat{N}^{-1}\mat{Z}\bo{\psi}
+  \end{equation}
+In the free case, i.e. $n(r,\theta)=1$, we have that
+  \begin{equation}
+   n_{m'} = \sqrt{2\pi}\delta_{m'0}
+  \end{equation}
+such that we have
+  \begin{equation}
+    \label{eq:vpm.freeCase}
+    \bo{\psi}''-\frac{\mat{M}^2-\mat{I}/4}{r^2}\bo{\psi}+k^2\bo{\psi}=0,
+  \end{equation}
+the Bessel equation. For the general case, it makes sense
+to posit a matrix solution of the form
+  \begin{equation}
+   \bo{\psi}=\mat{G}_k(r)\mat{W}(kr)
+  \end{equation}
+where $\left[\mat{W}(kr)\right]_{mm}=H_m^{(\pm)}(kr)$ where
+we choose the sign for either incoming or outgoing 
+wave boundary condition. Substituting this into \eqref{eq:vpm.TE.GeneralCase}
+and using \eqref{eq:vpm.freeCase} gives
+  \begin{multline}
+    \label{eq:vpm.masterEquation}
+    \mat{G}''+2\mat{G}'\frac{d}{dr}\left(\log\mat{W}\right)+\frac{1}{r^2}\left[\mat{G},\mat{M^2}-\mat{I}/4\right]+\frac{k^2}{2\pi}\left(\mat{N}^2-2\pi\right)
+      =
+    2\mat{N}^{-1}\mat{N}'\left[\mat{G}'+\mat{G}\frac{d}{dr}\left(\log\mat{W}\right)-\frac{\mat{G}}{2r}\right]-\frac{2}{r^2}\mat{N}^{-1}\mat{ZG}.
+  \end{multline}
+In the case of TM polarization, the right-hand side 
+of \eqref{eq:vpm.masterEquation} vanishes. 
+
+We start with the matrix case. We parametrize the solution as
+  \begin{equation}
+    \mat{F}_k(r) = \mat{G}_k(r)\mat{W}(kr)
+  \end{equation}
+where $\mat{W}(kr)$ has the outgoing wave functions $rh_\ell^{(+)}(kr)$ on its diagonal. 
+With the Sommerfeld condition, we can conclude that $\mat{G}_k(\infty) = \mat{I}$ and 
+$\mat{G}_k'(\infty)=\mat{0}$. We have the differential equation
+  \begin{multline}
+   -\mat{G}_k(r)''-2\mat{G}_k(r)'\left(\frac{\partial}{\partial r}\ln\mat{W}(kr)\right)
+    \\+\frac{1}{r^2}\left[\mat{L}^2,\mat{G}_k(r)\right]+\mat{V}(r)\mat{G}_k(r)=0
+  \end{multline}
+The incoming wave solutions solves the same equation, but with
+$\mat{W}(kr)\mapsto \mat{W}(kr)^\dagger$. Denoting this solution 
+by $\mat{G}_{-k}(r)$, we find that the wave function is
+  \begin{equation}
+    \bo{\psi}(r) = \mat{G}_{-k}(r)\mat{W}(kr)^\dagger+\mat{G}_k(r)\mat{W}(kr)\mat{S}_k(k)
+  \end{equation}
+where $\mat{S}_k(k)$ is the scattering matrix. Because of the
+$1/r$ factor in our expansion, $\bo{\psi}(0)$ must vanish 
+for the field to be finite at the origin. We can then write the 
+scattering matrix as
+  \begin{equation}
+   \mat{S}_k = -\lim_{r\rightarrow0}\mat{W}^{-1}(kr)\mat{G}^{-1}_k(r)\mat{G}_{-k}(r)\mat{W}(kr)^\dagger
+  \end{equation}
+These equations come from \cite{FOR2012}, modulo some minor changes.
+
+Not surprisingly, we will have to deal with exactly the same issue as before: 
+notice the product $\mat{W}^\dagger(kr)\mat{A}\mat{W}^{-1}(kr)$. For diagonal
+matrices $\mat{W}$, we can rewrite this product as
+  \begin{equation*}
+    \mat{A}\circ\left(\text{diag}(\mat{W}^\dagger)\otimes\text{diag}(\mat{W}^{-1})\right)
+  \end{equation*}
+which is our beloved Schur product that caused some issues in \gls{sqa}. 
+
 \paragraph{Green's Function Method}
-\todo[inline]{Primer on VPM for bidimensional cavities (mention its
-	      use for 3D cavities with vector spherical wave functions).}
-\todo[inline]{Motivation for VPM: computing the field more efficiently than in SQA.}
+Seeing the differential methods fail, the author of this essay, 
+then on the brink of despair, first took notice of the 
+power of integral methods. Simply rewriting Helmholtz's 
+equation as
+  \begin{equation}
+   \left[\nabla^2+\epsilon_B(\omega)k^2\right]\psi=-k^2\Delta\epsilon(\bo{r};\omega)\psi
+  \end{equation}
+where 
+  \begin{equation}
+  \Delta\epsilon(\bo{r};\omega)=\epsilon(\bo{r};\omega)-\epsilon_B(\omega)
+  \end{equation}
+where $\epsilon(\bo{r}),\omega)$ is the permittivity profile of the scatterer
+and $\epsilon_B(\omega)$ the constant permittivity of the environment, or background.
+This allows to write a formal solution using the Green's function of Helmholtz's equation
+  \begin{equation}
+   \psi(\bo{r}) = \phi(\bo{r}) - k^2\mathop{\iint}_\mathcal{C}G(\bo{r},\bo{r}')\Delta\epsilon(\bo{r}';\omega)\psi(\bo{r}')d^2\bo{r}'
+  \end{equation}
+where $\phi(\bo{r})$ is a solution of the homogeneous problem and
+  \begin{equation}
+   G_\omega(\bo{r},\bo{r}') = -\frac{i}{4}H_0^{(\omega)}(k\sqrt{\epsilon_B}|\bo{r}-\bo{r}'|)
+  \end{equation}
+and we use the \textit{outgoing} Green's function $G=G_+$.
+
+Instead of a \gls{pde}, we now must solve an implicit 
+integral equation for the field. It is a Fredholm 
+equation of the second kind with a weakly singular, compact
+operator. This ensures the existence
+and uniticity of the solution \cite{GOH1981,COL2013}.
+We solve the surface integral equation in real space by meshing
+the cavity $\mathcal{C}$. The details of the meshing is left to 
+Appendix \ref{sec:app.basisEqn.greenFunction}. Let us denote the set
+of cells of our mesh by $\Delta$. We can thus cast the integral
+equation as
+	\begin{equation}
+		\psi_j = \phi_j -k^2\sum_{j'\in\Delta} G_{jj'}\Delta\epsilon_{j'}A_{j'}\psi_{j'}
+	\end{equation}
+where $\psi_j=\psi(\bo{r}_j)$ and similarly for the other quantities. We can
+rewrite this as the matrix problem\footnote{This, of course, only holds if the
+kernel is linear.} 
+	\begin{equation}
+		\left(\mat{I}+\mat{K}\right)\bo{\psi}=\bo{\phi}.
+	\end{equation}
+where 
+	\begin{equation}
+		K_{jj'} = G_{jj'}\Delta\epsilon_{j'}A_{j'}.
+	\end{equation}
+
+The matrix equation is then solved using any good 
+linear algebra solver. This yields values for the
+field inside the scatterer. The integral equation
+is then explicit for the field outside the scatterer. 
+Our interest, however, still lies in the computation
+of the scattering matrix. It turns out that, if we
+use 
+	\begin{equation}
+		\phi = J_M(kr)e^{iM\theta}
+	\end{equation}
+as the ``incoming'' field, one may find that the scattering
+matrix can be computed via
+	\begin{equation}
+		S_{mM} = \delta_{mM} - \frac{ik^2}{2}\mathop{\iint}_\mathcal{C}e^{-im{\theta'}}J_m(kr')\Delta\epsilon(\bo{r}')\psi^{(M)}(\bo{r}')d^2\bo{r}'.
+	\end{equation}
+In Appendix \ref{sec:app.basisEqn.greenFunction}, we lay out the method in more detail, 
+discuss the numerical implementation and present a generalization for the complete 
+vectorial electromagnetic fields.
 
 \section{Smart Textile Antennae}
 \subsection{Basic Antenna Theory and HFSS Simulations}
@@ -86,7 +356,7 @@ is related to the electric field via Ohm's law, i.e.
    \bo{J}_c=\sigma\bo{E}
   \end{equation}
 while the source current is a prepared, physical source initially 
-independant of the system.
+independent of the system.
 
 A technical point is in order. In the antenna literature, the induced
 currents and charge density are considered as the fundamental quantities 
@@ -113,9 +383,9 @@ the $\bo{J}$ and $\rho$ give rise to both electric and magnetic fields.
 To compute the field from these sources, which are presupposed to exist, 
 we must use the Stratton-Chu integrals. The derivation is standard, so we 
 refer to \cite{ELL2003}. Consider a volume $V$ of free space containing
-sources and possibly excluded subvolumes $V_i$ bound by surfaces $S_i$ that contain matter
+sources and possibly excluded sub-volumes $V_i$ bound by surfaces $S_i$ that contain matter
 of some kind. By the use of Green's and Stokes' theorems and other vectorial 
-identities, we find that the field outside the excluded subvolumes
+identities, we find that the field outside the excluded sub-volumes
 can be expressed as
   \begin{align}
    \bo{E} &= \frac{1}{4\pi}\mathop{\iiint}_V \left(\rho\nabla G+i\omega G\bo{J}\right)dV
@@ -137,7 +407,7 @@ is known.
 These two properties discriminate antennae into two categories, denoted Type I and Type II.
 
 Type I antennae have a well-approximated current distribution, which means that there are no
-subvolumes to be excluded and therefore no surface integrals in expressions 
+sub-volumes to be excluded and therefore no surface integrals in expressions 
 \eqref{eq:antenna.strattonChuE} and \eqref{eq:antenna.strattonChuH}. 
 
 On the other hand, Type II antennae have well-approximated near-fields, leading
@@ -473,7 +743,7 @@ we have tried to simulate. Table \ref{tab:antenna.rfxx-parameters}
 shows the actual geometrical parameters of the fibre-antennas.
 
 \paragraph*{On the thickness of the silver shells}
-The thicknesses of the dilectric materials are provided by the manufacturer, 
+The thicknesses of the dielectric materials are provided by the manufacturer, 
 Polymicro Technologies, safe for the thicknesses of the silver layers. 
 For the time being, we have calculated those thicknesses by measuring
 the DC resistance of the inner and outer layers of silver and
@@ -557,7 +827,7 @@ thicknesses obtained via the bulk conductivity model (Bruggeman
 effective conductivity) and the Fuchs-Sondheimer model with 
 effective conductivity for the RF33 fibre. Given that the AFM pictures
 show surface inhomogeneity, we assume diffuse scattering in 
-the FS model ($p=0$). We see that chosing a dimensionality 
+the FS model ($p=0$). We see that choosing a dimensionality 
 of 3 or 2 does not significantly affect the thicknesses, but
 we see a difference of about 20\% in the effective conductivities.
 
@@ -732,7 +1002,7 @@ the optical length of the windows seems to explain a single
 peak in the Fourier power spectrum. 
 
 The author is not sure that is the proper method to
-analyze the Fourier spectrum, however. 
+analyze the Fourier spectrum, however.
 
 \begin{figure}
  \centering

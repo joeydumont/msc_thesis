@@ -1,6 +1,10 @@
+% !TeX root = ../msc_thesis_jayd.tex
 \chapter{Numerical Tools}
 
 \section{Numerical Computation of the Scattering Matrix}\label{sec:app.numTools.scatMat}
+We detail the numerical solution of Helmholtz's equation with the onion discretization 
+procedure of \gls{sqa}.
+
 In the TE case, we must take $n\mapsto n_\text{eff}$. This leads us to evaluate the 
 extra integral
   \begin{equation}
@@ -27,7 +31,7 @@ Notice the form of the $\mat{L}^j$ matrix. As can be seem from inspection,
 the value of the elements depend only on their distance from the diagonal.
 Taking a closer look reveals the form
   \begin{equation}
-   \mat{L}^j = \mat{M}^2 +\begin{pmatrix} 
+   \mat{L}^j = \mat{M}^2 +k^2r_j^2\begin{pmatrix} 
 		  n_0 & n_{-1} & \cdots & \cdots & n_{-2M}	\\
 		  n_1	  & n_0& \cdots & \cdots & n_{-2M-1}\\
 		  n_2	  & n_1	   & n_0& \cdots & n_{-2M-2}\\
@@ -44,12 +48,15 @@ We will note the left (covariant) basis by $\Ket{\tilde{\Phi}_\mu^j}$.
 This is not sufficient, however, because we are not guaranteed that
 both sets of eigenvectors will form a complete basis. 
 
+\paragraph{Normality of $\mat{L}^j$}
+
+
 \section{Computation of the Logarithmic Derivative $[H^{(\pm)}_\nu(z)]'/H^{(\pm)}_\nu(z)$}\label{sec:app.numTools.logDeriv}
 
 \index{continued fraction expansions|(textbf}
 As we have seen from Appendix \ref{app:basicEquations}, the computation of the logarithmic derivative
-of Bessel functions is of the upmost importance in the numerical solution 
-of scattering problems. Given that we already use Amos' library to evaluate
+of Bessel functions is of the utmost importance in the numerical solution 
+of scattering problems. Given that we already use Amos' library \cite{AMO86} to evaluate
 the Bessel functions, we might have been tempted to use it 
 to directly evaluate the derivative. It turns out that using
 expansions that pertain to logarithmic derivatives is somewhat
@@ -270,3 +277,5 @@ even though it requires three Hankel function evaluations.
 \input{backmatter/appWigner.tex}
 
 \input{backmatter/appSphHarmonics.tex}
+
+ \nocite{*}
