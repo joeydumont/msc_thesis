@@ -1,22 +1,34 @@
 % !TeX root = ../msc_thesis_jayd.tex
 \chapter{Active Media and Radiation}
-While the previous chapter dealt with the modelization
-of passive dielectric structures, this one will attempt
-to model more complex classes of structures. 
+The previous chapter set the stage for the study of 
+the scattering of light on general, albeit passive, 
+potentials. The relative simplicity of the geometry
+and of the physics allowed for a solution rich 
+in physical information and lead to a rather simple
+numerical solution. 
 
-The first part will
-deal with active dielectric cavities. A recently formulated
-steady state \textit{ab initio} laser theory (SALT) solves the 
-Schrödinger-Bloch state equations in such a way that the effect of
-the active medium can be considered as a pump-dependent
-deformation of the refractive index profile. We present a summary 
-of the theory and two methods of solution, one based on the phase
-accumulated by incoming waves and the other based on Green's
-function. 
+In the first section, we test the limits of the our analytical formalism
+and of our numerical advances. To more accurately model
+microlasers, we model the interaction of light with the underlying
+quantum gain medium, i.e. we solve the Maxwell-Bloch, or Schrödinger-Bloch, 
+matter equations. We will specifically use the \gls{salt}, a recently 
+formulated steady state laser theory. In this theory, the effect 
+of the active medium is reduced to an additional frequency and pump-dependent
+term in the refractive index. This extra term has a Lorentzian frequency
+dependence, as physically expected, and has non-zero real and imaginary
+parts. The fragility of our extension of SQA is then exposed and some replacement
+methods are suggested. 
 
-The second part describes the modelization attempts
-of the author on the leaky coax antenna. 
-\todo[inline]{More detail}
+
+The second section studies the experimental response
+of different realizations of a specific type of antenna
+known as \glspl{lcx}. The genesis of this study lies in
+the hopes of designing an antenna that can be seamlessly
+integrated into textile. The sheer complexity of the
+antenna, as we will show, bars the use of the methods developed
+in this essay in favour of the all-numerical \gls{fem}. 
+This particular choice will be motivated and the design 
+parameters of the antenna thoroughly explained. 
 
 \section{Lasing and Scattering}
 A recently formulated laser theory, named the 
@@ -27,12 +39,15 @@ microlasers. Its steady-state nature allows us to apply
 the formalism developed in the previous section 
 to the theory. However, in light of the several shortcomings
 of the \gls{sqa}'s numerical implementation, we have studied 
-two other numerical methods. The first one is based on 
+two other numerical methods. The first one, the \gls{vpm}, is based on 
 differential equations and shares some of the problems of 
 the onion method, but has a nice physical interpretation
 in terms of phases and is more easily generalizable to 
-3D scattering. The other one is based on integral methods 
-and seems to be more stable than the other methods.
+3D scattering. 
+To find a more robust solution, we completely forgo 
+differential equations in favour of integral ones. 
+Our brief incursion into the rich field of integral equations
+is a rather recent one, and might leave the reader hungry for more.
 
 \subsection{Primer on Steady State ab initio Laser Theory (SALT)}
 Our exposition of \gls{salt} will be divided into two main sections:
@@ -49,6 +64,34 @@ Our starting point, as always, is
   \end{align}
 where $\bo{P}^{NL}$ now represents the possibly non-linear response
 of the underlying quantum gain medium to the electric field $\bo{E}$.
+We separate the fields in transverse and longitudinal
+components, as we did for the passive cavities. Assuming 
+that the propagation constant $\beta$ vanishes, we can 
+separate two polarization states and write decoupled differential
+equations for the longitudinal components of the fields
+	\begin{subequations}
+	\begin{align}
+		\left[\nabla^2+k^2n^2\right]E_z	&= \frac{1}{\mu}\nabla E_z\cdot\nabla\mu -k^2\mu P_z	\tag{\theequation.TM}\\
+		\left[\nabla^2+k^2n^2\right]H_z	&= \frac{1}{\epsilon}\nabla H_z\cdot\nabla\epsilon-
+											\frac{ik}{\epsilon}\bo{P}^{NL}\times\nabla\epsilon
+											-ik\nabla\times\bo{P}^{NL}							\tag{\theequation.TE}\label{eq:active.salt.TEeqn}
+	\end{align}
+	\end{subequations}
+where the last equation is the \textit{proper} generalization for TE modes. 
+To derive these equations, we made the implicit assumptions that the 
+non-linear electric susceptibility tensor, 
+	\begin{equation}
+		\bo{P}^{NL} = \bo{\chi_e}^{NL}(\bo{r};\omega)\bo{E}(\bo{r}),
+	\end{equation}
+is at least a diagonal tensor, or a scalar. In the TM polarization, 
+$E_r=E_\theta=0\Rightarrow P_r=P_\theta=0$, such that $\bo{P}^{NL}$
+has a single non-zero component, while in the TE polarization only
+the $P_r$ and $P_\theta$ components are non-zero. The vectors resulting
+from the cross-product and curl in \eqref{eq:active.salt.TEeqn} possess
+only a $z$-component, as needed. 
+
+To go any further, we must compute the value of the non-linear electric
+susceptibility tensor. 
 To show the main features of the theory, we assume a two-level quantum 
 system as the gain medium, although the method is generalizable to 
 multi-level systems \cite[\S2.3]{GE2010b}. 
@@ -59,7 +102,7 @@ multi-level systems \cite[\S2.3]{GE2010b}.
   % -- Draw quantum system. 
   \draw[very thick] (0,0) -- (2,0) node[right] {$\Ket{1}$};
   \draw[very thick] (0,2) -- (2,2) node[right] {$\Ket{2}$};
-  \draw[thick,->,>=stealth] (1,2) -- (1,0) node[near end,right] {$\Gamma_{21}$};
+  \draw[thick,->,>=stealth] (1,2) -- (1,0) node[near end,right] {$\gamma_\parallel$};
   
   % -- Draw incoming light.
   \draw[decorate,decoration={snake,amplitude=0.5cm,segment length=0.5cm}] (-3,1) -- (-0.25,1);
@@ -74,13 +117,15 @@ multi-level systems \cite[\S2.3]{GE2010b}.
  \label{fig:active.salt.twoLevelSystem}
 \end{figure}
 
-Notice that the two-level system has solution
+Solving Schrödinger's equation for a ``bare'', i.e. non-interacting
+two-level system yields
   \begin{equation}
    H_0\Ket{\psi}=\omega_j\Ket{\psi}	\qquad j=0,1
   \end{equation}
 and corresponding eigenfunctions $\Ket{1}$ and $\Ket{2}$. 
-The perturbation caused by the incoming light field is of the
-form 
+The incoming light field acts as a perturbation and source of energy
+that stimulates a population transfer from level 1 to level 2 that decay
+at rate $1/\gamma_\parallel$. The perturbation can be written as
   \begin{equation}
    H_1 = e\bo{\mu}\cdot\bo{E}
   \end{equation}
@@ -94,27 +139,47 @@ and form the density matrix
   \begin{equation}
    \rho(t) = \Ket{\psi_1(t)}\Bra{\psi_1(t)}.
   \end{equation}
+It allows us to solve the problem for an ensemble
+of two-level systems \cite{GE2010b}.
 Using the well-known evolution equations of the density
 matrix \cite[\S6.2]{BOY2008} and defining
-$D=\rho_{22}-\rho_{11}$, we obtain the equations
+$D=\rho_{22}-\rho_{11}$, the population difference between the two
+levels,  we obtain the equations
 \cite[\S5.3]{HAK1985b}
   \begin{align}
    \dot{\bo{P}}^{NL}	&= -\left(i\omega+\gamma_\perp\right)\bo{P}^{NL}+\frac{g^2}{i\hbar}\bo{E}D	\\
-   \dot{D}		&= \gamma_\parallel\left(D_0-D\right)-\frac{2}{i\hbar}\bo{E}\cdot\bo{P}^{NL}
+   \dot{D}				&= \gamma_\parallel\left(D_0-D\right)-\frac{2}{i\hbar}\bo{E}\cdot\bo{P}^{NL}
   \end{align}
-Assuming that $\dot{D}=0$ (stationary inversion approximation) 
-and expanding the field and polarization in Fourier series
-leads to the relationship
+where $g^2$ is the dipole moment of the system, 
+$\gamma_\perp$ is an \textit{ad hoc} phenomenological damping
+term that comes from the interaction of the ensemble of systems\footnote{The author surmises that it 
+could be computed with a mean field approximation.}
+and $D_0$ is the equilibrium population. The approach 
+uses a \gls{rwa}, but, contrary 
+to most derivations, does not invoke the \gls{svea}. 
+One of the main approximations, one that is necessary to make
+ground, is the \gls{sia}, i.e. $\dot{D}=0$. Writing the fields
+as Fourier series
+	\begin{align*}
+		\bo{P}^{NL}	&= \sum_{\mu}\bo{p}_\mu e^{-ik_\mu t}	&	\bo{E}	&= \sum_{\mu} \bo{\Psi}_\mu e^{-ik_\mu t}
+	\end{align*}
+leads to the relationship\footnote{We have skipped some steps. See \cite[\S2.2]{GE2010b} for details.}
   \begin{equation}
    \bo{p}_\mu = \frac{g^2}{\hbar}\frac{1}{k_\mu-k+i\gamma_\perp}\frac{D(\bo{r})}{1+\sum\frac{4g^2}{\gamma_\perp\gamma_\parallel}\Gamma(k_\mu)\left|\Psi_\mu(\bo{r})\right|^2}\bo{\Psi}_\mu(\bo{r}).
   \end{equation}
-which leads to the equation
+In the TM polarization, this leads to the equation
   \begin{equation}
    \left[\nabla^2+k^2\left(\epsilon(\bo{r})+\frac{g^2}{\hbar}\frac{1}{k_\mu-k+i\gamma_\perp}\frac{D(\bo{r})}{1+\sum\frac{4g^2}{\gamma_\perp\gamma_\parallel\Gamma(k_\mu)}\left|\Psi_\mu(\bo{r})\right|^2}\right)\right]\Psi_\mu(\bo{r})=0
   \end{equation}
-This is what we will solve in the next two sections.
+where
+	\begin{equation}
+		\Gamma(k_\mu) = \frac{\gamma_\perp^2}{(k-k_\mu)^2-\gamma_\perp^2}.
+	\end{equation}
 
-\paragraph{Constant-flux States and Scattering}    
+\paragraph{Constant-flux States and Scattering}
+
+\todo[inline]{Detail non-Hermitian problem defined by CF states. Methods of solution 
+to the possibly non-linear equations.}
 
 \subsection{Methods of Solution}
 \paragraph{Variable Phase Method}
@@ -141,119 +206,66 @@ issues and our implementation is far from complete, we present
 here the main development both for the interested reader and for 
 future reference. 
 
-We recall that the bidimensional equations in the 
-dielectric case are
-  \begin{subequations}
-  \begin{align}
-   \left[\nabla^2+k^2n^2\right]H_z	&= \frac{2}{n}\nabla H_z\cdot\nabla n	\tag{\theequation.TE}\\
-   \left[\nabla^2+k^2n^2\right]E_z	&=0					\tag{\theequation.TM}
-  \end{align}
-  \end{subequations}
-We will start with the TE equation, as it contains the TM one. We use
-the expansions
+The method starts with the angular momentum expansions
   \begin{subequations}
   \begin{align}
    H_z(r,\theta)	&= \frac{1}{\sqrt{2\pi}}\sum_{m=-\infty}^\infty \frac{1}{\sqrt{r}}\psi_m(r)e^{im\theta}	\\
    n(r,\theta)		&= \frac{1}{\sqrt{2\pi}}\sum_{m'=-\infty}^\infty n_{m'}(r)e^{im'\theta}.
   \end{align}
   \end{subequations}
-Before applying the expansions, we will multiply the equation through 
-by $n$ and write the derivatives explicitly
-  \begin{equation}
-    \left[n\left(\frac{\partial^2}{\partial r^2}+\frac{1}{r}\frac{\partial}{\partial r}+\frac{1}{r^2}\frac{\partial^2}{\partial\theta^2}\right)+k^2n^3\right]H_z
-    =
-    2\frac{\partial H_z}{\partial r}\frac{\partial n}{\partial r}+\frac{2}{r^2}\frac{\partial H_z}{\partial\theta}\frac{\partial n}{\partial\theta}.
-  \end{equation}
-Expanding this equation yields (after some simplification)
-  \begin{multline}
-   \sum_{m,m'}
-    \left\{\frac{n_{m'}}{2\pi}\left(\frac{\psi_{m}''}{r^{1/2}}-\frac{(m^2-1/4)}{r^{5/2}}\psi_m\right)e^{i(m+m')\theta}\right\}
-	+\left(\frac{k}{2\pi}\right)^2\left(\sum_{m'}n_{m'}e^{im'\theta}\right)^3\left(\sum_m\frac{\psi_m}{r^{1/2}}e^{im\theta}\right)\\
-	=\frac{2}{2\pi}\sum_{m,m'}\left\{n_{m'}'\left[\frac{\psi_m'}{r^{1/2}}-\frac{\psi_m}{2r^{3/2}}\right]-\frac{mm'}{r^2}\frac{\psi_mn_{m'}}{r^{1/2}}\right\}e^{i(m+m')\theta}
-  \end{multline}
-Projecting onto $\sqrt{r}e^{-im''\theta}/\sqrt{2\pi}$
-  \begin{multline}
-    \sum_{m,m'}\int_0^{2\pi}\left\{\frac{n_{m'}}{(2\pi)^{3/2}}\left(\psi_m''-\frac{(m^2-1/4)\psi_m}{r^2}\right)+\frac{k^2c_{m'}\psi_m}{(2\pi)^{3/2}}\right\}e^{i(m+m'-m'')\theta}d\theta\\
-    \frac{2}{(2\pi)^{3/2}}\int_0^{2\pi}\left\{n_{m'}'\left[\psi_m'-\frac{\psi_m}{2r}\right]-\frac{mm'}{r^2}\psi_mn_{m'}\right\}e^{i(m+m'-m'')\theta}d\theta
-  \end{multline}
-where
-  \begin{equation}
-   c_{m'} = \sum_{m}\sum_{m''}n_mn_{m''}n_{m'-m''-m}.
-  \end{equation}
-Integrating, introducing the matrices
-  \begin{subequations}
-  \begin{align}
-   \left[\mat{N}(r)\right]_{mm''}	&= \sum_{m'}n_{m'}\delta_{m+m',m''}	\\
-   \left[\mat{Z}(r)\right]_{mm''}	&= \sum_{m'}mm'n_{m'}'\delta_{m+m',m''},
-  \end{align}
-  \end{subequations}
-we obtain the matrix ODE
-  \begin{equation}
-  \label{eq:vpm.TE.GeneralCase}
-  \bo{\psi}''-\frac{\mat{M^2}-\mat{I}/4}{r^2}\bo{\psi}+\frac{k^2}{2\pi}\mat{N}^2\bo{\psi}
-    =
-   2\mat{N}^{-1}\mat{N}'\left[\bo{\psi}'-\frac{\psi}{2r}\right]-\frac{2}{r^2}\mat{N}^{-1}\mat{Z}\bo{\psi}
-  \end{equation}
-In the free case, i.e. $n(r,\theta)=1$, we have that
-  \begin{equation}
-   n_{m'} = \sqrt{2\pi}\delta_{m'0}
-  \end{equation}
-such that we have
-  \begin{equation}
-    \label{eq:vpm.freeCase}
-    \bo{\psi}''-\frac{\mat{M}^2-\mat{I}/4}{r^2}\bo{\psi}+k^2\bo{\psi}=0,
-  \end{equation}
-the Bessel equation. For the general case, it makes sense
-to posit a matrix solution of the form
-  \begin{equation}
-   \bo{\psi}=\mat{G}_k(r)\mat{W}(kr)
-  \end{equation}
-where $\left[\mat{W}(kr)\right]_{mm}=H_m^{(\pm)}(kr)$ where
-we choose the sign for either incoming or outgoing 
-wave boundary condition. Substituting this into \eqref{eq:vpm.TE.GeneralCase}
-and using \eqref{eq:vpm.freeCase} gives
-  \begin{multline}
-    \label{eq:vpm.masterEquation}
-    \mat{G}''+2\mat{G}'\frac{d}{dr}\left(\log\mat{W}\right)+\frac{1}{r^2}\left[\mat{G},\mat{M^2}-\mat{I}/4\right]+\frac{k^2}{2\pi}\left(\mat{N}^2-2\pi\right)
-      =
-    2\mat{N}^{-1}\mat{N}'\left[\mat{G}'+\mat{G}\frac{d}{dr}\left(\log\mat{W}\right)-\frac{\mat{G}}{2r}\right]-\frac{2}{r^2}\mat{N}^{-1}\mat{ZG}.
-  \end{multline}
-In the case of TM polarization, the right-hand side 
-of \eqref{eq:vpm.masterEquation} vanishes. 
+Substituting these expansions in Helmholtz's equation and projecting
+onto the eigenstate $\sqrt{r}e^{-im''\theta}/\sqrt{2\pi}$ yields a
+system of coupled \glspl{ode} for each moment of the field $\psi_m$
+	\begin{equation}
+		\label{eq:active.vpm.equation}
+		\bo{\psi}''-\frac{\mat{M}^2-\mat{I}/4}{r^2}\bo{\psi}+\frac{k^2}{2\pi}\mat{N}^2\bo{\psi}=0
+	\end{equation}
+where 
+	\begin{equation*}
+		\left[\mat{N}(r)\right]_{mm''}=\sum_{m'}n_{m'}(r)\delta_{m+m',m''}.
+	\end{equation*}
+Notice that the free case is recovered when $n(r,\theta)=1$, as 
+then $n_{m'}=\delta_{m'0}$ and 
+	\begin{equation}
+		\bo{\psi}''-\frac{\mat{M^2}-\mat{I}/4}{r^2}\bo{\psi}+k^2\bo{\psi}=0
+	\end{equation}
+a system of uncoupled Bessel equations. At this point, we 
+introduce the matrix \gls{ode}, i.e. \eqref{eq:active.vpm.equation} with as many 
+rows as columns. Each column solves the ODE, but has different boundary conditions
+\cite[\S15.2]{NEW1982}. Since the scattering solution must obey Sommerfeld's radiation
+condition, we use the factorization
+	\begin{equation}
+		\bo{\psi} = \mat{G}_k(r)\mat{W}^{+}(kr)
+	\end{equation}
+where $\left[\mat{W}^{\omega}(kr)\right]_{mm''}=H_m^{(\omega)}(kr)\delta_{mm''}$.
+Outside the \gls{lss}, the solution must be $\mat{W}^+(kr)$. In the general potential
+scattering theory, the \gls{lss} is usually a sphere at infinity, which yields the 
+initial value conditions
+	\begin{align}
+		\mat{G}_k(\infty)	&=\mat{I}	&	\mat{G}_k'(\infty)=\mat{0}.
+	\end{align}
+with 
+	\begin{equation}
+		\mat{G}_k''+2\mat{G}_k'\frac{d\log\mat{W}^\omega}{dr}+\frac{1}{r^2}\left[\mat{G}_k,\mat{M}^2-\mat{I}/4\right]
+					+\frac{k^2}{2\pi}\left(\mat{N}^2-2\pi\mat{I}\right)=0.
+	\end{equation}
 
-We start with the matrix case. We parametrize the solution as
-  \begin{equation}
-    \mat{F}_k(r) = \mat{G}_k(r)\mat{W}(kr)
-  \end{equation}
-where $\mat{W}(kr)$ has the outgoing wave functions $rh_\ell^{(+)}(kr)$ on its diagonal. 
-With the Sommerfeld condition, we can conclude that $\mat{G}_k(\infty) = \mat{I}$ and 
-$\mat{G}_k'(\infty)=\mat{0}$. We have the differential equation
-  \begin{multline}
-   -\mat{G}_k(r)''-2\mat{G}_k(r)'\left(\frac{\partial}{\partial r}\ln\mat{W}(kr)\right)
-    \\+\frac{1}{r^2}\left[\mat{L}^2,\mat{G}_k(r)\right]+\mat{V}(r)\mat{G}_k(r)=0
-  \end{multline}
-The incoming wave solutions solves the same equation, but with
-$\mat{W}(kr)\mapsto \mat{W}(kr)^\dagger$. Denoting this solution 
-by $\mat{G}_{-k}(r)$, we find that the wave function is
-  \begin{equation}
-    \bo{\psi}(r) = \mat{G}_{-k}(r)\mat{W}(kr)^\dagger+\mat{G}_k(r)\mat{W}(kr)\mat{S}_k(k)
-  \end{equation}
-where $\mat{S}_k(k)$ is the scattering matrix. Because of the
-$1/r$ factor in our expansion, $\bo{\psi}(0)$ must vanish 
-for the field to be finite at the origin. We can then write the 
-scattering matrix as
-  \begin{equation}
-   \mat{S}_k = -\lim_{r\rightarrow0}\mat{W}^{-1}(kr)\mat{G}^{-1}_k(r)\mat{G}_{-k}(r)\mat{W}(kr)^\dagger
-  \end{equation}
-These equations come from \cite{FOR2012}, modulo some minor changes.
+The $\mat{G}_k(r)$ matrix represents the phase shifts accumulated by each partial wave $m$ 
+and caused by the $m'$th angular moment of the potential. The factorization procedure 
+effectively transforms the \gls{bcp} to an \gls{ivp}, with the data provided on the 
+\gls{lss}. The matrix ODE can thus be solved by using any good integration routine\footnote{Although
+make sure you use a stiff equation solver. See Appendix \ref{sec:app.basisEqn.vpm} for details.}.
 
-Not surprisingly, we will have to deal with exactly the same issue as before: 
-notice the product $\mat{W}^\dagger(kr)\mat{A}\mat{W}^{-1}(kr)$. For diagonal
-matrices $\mat{W}$, we can rewrite this product as
-  \begin{equation*}
-    \mat{A}\circ\left(\text{diag}(\mat{W}^\dagger)\otimes\text{diag}(\mat{W}^{-1})\right)
-  \end{equation*}
-which is our beloved Schur product that caused some issues in \gls{sqa}. 
+The scattering matrix of the problem can also be obtained if we 
+compute the conjugate solution, solving with the incoming radiation $\bo{\psi}=\mat{G}_{-k}\mat{W}^-(kr)$
+instead of the outgoing one. The physical wave function is thus given by 
+	\begin{equation}
+		\bo{\psi} = \mat{G}_{-k}(r)\mat{W}^-(kr)+\mat{G}_k(r)\mat{W}^+(kr)\mat{S}_k(k).
+	\end{equation}
+Using the finiteness condition of the field at origin, we have
+	\begin{equation}
+		\mat{S}_k = -\lim_{r\rightarrow0}\left(\mat{W}^{+}(kr)\right)^{-1}\mat{G}_k^{-1}(r)\mat{G}_{-k}(r)\mat{W}^-(kr).
+	\end{equation}
 
 \paragraph{Green's Function Method}
 Seeing the differential methods fail, the author of this essay, 
@@ -267,7 +279,7 @@ where
   \begin{equation}
   \Delta\epsilon(\bo{r};\omega)=\epsilon(\bo{r};\omega)-\epsilon_B(\omega)
   \end{equation}
-where $\epsilon(\bo{r}),\omega)$ is the permittivity profile of the scatterer
+where $\epsilon(\bo{r};\omega)$ is the permittivity profile of the scatterer
 and $\epsilon_B(\omega)$ the constant permittivity of the environment, or background.
 This allows to write a formal solution using the Green's function of Helmholtz's equation
   \begin{equation}
@@ -322,13 +334,48 @@ In Appendix \ref{sec:app.basisEqn.greenFunction}, we lay out the method in more 
 discuss the numerical implementation and present a generalization for the complete 
 vectorial electromagnetic fields.
 
+\subsection{Examples}
+
 \section{Smart Textile Antennae}
+The last part of this essay recounts the author's contributions
+in a project involving the design and theoretical characterization
+of fibre-antennas. This section departs a little from the more theoretical
+and numerical musings of the others and presents both the modeling of the 
+antennae and their experimental characterization.   
+
+The goal of the original project was to develop an antenna that is compatible with 
+WiFi standards (i.e. emits at $f=2.45\,\unit{GHz}$) and easily integrated
+to textile. These two requirements impose multiple restrictions on both
+the materials that can be used and the geometry of the antenna. For seamless
+integration, we would like the antenna to be spun directly into the textile. 
+
+Most solutions today merely affix a patch antenna to a less 
+encumbered part of the textile, e.g. on the should pads of a shirt
+or the front of a t-shirt.
+A metallic plate shields the user from the electronic components 
+of the patch antenna. Because the properties of patch antennas are
+well known, it requires very little engineering and is thus cheap. However, integration 
+with the textile is far from seamless, as it is very apparent to the
+user that he has become a giant walking antenna. Our project thus 
+strives to find antenna designs that have emission properties
+as flexible as a patch antenna's while improving textile integration
+as to make it become transparent to the user.
+
+The concept of a fibre-antenna rapidly established itself
+as an ideal solution in the research group. It provides a rich
+architecture upon which to build. Moreover, it can easily 
+be spun into textile as it can loaded into the spools that 
+deliver threads to looms. Its mechanical properties make it
+fit for daily use as it can resist a trip in the washing machine. 
+Integration of the electronic components inside that fibre 
+serves to shield both the user and the components. 
+
 \subsection{Basic Antenna Theory and HFSS Simulations}
 Even today, a full 140 years after the publication of 
 Maxwell's \textit{Treatise on Electricity and Magnetism}, 
 the electromagnetic modeling of radiating structures 
 is an ongoing research problem. The notorious difficulty 
-of solving Maxwell's equations seriously hampers analy\-ti\-cal efforts
+of solving Maxwell's equations seriously hampers analytical efforts
 and, due to the nature of electromagnetic radiation, numerical
 progress is not easier to achieve.
 
@@ -450,7 +497,10 @@ as
     G(\theta,\varphi) = \frac{4\pi r^2\mathcal{P}(\theta,\varphi)}{P}
   \end{equation}
 where $P$ is the power accepted by the antenna. Because of the 
-losses, $P/r^2>\int_0^\pi\int_0^{2\pi}\mathcal{P}(\theta',\varphi')\sin\theta'd\theta'd\varphi'$
+losses, 
+	\begin{equation*}
+		P/r^2>\int_0^\pi\int_0^{2\pi}\mathcal{P}(\theta',\varphi')\sin\theta'd\theta'd\varphi'
+	\end{equation*}
 such that $G(\theta,\varphi)<D(\theta,\varphi)$. 
 
 We can also define partial gains in the exact same fashion we defined partial
@@ -502,6 +552,129 @@ Given the wild scale in the size of the structures (from the nanometer to the mi
 the FEM to solve the driven problem. The parameters of interest will be the scattering parameters, the
 radiation pattern and antenna efficiency, gain and directivity. We will first model the fibre-antennae
 that were fabricated. There will be a subsequent optimization phase.
+
+\todo[inline]
+{Discuss the passage from integral equations to finite element analysis.
+Definition of transmission problem, other kinds of boundary conditions, all
+difficult to account for in the traditional Fredholm form. Weak solution naturally
+incorporates the boundary conditions and, while it has some issues, is more
+easily solved.}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{\textwidth}
+    \centering
+   \begin{tikzpicture}
+    % -- Draw different materials of the antenna.
+    \coordinate (O) at (0,0);
+    \draw (O) circle (1);											% Vacuum core
+    \draw[fill=blue, even odd rule] (O) circle (1.2) (0:1) arc (0:360:1);					% Silver layer
+    \draw[fill=orange!50!white, even odd rule] (O) circle (2.6) (0:1.2) arc (0:360:1.2);			% Dielectric (Si) layer
+    \draw[fill=purple!40!white, even odd rule] (O) circle (3) (0:2.6) arc (0:360:2.6);				% Dielectric (polyamide) layer
+    \draw[fill=blue,even odd rule] (45:3) -- (45:3.2) arc (45:-225:3.2) -- (-225:3) arc (-225:45:3) -- cycle;	% Second silver layer
+    \draw[fill=blue,opacity=0.5,even odd rule,yshift=0.4cm] (45:3) -- (45:3.2) arc (45:135:3.2) -- (135:3) arc (135:45:3) -- cycle;
+    
+    % -- Draw the angular size of the window.
+    \draw[->,>=stealth,thick] (O) -- (-2.8,2.8);
+    \draw[->,>=stealth,thick] (O) -- (2.8,2.8);
+    \draw[thick] (45:0.3) arc (45:135:.3); 
+    \node at (0,0.5) {$\theta_w$};
+    
+    % -- Place text for materials
+    \node at (0,-0.25) {Vacuum};
+    \node[text=white,fill=blue,fill opacity=0.25,text opacity=1] at (0,-1.1) {Ag};
+    \node at (0,-1.9) {Si};
+    \node at (0,-2.8) {Polyamide};
+    \node[text=white,fill=blue,fill opacity=0.25,text opacity=1] at (0,-3.2) {Ag};
+   \end{tikzpicture}
+   \vspace{0.25cm}
+   \caption{View of the cross-section: in order of increasing radius, we have: vacuum, silver, silica, polyamide and silver.
+	    We have shown a cross-section where there is a ``window''. When there are no windows, 
+	    the outer silver layer takes up the entire circumference of the fiber.
+	    $\theta_w$ is the angular size of the windows.}
+   \label{fig:antenna.fibre-antenna.xsection}
+  \end{subfigure}
+  
+  \vspace{2cm}
+  
+  \begin{subfigure}[b]{\textwidth}
+    \centering
+   \begin{tikzpicture}
+    \draw[blue,thick] (0,-0.5) rectangle (15,2.5);
+    \draw[purple!40!white] (2,0.5) rectangle (4,1.5);
+    \draw[purple!40!white] (6,0.5) rectangle (8,1.5);
+    \draw[purple!40!white] (10,0.5) rectangle (12,1.5);
+    
+    \draw[<->,>=stealth,thick] (0,1) -- (2,1) node[midway,fill=white] {$d_L$};
+    \draw[<->,>=stealth,thick] (2,1) -- (4,1) node[midway,fill=white] {$S_z$};
+    \draw[<->,>=stealth,thick] (4,1) -- (6,1) node[midway,fill=white] {$d_z$};
+    \draw[<->,>=stealth,thick] (6,1) -- (8,1) node[midway,fill=white] {$S_z$};
+    \draw[<->,>=stealth,thick] (8,1) -- (10,1) node[midway,fill=white] {$d_z$};
+    \draw[<->,>=stealth,thick] (10,1) -- (12,1) node[midway,fill=white] {$S_z$};
+    \draw[<->,>=stealth,thick] (12,1) -- (15,1) node[midway,fill=white] {$d_R$};
+    \draw[|-|,thick] (-0.01,2.8) -- (15.01,2.8) node[midway,fill=white] {$L=d_L+d_R+(n-1)P+S_z$};
+    \draw[|-|,thick] (5.99,0.2) -- (10.01,0.2) node[midway,fill=white] {$P=S_z+d_z$};
+   \end{tikzpicture}
+   \vspace{0.25cm}
+   \caption{Top view: the positions of the windows are usually asymmetric, i.e. $d_L\neq d_R$. The distance between
+	    the windows is given by $d_z$ and the length of the windows are $S_z$. We notice that the length of the 
+	    fibre is given by $L=d_L+d_R+(n-1)P+S_z$ where $P=S_z+d_z$ is the period between windows and $n$ is the number
+	    of windows.}
+   \label{fig:antenna.fibre-antenna.topview}
+  \end{subfigure}
+  \caption{Geometry of the fibre-antenna}
+  \label{fig:antenna.fibre-antenna}
+\end{figure}
+
+\subsection{Leaky Coaxial Cable}
+The first design we have looked into is a well known one:
+the \textit{leaky coaxial fibre} (LCXF). It simply consists of
+a coaxial cable (metal rod, dielectric layer, metal coating)
+from which we have removed some of the metallic coating. 
+These holes in the metallic coating are called ``windows'' and
+allow light to escape the confines of the coax cable, hence
+the moniker \textit{leaky}. In the following section, we will
+look at several methods that we used to model the device
+and present the design parameters that were used. 
+
+\subsubsection{Specifications of the Devices}
+An image is worth a thousand words. Figure \ref{fig:antenna.fibre-antenna.xsection}
+shows a cross-section of the fibre. Figure \ref{fig:antenna.fibre-antenna.topview} 
+shows a top view of the antenna and display the positions of the windows. 
+Multiple designs have been fabricated, but we retain only those that 
+we have tried to simulate. Table \ref{tab:antenna.rfxx-parameters} 
+shows the actual geometrical parameters of the fibre-antennas.
+
+\paragraph*{On the thickness of the silver shells}
+The thicknesses of the dielectric materials are provided by the manufacturer, 
+Polymicro Technologies, safe for the thicknesses of the silver layers. 
+For the time being, we have calculated those thicknesses by measuring
+the DC resistance of the inner and outer layers of silver and
+using the relation \cite[p.~204]{CHE1989}
+  \begin{equation}
+    \label{eq:antenna.dcResistivity}
+    R = \frac{L}{\sigma A}
+  \end{equation}
+where $L$ is the length of the fibre, $\sigma$ the conductivity of the silver
+layer and $A$ its area. For the inner and outer layers, we have
+  \begin{align}
+    A_\text{inner}	&= \int_0^{2\pi}\int_{t_\text{vac}}^{t_\text{vac}+t_\text{Ag1}}r\,dr d\theta= \pi\left(2t_\text{vac}t_\text{Ag1}+t_\text{Ag1}^2\right)	\\
+    A_\text{outer}	&= \int_0^{2\pi}\int_T^{T+t_\text{Ag2}}r\,dr d\theta = \pi\left(2Tt_\text{Ag2}+t_\text{Ag2}^2\right)
+  \end{align}
+where $T=t_\text{vac}+t_\text{Ag1}+t_\text{Si}+t_\text{pyamide}$. 
+Substituting these results into \eqref{eq:antenna.dcResistivity}
+yields
+  \begin{subequations}
+  \label{eq:antenna:thickGeneralEquations}
+  \begin{align}  
+   t_\text{Ag1}^2 + 2t_\text{vac}t_\text{Ag1}-\frac{L}{\sigma_\text{Ag0}\pi R_\text{inner}}	&=0	\\
+   t_\text{Ag2}^2 + 2Tt_\text{Ag2}-\frac{L}{\sigma_\text{Ag0}\pi R_\text{outer}}			&=0
+  \end{align}
+  \end{subequations}
+where the $R$s are the measured D.C. resistances measured for each shell. 
+This can readily be solved using the quadratic equation. Using the bulk conductivity
+of silver (see Table \ref{tab:antenna.physicalParameters}) yields the 
+thicknesses found in Table \ref{tab:antenna.rfxx-parameters}.
 
 \subsubsection{Preliminary Results}
 We first model the RF21 design. Its parameters are summarized in 
@@ -630,148 +803,6 @@ silver layers on the propagation of light.
 \end{figure}
 
 \section{Antenna Modelization}
-The goal of this project is to develop an antenna that is compatible with 
-WiFi standards (i.e. emits at $f=2.45\,\unit{GHz}$) and easily integrated
-to textile. These two requirements impose multiple restrictions on both
-the materials that can be used and the geometry of the antenna. For seamless
-integration, we would like the antenna to be spun directly into the textile. 
-
-Most solutions today merely affix a patch antenna to a less 
-encumbered part of the textile, e.g. on the should pads of a shirt
-or the front of a t-shirt.
-A metallic plate shields the user from the electronic components 
-of the patch antenna. Because the properties of patch antennas are
-well known, it requires very little engineering and is thus cheap. However, integration 
-with the textile is far from seamless, as it is very apparent to the
-user that he has become a giant walking antenna. Our project thus 
-strives to find antenna designs that have emission properties
-as flexible as a patch antenna's while improving textile integration
-as to make it become transparent to the user.
-
-The concept of a fibre-antenna rapidly established itself
-as an ideal solution in the research group. It provides a rich
-architecture upon which to build. Moreover, it can easily 
-be spun into textile as it can loaded into the spools that 
-deliver threads to looms. Its mechanical properties make it
-fit for daily use as it can resist a trip in the washing machine. 
-Integration of the electronic components inside that fibre 
-serves to shield both the user and the components. 
-
-\begin{figure}
-  \centering
-  \begin{subfigure}[b]{\textwidth}
-    \centering
-   \begin{tikzpicture}
-    % -- Draw different materials of the antenna.
-    \coordinate (O) at (0,0);
-    \draw (O) circle (1);											% Vacuum core
-    \draw[fill=blue, even odd rule] (O) circle (1.2) (0:1) arc (0:360:1);					% Silver layer
-    \draw[fill=orange!50!white, even odd rule] (O) circle (2.6) (0:1.2) arc (0:360:1.2);			% Dielectric (Si) layer
-    \draw[fill=purple!40!white, even odd rule] (O) circle (3) (0:2.6) arc (0:360:2.6);				% Dielectric (polyamide) layer
-    \draw[fill=blue,even odd rule] (45:3) -- (45:3.2) arc (45:-225:3.2) -- (-225:3) arc (-225:45:3) -- cycle;	% Second silver layer
-    \draw[fill=blue,opacity=0.5,even odd rule,yshift=0.4cm] (45:3) -- (45:3.2) arc (45:135:3.2) -- (135:3) arc (135:45:3) -- cycle;
-    
-    % -- Draw the angular size of the window.
-    \draw[->,>=stealth,thick] (O) -- (-2.8,2.8);
-    \draw[->,>=stealth,thick] (O) -- (2.8,2.8);
-    \draw[thick] (45:0.3) arc (45:135:.3); 
-    \node at (0,0.5) {$\theta_w$};
-    
-    % -- Place text for materials
-    \node at (0,-0.25) {Vacuum};
-    \node[text=white,fill=blue,fill opacity=0.25,text opacity=1] at (0,-1.1) {Ag};
-    \node at (0,-1.9) {Si};
-    \node at (0,-2.8) {Polyamide};
-    \node[text=white,fill=blue,fill opacity=0.25,text opacity=1] at (0,-3.2) {Ag};
-   \end{tikzpicture}
-   \vspace{0.25cm}
-   \caption{View of the cross-section: in order of increasing radius, we have: vacuum, silver, silica, polyamide and silver.
-	    We have shown a cross-section where there is a ``window''. When there are no windows, 
-	    the outer silver layer takes up the entire circumference of the fiber.
-	    $\theta_w$ is the angular size of the windows.}
-   \label{fig:antenna.fibre-antenna.xsection}
-  \end{subfigure}
-  
-  \vspace{2cm}
-  
-  \begin{subfigure}[b]{\textwidth}
-    \centering
-   \begin{tikzpicture}
-    \draw[blue,thick] (0,-0.5) rectangle (15,2.5);
-    \draw[purple!40!white] (2,0.5) rectangle (4,1.5);
-    \draw[purple!40!white] (6,0.5) rectangle (8,1.5);
-    \draw[purple!40!white] (10,0.5) rectangle (12,1.5);
-    
-    \draw[<->,>=stealth,thick] (0,1) -- (2,1) node[midway,fill=white] {$d_L$};
-    \draw[<->,>=stealth,thick] (2,1) -- (4,1) node[midway,fill=white] {$S_z$};
-    \draw[<->,>=stealth,thick] (4,1) -- (6,1) node[midway,fill=white] {$d_z$};
-    \draw[<->,>=stealth,thick] (6,1) -- (8,1) node[midway,fill=white] {$S_z$};
-    \draw[<->,>=stealth,thick] (8,1) -- (10,1) node[midway,fill=white] {$d_z$};
-    \draw[<->,>=stealth,thick] (10,1) -- (12,1) node[midway,fill=white] {$S_z$};
-    \draw[<->,>=stealth,thick] (12,1) -- (15,1) node[midway,fill=white] {$d_R$};
-    \draw[|-|,thick] (-0.01,2.8) -- (15.01,2.8) node[midway,fill=white] {$L=d_L+d_R+(n-1)P+S_z$};
-    \draw[|-|,thick] (5.99,0.2) -- (10.01,0.2) node[midway,fill=white] {$P=S_z+d_z$};
-   \end{tikzpicture}
-   \vspace{0.25cm}
-   \caption{Top view: the positions of the windows are usually asymmetric, i.e. $d_L\neq d_R$. The distance between
-	    the windows is given by $d_z$ and the length of the windows are $S_z$. We notice that the length of the 
-	    fibre is given by $L=d_L+d_R+(n-1)P+S_z$ where $P=S_z+d_z$ is the period between windows and $n$ is the number
-	    of windows.}
-   \label{fig:antenna.fibre-antenna.topview}
-  \end{subfigure}
-  \caption{Geometry of the fibre-antenna}
-  \label{fig:antenna.fibre-antenna}
-\end{figure}
-
-\subsection{Leaky Coaxial Cable}
-The first design we have looked into is a well known one:
-the \textit{leaky coaxial fibre} (LCXF). It simply consists of
-a coaxial cable (metal rod, dielectric layer, metal coating)
-from which we have removed some of the metallic coating. 
-These holes in the metallic coating are called ``windows'' and
-allow light to escape the confines of the coax cable, hence
-the moniker \textit{leaky}. In the following section, we will
-look at several methods that we used to model the device
-and present the design parameters that were used. 
-
-\subsubsection{Specifications of the Devices}
-An image is worth a thousand words. Figure \ref{fig:antenna.fibre-antenna.xsection}
-shows a cross-section of the fibre. Figure \ref{fig:antenna.fibre-antenna.topview} 
-shows a top view of the antenna and display the positions of the windows. 
-Multiple designs have been fabricated, but we retain only those that 
-we have tried to simulate. Table \ref{tab:antenna.rfxx-parameters} 
-shows the actual geometrical parameters of the fibre-antennas.
-
-\paragraph*{On the thickness of the silver shells}
-The thicknesses of the dielectric materials are provided by the manufacturer, 
-Polymicro Technologies, safe for the thicknesses of the silver layers. 
-For the time being, we have calculated those thicknesses by measuring
-the DC resistance of the inner and outer layers of silver and
-using the relation \cite[p.~204]{CHE1989}
-  \begin{equation}
-    \label{eq:antenna.dcResistivity}
-    R = \frac{L}{\sigma A}
-  \end{equation}
-where $L$ is the length of the fibre, $\sigma$ the conductivity of the silver
-layer and $A$ its area. For the inner and outer layers, we have
-  \begin{align}
-    A_\text{inner}	&= \int_0^{2\pi}\int_{t_\text{vac}}^{t_\text{vac}+t_\text{Ag1}}r\,dr d\theta= \pi\left(2t_\text{vac}t_\text{Ag1}+t_\text{Ag1}^2\right)	\\
-    A_\text{outer}	&= \int_0^{2\pi}\int_T^{T+t_\text{Ag2}}r\,dr d\theta = \pi\left(2Tt_\text{Ag2}+t_\text{Ag2}^2\right)
-  \end{align}
-where $T=t_\text{vac}+t_\text{Ag1}+t_\text{Si}+t_\text{pyamide}$. 
-Substituting these results into \eqref{eq:antenna.dcResistivity}
-yields
-  \begin{subequations}
-  \label{eq:antenna:thickGeneralEquations}
-  \begin{align}  
-   t_\text{Ag1}^2 + 2t_\text{vac}t_\text{Ag1}-\frac{L}{\sigma_\text{Ag0}\pi R_\text{inner}}	&=0	\\
-   t_\text{Ag2}^2 + 2Tt_\text{Ag2}-\frac{L}{\sigma_\text{Ag0}\pi R_\text{outer}}			&=0
-  \end{align}
-  \end{subequations}
-where the $R$s are the measured D.C. resistances measured for each shell. 
-This can readily be solved using the quadratic equation. Using the bulk conductivity
-of silver (see Table \ref{tab:antenna.physicalParameters}) yields the 
-thicknesses found in Table \ref{tab:antenna.rfxx-parameters}.
 
 In our previous simulations, it was clear that something was amiss:
 there was no correlation between the simulation and
