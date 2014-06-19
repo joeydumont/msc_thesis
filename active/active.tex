@@ -350,8 +350,8 @@ the materials that can be used and the geometry of the antenna. For seamless
 integration, we would like the antenna to be spun directly into the textile. 
 
 Most solutions today merely affix a patch antenna to a less 
-encumbered part of the textile \cite{JAI2013}, e.g. on the should pads of a shirt
-or the front of a t-shirt.
+encumbered part of the textile \cite{CAT2004,JAI2013}, e.g. 
+on the should pads of a shirt or the front of a t-shirt.
 A metallic plate shields the user from the electronic components 
 of the patch antenna. Because the properties of patch antennas are
 well known \cite{ELL2003}, it requires very little engineering and is thus cheap. However, integration 
@@ -375,7 +375,7 @@ we will first show the important quantities when
 working with antennas, and more importantly the design
 parameters.
 
-\subsection{Basic Antenna Theory and HFSS Simulations}
+\subsection{Basic Antenna Theory}
 Even today, a full 140 years after the publication of 
 Maxwell's \textit{Treatise on Electricity and Magnetism}, 
 the electromagnetic modeling of radiating structures 
@@ -389,26 +389,13 @@ antenna theory (Maxwell's) and discuss the nature
 of sources in this framework (currents and charges). 
 
 \subsubsection{Maxwell's Equations}
-Being, by now, comfortable with the basic form of Maxwell's equations, 
-we will simply state them for linear, non-chiral and reciprocal media
-and allow for the existence of current and charge densities. 
-They are (in Lorentz-Heaviside units with $c=1$) \cite{NOV2012}
-  \begin{subequations}
-  \begin{align}
-   \nabla\times\bo{E}+\frac{\partial(\mu\bo{H})}{\partial t}	&=0	\\
-   \nabla\times\bo{H}-\frac{\partial(\epsilon\bo{E})}{\partial t}-\bo{J}_c&=\bo{J}_s\\
-   \nabla\cdot(\epsilon\bo{E})					&=\rho	\\
-   \nabla\cdot(\mu\bo{H})					&=0
-  \end{align}
-  \end{subequations}
-where we have separated the current using two terms: a source current, $\bo{J}_s$ and
-an induced conduction current $\bo{J}_c$. The induced conduction current
-is related to the electric field via Ohm's law, i.e.
-  \begin{equation}
-   \bo{J}_c=\sigma\bo{E}
-  \end{equation}
-while the source current is a prepared, physical source initially 
-independent of the system.
+Recall the macroscopic Maxwell equations in matter
+\eqref{eq:passive.formalism.maxwellsEquations}, with the 
+induced conduction current density given by
+	\begin{equation}
+		\bo{j}_c = \sigma\bo{E}.
+	\end{equation}
+
 
 A technical point is in order. In the antenna literature, the induced
 currents and charge density are considered as the fundamental quantities 
@@ -441,9 +428,9 @@ identities, we find that the field outside the excluded sub-volumes
 can be expressed as
   \begin{align}
    \bo{E} &= \frac{1}{4\pi}\mathop{\iiint}_V \left(\rho\nabla G+i\omega G\bo{J}\right)dV
-	+\frac{1}{4\pi}\oiint_{S_1,\cdots,S_N}\left[\bo{n}\cdot\bo{E}\nabla G+(\bo{n}\times\bo{E})\times\nabla G+i\omega G(\bo{n}\times\bo{H})\right]dS\label{eq:antenna.strattonChuE}\\
+	+\frac{1}{4\pi}\oiint_{S_1,\cdots,S_N}\left[\bo{n}\cdot\bo{E}\nabla G+(\bo{n}\times\bo{E})\times\nabla G+i\omega G(\bo{n}\times\bo{H})\right]dS\label{eq:active.antennae.strattonChuE}\\
    \bo{H} &= \frac{1}{4\pi}\mathop{\iiint}_V \bo{J}\times\nabla G dV
-	+\frac{1}{4\pi}\oiint_{S_1,\cdots,S_N}\left[-i\omega G(\bo{n}\times\bo{E})+(\bo{n}\times\bo{H})\times\nabla G+(\bo{n}\cdot\bo{H})\nabla G\right]dS\label{eq:antenna.strattonChuH}
+	+\frac{1}{4\pi}\oiint_{S_1,\cdots,S_N}\left[-i\omega G(\bo{n}\times\bo{E})+(\bo{n}\times\bo{H})\times\nabla G+(\bo{n}\cdot\bo{H})\nabla G\right]dS\label{eq:active.antennae.strattonChuH}
   \end{align}
 where $G$ is the Green's function of the problem
   \begin{equation}
@@ -501,7 +488,7 @@ as
   \begin{equation}
     G(\theta,\varphi) = \frac{4\pi r^2\mathcal{P}(\theta,\varphi)}{P}
   \end{equation}
-where $P$ is the power accepted by the antenna. Because of the 
+where $P$ is the power fed into the antenna. Because of the 
 losses, 
 	\begin{equation*}
 		P/r^2>\int_0^\pi\int_0^{2\pi}\mathcal{P}(\theta',\varphi')\sin\theta'd\theta'd\varphi'
@@ -518,7 +505,8 @@ to the power accepted by the antenna \cite{IEEE145-1993}.
 The scattering parameters (or $S$-parameters) are
 usually defined through a linear $N$-port network. 
 Suppose we have an electronic device comprising
-$N$ ports, or points of entry. Imagine shining light onto
+$N$ ports, or points of entry. Imagine shining light onto, 
+or make a current flow into,
 one of the ports, say port $j$. A certain percentage
 of the power carried by this light be reflected 
 by this port and the rest will be transmitted to the
@@ -538,21 +526,49 @@ components to the incoming (incident) components
   \end{equation}
 In this case, the ``ports'' are the different angular momenta
 components rather than physical input/output connections. 
-Ports are somewhat arbitrary in optical structures.
+The precise nature of ports is somewhat arbitrary in optical structures.
 
-\subsection{HFSS Simulations of an LCX Antenna}
-In our quest of finding a fibre-antenna design that can easily be integrated into
-textile, we have stumbled upon the leaky coaxial cable (LCX) design: a basic coaxial cable
-from which are cut windows as to expose the dielectric core. The radiation characteristics
-can be tuned by changing the geometric properties of the windows. 
+The traces of these parameters, i.e. the value of $S_{ij}$ as a function of 
+the frequency of the input current, will be of primary interest. The frequency
+response can give information about the finesse of the resonances, as well as
+hinting at specific radiation mechanisms. The analysis below will be divided
+in two parts: the analysis of the traces on their own, and comparison with the 
+theoretical/simulation traces.
 
-LCX antennae are usually analyzed using harmonic analysis \cite{WAN2001}. 
-In our case, however, we cannot consider the structure to be periodic, as the total 
+\subsection{The Leaky Coaxial Cable}
+The modelization of \gls{lcx} is not a new field \cite{DEL1980,WAN2001,KIM2007,ADD2008}.
+They have been studied using a variety of analytical and numerical methods. Most of them 
+depend on a set of \textit{crucial} approximations that cannot be assumed to hold 
+in our particular case.
+
+\begin{description}
+	\item [Periodicity of the structure] The $z$-periodicity of the geometry and 
+		and material parameters paves the way for a Floquet-Bloch expansion of the 
+		fields. This is used in \cite{WAN2001}.
+	\item [Narrow slits] A perturbation theory, where slits are supposed to be 
+			small as compared to the wavelength, $kS_z\ll1$, is used in \cite{KIM2007}.
+	\item [Transmission line behaviour] One of the most important approximation, it stipulates
+			that the \gls{lcx} supports a single TEM propagating mode. This allows the 
+			unambiguous use of scalar voltages and currents as the physical observables
+			\cite{PAU2007}. It also allows
+			the use of simpler numerical methods, such as using the overlap between the 
+			propagating mode and the radiation continuum to quantify the radiation 
+			properties \cite{SHI1989,ADD2008}. 
+\end{description}
+
+In our case, the worst offender is the last one, as our metal deposition method
+does not allow for a fine control of the thicknesses deposited, nor ensure its
+smoothness. The TEM approximation relies on the metal layers behaving almost as 
+perfect conductors. Our metallic layers are typically smaller than the skin
+depth of the metal, which makes the approximation invalid. 
+
+Moreover, we cannot consider the structure to be periodic, as the total 
 length of the fibre-antenna is of the order of the wavelength ($\lambda\sim12\unit{cm}$) and the period
-of the slots is smaller than the wavelength. Moreover, given the size of the slots, 
+of the slots is smaller than the wavelength. Given the size of the slots, 
 the author is comfortable to say that we neither are in the perturbation regime. 
 Figure \ref{fig:antenna.fibre-antenna} shows the actual design and the important parameters.
 
+\paragraph{Choice of simulation software}
 Given the wild scale in the size of the structures (from the nanometer to the millimeter), we use
 the FEM to solve the driven problem. The parameters of interest will be the scattering parameters, the
 radiation pattern and antenna efficiency, gain and directivity. We will first model the fibre-antennae
@@ -564,6 +580,19 @@ Definition of transmission problem, other kinds of boundary conditions, all
 difficult to account for in the traditional Fredholm form. Weak solution naturally
 incorporates the boundary conditions and, while it has some issues, is more
 easily solved.}
+
+%As finite element methods directly solve Maxwell's equations, 
+%they can be a useful tool to verify semi-analytical methods. 
+%In the last section, we reported some agreement issues 
+%between experimental and simulation data. We purported
+%that the discrepancy was due to the small size of the
+%silver layers that we could properly account for in 
+%the finite element model. This issue has been solved
+%by abandoning the idea of properly meshing the silver layers
+%and replacing them by appropriate impedance boundary conditions.
+%From HFSS's documentation, we see that the ``Layered Impedance 
+%Boundary Conditions'' module follows the theory set forth in 
+%\cite{MIT1968} and others. 
 
 \begin{figure}
   \centering
@@ -597,10 +626,10 @@ easily solved.}
 	    We have shown a cross-section where there is a ``window''. When there are no windows, 
 	    the outer silver layer takes up the entire circumference of the fiber.
 	    $\theta_w$ is the angular size of the windows.}
-   \label{fig:antenna.fibre-antenna.xsection}
+   \label{fig:active.antennae.fibre-antenna.xsection}
   \end{subfigure}
   
-  \vspace{2cm}
+  \vspace{4cm}
   
   \begin{subfigure}[b]{\textwidth}
     \centering
@@ -625,24 +654,13 @@ easily solved.}
 	    the windows is given by $d_z$ and the length of the windows are $S_z$. We notice that the length of the 
 	    fibre is given by $L=d_L+d_R+(n-1)P+S_z$ where $P=S_z+d_z$ is the period between windows and $n$ is the number
 	    of windows.}
-   \label{fig:antenna.fibre-antenna.topview}
+   \label{fig:active.antennae.fibre-antenna.topview}
   \end{subfigure}
   \caption{Geometry of the fibre-antenna}
-  \label{fig:antenna.fibre-antenna}
+  \label{fig:active.antennae.fibre-antenna}
 \end{figure}
 
-\subsection{Leaky Coaxial Cable}
-The first design we have looked into is a well known one:
-the \textit{leaky coaxial fibre} (LCXF). It simply consists of
-a coaxial cable (metal rod, dielectric layer, metal coating)
-from which we have removed some of the metallic coating. 
-These holes in the metallic coating are called ``windows'' and
-allow light to escape the confines of the coax cable, hence
-the moniker \textit{leaky}. In the following section, we will
-look at several methods that we used to model the device
-and present the design parameters that were used. 
-
-\subsubsection{Specifications of the Devices}
+\paragraph{Specifications of the Devices}
 An image is worth a thousand words. Figure \ref{fig:antenna.fibre-antenna.xsection}
 shows a cross-section of the fibre. Figure \ref{fig:antenna.fibre-antenna.topview} 
 shows a top view of the antenna and display the positions of the windows. 
@@ -650,40 +668,229 @@ Multiple designs have been fabricated, but we retain only those that
 we have tried to simulate. Table \ref{tab:antenna.rfxx-parameters} 
 shows the actual geometrical parameters of the fibre-antennas.
 
-\paragraph*{On the thickness of the silver shells}
+\subparagraph{On the thickness of the silver shells}
 The thicknesses of the dielectric materials are provided by the manufacturer, 
 Polymicro Technologies, safe for the thicknesses of the silver layers. 
 For the time being, we have calculated those thicknesses by measuring
 the DC resistance of the inner and outer layers of silver and
 using the relation \cite[p.~204]{CHE1989}
   \begin{equation}
-    \label{eq:antenna.dcResistivity}
+    \label{eq:active.antennae.dcResistivity}
     R = \frac{L}{\sigma A}
   \end{equation}
 where $L$ is the length of the fibre, $\sigma$ the conductivity of the silver
 layer and $A$ its area. For the inner and outer layers, we have
   \begin{align}
-    A_\text{inner}	&= \int_0^{2\pi}\int_{t_\text{vac}}^{t_\text{vac}+t_\text{Ag1}}r\,dr d\theta= \pi\left(2t_\text{vac}t_\text{Ag1}+t_\text{Ag1}^2\right)	\\
+    A_\text{inner}	&= \int_0^{2\pi}\int_{t_\text{vac}-t_\text{Ag1}}^{t_\text{vac}}r\,dr d\theta= \pi\left(2t_\text{vac}t_\text{Ag1}-t_\text{Ag1}^2\right)	\\
     A_\text{outer}	&= \int_0^{2\pi}\int_T^{T+t_\text{Ag2}}r\,dr d\theta = \pi\left(2Tt_\text{Ag2}+t_\text{Ag2}^2\right)
   \end{align}
 where $T=t_\text{vac}+t_\text{Ag1}+t_\text{Si}+t_\text{pyamide}$. 
 Substituting these results into \eqref{eq:antenna.dcResistivity}
 yields
   \begin{subequations}
-  \label{eq:antenna:thickGeneralEquations}
+  \label{eq:active.antennae.thickGeneralEquations}
   \begin{align}  
-   t_\text{Ag1}^2 + 2t_\text{vac}t_\text{Ag1}-\frac{L}{\sigma_\text{Ag0}\pi R_\text{inner}}	&=0	\\
+   -t_\text{Ag1}^2 + 2t_\text{vac}t_\text{Ag1}-\frac{L}{\sigma_\text{Ag0}\pi R_\text{inner}}	&=0	\\
    t_\text{Ag2}^2 + 2Tt_\text{Ag2}-\frac{L}{\sigma_\text{Ag0}\pi R_\text{outer}}			&=0
   \end{align}
   \end{subequations}
-where the $R$s are the measured D.C. resistances measured for each shell. 
+where the $R$s are the measured D.C. resistances for each shell. 
 This can readily be solved using the quadratic equation. Using the bulk conductivity
 of silver (see Table \ref{tab:antenna.physicalParameters}) yields the 
 thicknesses found in Table \ref{tab:antenna.rfxx-parameters}.
 
+\begin{figure}
+ \begin{center}
+ \begin{tikzpicture}
+  % -- Draw the overall shape.
+  \draw[very thick] (0,0) -- (8,0) -- ++(0,-2) -- ++(-3,0) -- ++(0,-2) -- ++(-2,0) -- ++(0,2) -- ++(-3,0) -- ++(0,2); 
+  
+  % -- We draw the reflected/transmitted arrows.
+  \draw[->,>=stealth] (8.25,-0.5) -- ++(1,0) node[near end,above] {$a_1$};
+  \draw[<-,>=stealth] (8.25,-1.5) -- ++(1,0) node[near end,above] {$b_1$};
+  \draw[<-,>=stealth] (-1.25,-0.5) -- ++(1,0) node[near start,above] {$a_2$};
+  \draw[->,>=stealth] (-1.25,-1.5) -- ++(1,0) node[near start,above] {$b_2$};
+  \draw[->,>=stealth] (3.5,-4.25) -- ++(0,-1) node[near end,right] {$a_3$};
+  \draw[<-,>=stealth] (4.5,-4.25) -- ++(0,-1) node[near end,right] {$b_3$};
+ \end{tikzpicture}
+ \end{center}
+ \caption[Example of a 3-port network]{Example of a 3-port network. The ``ends'' of the structure are generally used at its ports.}
+ \label{fig:active.antennae.network}
+\end{figure}
+
+\subsection{Analysis of Experimental Traces}
+Before showing the correspondence (or lack thereof) between the
+simulated and measured traces, we will analyze the traces by themselves
+and try to extract any information we can. The main tool 
+we will use to do so is the autocorrelation of the traces. It is defined
+as 
+	\begin{equation}
+		c_{XX}(\Delta t) = \frac{\avg{\left[X(t+\Delta t)-\avg{X(t)}\right]\left[X(t)-\avg{X(t)}\right]}}{\avg{X(t)^2}-\avg{X(t)}}
+	\end{equation}
+for a time series $X(t)$. Since the autocorrelation of a signal has the same periodicity
+as the input signal, it is a practical way to reduce the noise of experimental
+data and detect periodicity. 
+
+Another interesting property that can be used to theoretically characterize
+the type of scattering occurring in our structures is the decay of the 
+autocorrelation function. In the 1980s, it was shown that if the underlying
+classical mechanics of the structure showed chaoticity, the corresponding
+\textit{unbounded} scattering problem retained the signature of chaos 
+through the Lorentzian decay of the autocorrelation of the scattering matrix 
+elements \cite{BLU1988}. We will thus use a Lorentzian fit of the form 
+	\begin{equation}
+		L(x;\bo{p}) = p_0 \frac{p_1/2}{x^2-p_1^2/4}
+	\end{equation}
+where $\bo{p}$ is a vector of parameters to be fitted. The quality of the
+fit will serve as a qualitative way to determine the quality of the
+fibre-antenna. A good Lorentzian fit indicates irregularity of the spectral
+response and consequently of the bad quality of this particular fibre-antenna
+realization. The reasoning is that the resonances (or dips, rather) are the result
+of the commensuration between the geometry and the wavelength of the light and 
+are thus expected to repeat periodically. 
+
+\paragraph{RF10}
+This is the first realization of the fibre-antenna and, 
+consequently, its $S$-parameters are far from the desired
+ones (see Figure \ref{fig:active.lcx.rf10sParameters}), as they
+show a single dip at $f\sim800\,\unit{MHz}$. The rapid decrease
+of the autocorrelation reflects on the poor fabrication process.
+
+\begin{figure}
+ \centering
+ \includegraphics{figs/active/RF10-sParameters.pdf}
+ \caption[Experimental $S_{22}$ trace of the RF10 fibre-antenna]
+ 		{Experimental $S_{22}$ trace for the RF10 fibre-antenna. 
+ 		The relatively background value of $\sim -4\,\unit{dB}$ indicates
+ 		that much of the power is reflected back from port 2 (the right-hand side of
+ 		the antenna, according to our specifications). Also, its single dip at $f\sim800\,\unit{MHz}$
+ 		is mostly useless for our purposes.}
+ \label{fig:active.lcx.rf10sParameters}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics{figs/active/RF10-autoCorrelation.pdf}
+ \caption[Autocorrelation of the experimental trace of $S_{22}$ for the RF10 fibre-antenna]
+ 		{Autocorrelation of the experimental trace of $S_{22}$ for the RF10 fibre-antenna.
+ 		The dotted line represents the Lorentzian fit. Despite relatively strong negative correlation around $800\,\unit{MHz}$,
+ 		it is almost zero over the whole interval, but does not fit the Lorentzian.}
+ \label{fig:active.lcx.rf10autocorrelation}
+\end{figure}
+
+\paragraph{RF21}
+
+
+\begin{figure}
+ \centering
+ \includegraphics{figs/active/RF21-sParameters.pdf}
+ \caption[Experimental $S_{22}$ trace for the RF21 fibre]
+ 		{Experimental $S_{22}$ trace for the RF21 fibre.}
+ \label{fig:active.lcx.rf21sParameters}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics{figs/active/RF21-autoCorrelation.pdf}
+ \caption[Autocorrelation of the experimental $S_{22}$ trace for the RF21 fibre-antenna]
+ 		{Autocorrelation of the experimental $S_{22}$ trace for the RF21 fibre-antenna.}
+ \label{fig:active.lcx.rf21autocorrelation}
+\end{figure}
+
+\paragraph{RF27 and RF29}
+As we can see from Table \ref{tab:antenna.rfxx-parameters}, these two antennae
+are rather similar. It is thus not surprising that their $S$-parameters
+show similar behaviour (compare Figures \ref{fig:active.lcx.rf27sParameters} and
+\ref{fig:active.lcx.rf29sParameters}). Their small differences can be explained
+away by the experimental variability of both the metal deposition and window
+sizing protocols, as they have identical specifications.
+
+Notice the quick decay of the autocorrelation function of the reflection 
+coefficients, $S_{11}$ and $S_{22}$. If it were not for the hint of
+regularity present in the autocorrelation function of $S_{12}$, 
+it could be swiftly concluded that both antennae show chaotic scattering.
+In any case, the lack of periodicity in the signals seems to indicate 
+that the dip is not due to the geometry of the fibre-antenna. 
+
+\begin{figure}
+ \centering
+ \includegraphics{figs/active/RF27-sParameters.pdf}
+ \caption[Experimental $S$-parameter traces for the RF27 fibre-antenna]
+ 		{Experimental $S$-parameter traces for the RF27 fibre-antenna.}
+ \label{fig:active.lcx.rf27sParameters}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics{figs/active/RF27-autoCorrelation.pdf}
+ \caption[Autocorrelation of the experimental $S$-parameter traces for the RF27 fibre-antenna]
+ 		{Autocorrelation of the experimental $S$-parameter traces for the RF27 fibre-antenna.}
+ \label{fig:active.lcx.rf27autocorrelation}
+\end{figure}
+
+
+\begin{figure}
+ \centering
+ \includegraphics{figs/active/RF29-sParameters.pdf}
+ \caption[Experimental $S$-parameter traces for the RF29 fibre-antenna]
+ 		{Experimental $S$-parameter traces for the RF29 fibre-antenna.}
+ \label{fig:active.lcx.rf29sParameters}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics{figs/active/RF29-autoCorrelation.pdf}
+ \caption[Autocorrelation of the experimental $S$-parameter traces for the RF29 fibre-antenna]
+ 		{Autocorrelation of the experimental $S$-parameter traces for the RF29 fibre-antenna.}
+ \label{fig:active.lcx.rf29autocorrelation}
+\end{figure}
+
+\paragraph{RF33}
+The RF33 fibre-antenna, the final antenna produced, is the most mature
+one in terms of experimental protocol and is therefore most
+worthy of study. 
+
+\begin{figure}
+ \centering
+ \includegraphics{figs/active/RF33-sParameters.pdf}
+ \caption[Experimental $S$-parameter traces for the RF33 fibre-antenna]
+ 		{Experimental $S$-parameter traces for the RF33 fibre-antenna.}
+ \label{fig:active.lcx.rf33sParameters}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics{figs/active/RF33-autoCorrelation.pdf}
+ \caption[Autocorrelation of the experimental $S$-parameter traces for the RF33 fibre-antenna]
+ 		{Autocorrelation of the experimental $S$-parameter traces for the RF33 fibre-antenna.}
+ \label{fig:active.lcx.rf33autocorrelation}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics{figs/active/RF33-fft.pdf}
+ \caption[FFT spectrum of the autocorrelation functions of the $S$-parameters of the RF33 fibre-antenna]
+ 		{FFT spectrum of the autocorrelation functions of the $S$-parameters of the RF33 fibre-antenna.}
+ \label{fig:active.lcx.rf33fft}
+\end{figure}
+
+
+\subsection{Comparison with Simulation Results}
+
 \subsubsection{Preliminary Results}
 We first model the RF21 design. Its parameters are summarized in 
 Table \ref{tab:antenna.rfxx-parameters}. 
+
+\begin{figure}
+ \centering
+ \includegraphics[width=\textwidth]{figs/active/sParametersRF21.pdf}
+ \caption[$S$-parameters of the RF21 fibre design]
+ 		{$S$-parameters of the RF21 fibre design. The full lines represent
+	  	the experimental data while the dotted lines represent the simulation data.
+	  	The top $x$ axis shows the $S$-parameters as a function of the ratio of the 
+	  	vacuum wavelength $\lambda_f$ over the period of the windows $P$.}
+ \label{fig:antenna.sParameters}
+\end{figure}
 
 Notice the small thickness
 of the silver layers (126 and 101 nm) compared to the other 
@@ -706,108 +913,6 @@ instead of the values listed in Table \ref{tab:antenna.rfxx-parameters}. In
 this regime, the fibre-antenna behaves like an ordinary transmission line. 
 However, as the mesher does not allow us to go under $2\,\unit{\mu m}$, we cannot
 conclude that is really due to the thickness of the Ag layers, only suspect it.
-
-In our following report, we will break down the problem
-to make it analytically tractable and try to analyze the effect of ``small''
-silver layers on the propagation of light. 
-
-\begin{figure}
- \begin{center}
- \begin{tikzpicture}
-  % -- Draw the overall shape.
-  \draw[very thick] (0,0) -- (8,0) -- ++(0,-2) -- ++(-3,0) -- ++(0,-2) -- ++(-2,0) -- ++(0,2) -- ++(-3,0) -- ++(0,2); 
-  
-  % -- We draw the reflected/transmitted arrows.
-  \draw[->,>=stealth] (8.25,-0.5) -- ++(1,0) node[near end,above] {$a_1$};
-  \draw[<-,>=stealth] (8.25,-1.5) -- ++(1,0) node[near end,above] {$b_1$};
-  \draw[<-,>=stealth] (-1.25,-0.5) -- ++(1,0) node[near start,above] {$a_2$};
-  \draw[->,>=stealth] (-1.25,-1.5) -- ++(1,0) node[near start,above] {$b_2$};
-  \draw[->,>=stealth] (3.5,-4.25) -- ++(0,-1) node[near end,right] {$a_3$};
-  \draw[<-,>=stealth] (4.5,-4.25) -- ++(0,-1) node[near end,right] {$b_3$};
- \end{tikzpicture}
- \end{center}
- \caption[Example of a 3-port network]{Example of a 3-port network. The ``ends'' of the structure are generally used at its ports.}
- \label{fig:antenna.network}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics[width=\textwidth]{figs/active/sParametersRF21.pdf}
- \caption[$S$-parameters of the RF21 fibre design]{$S$-parameters of the RF21 fibre design. The full lines represent
-	  the experimental data while the dotted lines represent the simulation data.
-	  The top $x$ axis shows the $S$-parameters as a function of the ratio of the 
-	  vacuum wavelength $\lambda_f$ over the period of the windows $P$.}
- \label{fig:antenna.sParameters}
-\end{figure}
-
-
-\begin{figure}
- \centering
- \includegraphics{figs/active/RF10-sParameters.pdf}
- \caption{$S$-parameters of ...}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics{figs/active/RF10-autoCorrelation.pdf}
- \caption{Autocorrelation of ...}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics{figs/active/RF21-sParameters.pdf}
- \caption{$S$-parameters of ...}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics{figs/active/RF21-autoCorrelation.pdf}
- \caption{Autocorrelation of ...}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics{figs/active/RF27-sParameters.pdf}
- \caption{$S$-parameters of ...}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics{figs/active/RF27-autoCorrelation.pdf}
- \caption{Autocorrelation of ...}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics{figs/active/RF29-sParameters.pdf}
- \caption{$S$-parameters of ...}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics{figs/active/RF29-autoCorrelation.pdf}
- \caption{Autocorrelation of ...}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics{figs/active/RF33-sParameters.pdf}
- \caption{$S$-parameters of ...}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics{figs/active/RF33-autoCorrelation.pdf}
- \caption{Autocorrelation of ...}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics{figs/active/RF33-fft.pdf}
- \caption{FFT of ...}
-\end{figure}
-
-\section{Antenna Modelization}
 
 In our previous simulations, it was clear that something was amiss:
 there was no correlation between the simulation and
@@ -837,26 +942,24 @@ The positive solution is, defining $q=\left(d\delta_1-1\right)\sigma_1+\left(d\d
 \begin{figure}
  \centering
  \includegraphics[width=0.8\textwidth]{figs/active/out/AFM.pdf}
- \caption[AFM pictures of silver deposited onto glass plates]{AFM pictures of silver deposited onto glass plates. \textbf{(a)} Flakes of silver oxide seem to be forming onto the deposited
-	  silver layer. \textbf{(b)} Sample image showing the inhomogeneity of the
-	  silver layer.}
+ \caption[AFM pictures of silver deposited onto glass plates]
+ 		{AFM pictures of silver deposited onto glass plates. \textbf{(a)} Flakes of silver oxide seem to be forming onto the deposited
+	  	silver layer. \textbf{(b)} Sample image showing the inhomogeneity of the
+	  	silver layer.}
  \label{fig:antenna.AFM}
 \end{figure}
 
-
-\paragraph*{Size Effects}
-It has recently come to our attention that the conductivity 
+Conductivity 
 of thin metal films can be a function of their thicknesses. 
-We will explore this in future work, so for now 
-suffice it to say that the Fuchs-Sondheimer model states
+The Fuchs-Sondheimer model states
 that
   \begin{equation}
       \sigma_F = \frac{\sigma_0}{1+\frac{3\lambda}{8d}\left(1-p\right)}
   \end{equation}
-where $0\leq p\leq1$ is a specularity parameter and $\lambda$ is the 
+where $0\leq p\leq1$ is a specularity parameter that depends on the 
+reflectivity of the electron gas, and $\lambda$ is the 
 electron free mean path in the metal. This model states that conductivity
 diminishes as the thickness of the metallic layer gets smaller.
-
 
 In Figure \ref{fig:antenna.thicknessRatios}, we compare the 
 thicknesses obtained via the bulk conductivity model (Bruggeman 
@@ -869,50 +972,49 @@ we see a difference of about 20\% in the effective conductivities.
 
 The most interesting thing, though, is that the FS
 model predicts metallic layers that are 10\% to 80\% thicker 
-than with the bulk conductivity model. This will be explored 
-in the next report. 
+than with the bulk conductivity model. 
 
 \begin{table}
   \newcolumntype{d}{D{.}{.}{3}}
   \caption[Geometric and physical parameters of the \gls{lcx} antennae]
 	  {Geometric and physical parameters of the \gls{lcx} antennae.
 	  Units are repeated from column above if not indicated.}
- \begin{subtable}[t]{0.45\textwidth}
+ \begin{subtable}[t]{0.65\textwidth}
  \caption[Geometric parameters of the RF21/RF33 fibre designs]
-	  {Geometric parameters of the RF21/RF33 fibre designs. 
+	  {Geometric parameters of the fibre designs. 
 	  The thicknesses of the layers are listed in order, stating
 	  from the inner layer to the outer layer of the fibre-antenna.}
  \label{tab:antenna.rfxx-parameters}
- \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}c@{\extracolsep{\fill}}d@{\extracolsep{\fill}}d}
+ \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}c@{\extracolsep{\fill}}d@{\extracolsep{\fill}}d@{\extracolsep{\fill}}d@{\extracolsep{\fill}}d}
   \hline\hline
-  Quantity			& Unit			& \multicolumn{1}{c}{RF21} 	& \multicolumn{1}{c}{RF33}	\\
+  Quantity			& Unit			& \multicolumn{1}{c}{RF21} 	& \multicolumn{1}{c}{RF27\parnote{Measurements are approximate; values for the inner and outer resistances were lost. We assume they are identical to the RF29.}}	& \multicolumn{1}{c}{RF29}	& \multicolumn{1}{c}{RF33}	\\
   \hline
-  $t_\text{vac}$		& $\unit{\mu m}$	& 99.874			& 99.924			\\
-  $t_\text{Ag1}$		& 			& 0.126				& 0.0766			\\
-  $t_\text{Si}$			& 			& 273				& 273				\\
-  $t_\text{pyamide}$		& 			& 24				& 24				\\
-  $t_\text{Ag2}$		& 			& 0.101				& 0.030				\\
-  $d_L$				& $\unit{mm}$		& 27				& 30.91				\\
-  $d_R$				& 			& 55				& 54.72				\\
+  $t_\text{vac}$	& $\unit{\mu m}$& 99.874					& 99.900					& 99.646			& 99.924			\\
+  $t_\text{Ag1}$	& 				& 0.126						& 0.100						& 0.354				& 0.0766			\\
+  $t_\text{Si}$		& 				& 273						& 273 						& 273				& 273				\\
+  $t_\text{pyamide}$& 				& 24						& 24 						& 24 				& 24				\\
+  $t_\text{Ag2}$	& 				& 0.101						& 0.100						& 0.306				& 0.030				\\
+  $d_L$				& $\unit{mm}$	& 27						& 30						& 31				& 30.91				\\
+  $d_R$				& 				& 55						& 55						& 55				& 54.72				\\
   $S_{z1}$\parnote{Each window has a different $S_z$ and $d_z$.}
-				& 			& 32				& 34.36				\\
-  $S_{z2}$			& 			& 32				& 34.06				\\
-  $S_{z3}$			& 			& 32				& 33.87				\\
-  $d_{z1}$			& 			& 28				& 27.44				\\
-  $d_{z2}$			& 			& 28				& 28.36				\\
-  $L$				& $\unit{cm}$		& 30.0				& 24.372			\\
-  $\theta_w$			& $\unit{deg}$		& 180				& 180				\\
-  $R_\text{inner}$		& $\unit{\Omega}$	& 60.0				& 80.5				\\
-  $R_\text{outer}$		&			& 20.0				& 59.8				\\
+					& 				& 32						& 34						& 33				& 34.36				\\
+  $S_{z2}$			& 				& 32						& 34						& 34				& 34.06				\\
+  $S_{z3}$			& 				& 32						& 34						& 33.5				& 33.87				\\
+  $d_{z1}$			& 				& 28						& 28						& 29				& 27.44				\\
+  $d_{z2}$			& 				& 28						& 28						& 28.5				& 28.36				\\
+  $L$				& $\unit{cm}$	& 30.0						& 24.3						& 24.4				& 24.372			\\
+  $\theta_w$		& $\unit{deg}$	& 180						& 180						& 180 				& 180				\\
+  $R_\text{inner}$	& $\unit{\Omega}$& 60.0						& \multicolumn{1}{c}{---}	& 60				& 80.5				\\
+  $R_\text{outer}$	&				& 20.0						& \multicolumn{1}{c}{---}	& 20				& 59.8				\\
   \hline\hline
  \end{tabular*}
  \begin{flushleft}
  \parnotes
  \end{flushleft}
  \end{subtable}\hfill
- \begin{subtable}[t]{0.45\textwidth}
+ \begin{subtable}[t]{0.3\textwidth}
   \begin{center}
- \caption{Physical parameters of the materials used in the RF21/RF33 antennas.}
+ \caption{Physical parameters of the materials used in the fibre-antennae.}
  \label{tab:antenna.physicalParameters}
  \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}c@{\extracolsep{\fill}}d}
   \hline\hline
@@ -932,7 +1034,6 @@ in the next report.
  \end{subtable}
 \end{table}
 
-
 \begin{figure}
   \centering
   \includegraphics[width=0.9\textwidth]{figs/active/comparisonThickness.pdf}
@@ -946,21 +1047,6 @@ in the next report.
 	  The red line shows the ratio of the green line to the black line.}
   \label{fig:antenna.thicknessRatios}
 \end{figure}
-
-
-\subsubsection{Finite Element Method}
-As finite element methods directly solve Maxwell's equations, 
-they can be a useful tool to verify semi-analytical methods. 
-In the last report, we reported some agreement issues 
-between experimental and simulation data. We purported
-that the discrepancy was due to the small size of the
-silver layers that we could properly account for in 
-the finite element model. This issue has been solved
-by abandoning the idea of properly meshing the silver layers
-and replacing them by appropriate impedance boundary conditions.
-From HFSS's documentation, we see that the ``Layered Impedance 
-Boundary Conditions'' module follows the theory set forth in 
-\cite{MIT1968} and others. 
 
 We have simulated the RF21 fibre using Bruggeman's model
 for the effective conductivity and with values
