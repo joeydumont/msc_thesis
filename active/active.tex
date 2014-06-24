@@ -19,7 +19,6 @@ dependence, as physically expected, and has non-zero real and imaginary
 parts. The fragility of our extension of SQA is then exposed and some replacement
 methods are suggested. 
 
-
 The second section studies the experimental response
 of different realizations of a specific type of antenna
 known as \glspl{lcx}. The genesis of this study lies in
@@ -152,7 +151,7 @@ levels,  we obtain the equations
   \end{align}
 where $g^2$ is the dipole moment of the system, 
 $\gamma_\perp$ is an \textit{ad hoc} phenomenological damping
-term that comes from the interaction of the ensemble of systems\footnote{The author surmises that it 
+term that comes from the interaction of the ensemble of two-level systems\footnote{The author surmises that it 
 could be computed with a mean field approximation.}
 and $D_0$ is the equilibrium population. The approach 
 uses a \gls{rwa}, but, contrary 
@@ -169,7 +168,7 @@ leads to the relationship\footnote{We have skipped some steps. See \cite[\S2.2]{
   \end{equation}
 In the TM polarization, this leads to the equation
   \begin{equation}
-   \left[\nabla^2+k^2\left(\epsilon(\bo{r})+\frac{g^2}{\hbar}\frac{1}{k_\mu-k+i\gamma_\perp}\frac{D(\bo{r})}{1+\sum\frac{4g^2}{\gamma_\perp\gamma_\parallel\Gamma(k_\mu)}\left|\Psi_\mu(\bo{r})\right|^2}\right)\right]\Psi_\mu(\bo{r})=0
+   \left[\nabla^2+k^2\left(\epsilon(\bo{r})+\frac{g^2}{\hbar}\frac{1}{k_\mu-k+i\gamma_\perp}\frac{D(\bo{r})}{1+\sum_\mu\frac{4g^2}{\gamma_\perp\gamma_\parallel\Gamma(k_\mu)}\left|\Psi_\mu(\bo{r})\right|^2}\right)\right]\Psi_\mu(\bo{r})=0
   \end{equation}
 where
 	\begin{equation}
@@ -426,12 +425,12 @@ sources and possibly excluded sub-volumes $V_i$ bound by surfaces $S_i$ that con
 of some kind. By the use of Green's and Stokes' theorems and other vectorial 
 identities, we find that the field outside the excluded sub-volumes
 can be expressed as
-  \begin{align}
-   \bo{E} &= \frac{1}{4\pi}\mathop{\iiint}_V \left(\rho\nabla G+i\omega G\bo{J}\right)dV
-	+\frac{1}{4\pi}\oiint_{S_1,\cdots,S_N}\left[\bo{n}\cdot\bo{E}\nabla G+(\bo{n}\times\bo{E})\times\nabla G+i\omega G(\bo{n}\times\bo{H})\right]dS\label{eq:active.antennae.strattonChuE}\\
-   \bo{H} &= \frac{1}{4\pi}\mathop{\iiint}_V \bo{J}\times\nabla G dV
-	+\frac{1}{4\pi}\oiint_{S_1,\cdots,S_N}\left[-i\omega G(\bo{n}\times\bo{E})+(\bo{n}\times\bo{H})\times\nabla G+(\bo{n}\cdot\bo{H})\nabla G\right]dS\label{eq:active.antennae.strattonChuH}
-  \end{align}
+%  \begin{align}
+%   \bo{E} &= \frac{1}{4\pi}\mathop{\iiint}_V \left(\rho\nabla G+i\omega G\bo{J}\right)dV
+%	+\frac{1}{4\pi}\oiint_{S_1,\cdots,S_N}\left[\bo{n}\cdot\bo{E}\nabla G+(\bo{n}\times\bo{E})\times\nabla G+i\omega G(\bo{n}\times\bo{H})\right]dS\label{eq:active.antennae.strattonChuE}\\
+%   \bo{H} &= \frac{1}{4\pi}\mathop{\iiint}_V \bo{J}\times\nabla G dV
+%	+\frac{1}{4\pi}\oiint_{S_1,\cdots,S_N}\left[-i\omega G(\bo{n}\times\bo{E})+(\bo{n}\times\bo{H})\times\nabla G+(\bo{n}\cdot\bo{H})\nabla G\right]dS\label{eq:active.antennae.strattonChuH}
+%  \end{align}
 where $G$ is the Green's function of the problem
   \begin{equation}
    G(\bo{r},\bo{r}') = \frac{e^{ik|\bo{r}-\bo{r'}|}}{4\pi|\bo{r}-\bo{r}'|}.

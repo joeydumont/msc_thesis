@@ -22,12 +22,12 @@ and that most of the amplitude, for a certain range of parameters,
 is concentrated within an annulus near the boundary of the gallery \cite{RAY1910}, 
 further proving his explanation.
 He also noted that his derivation held for electrical waves if the walls
-were perfectly conducting. He termed this phenomena the whispering-gallery 
-phenomena and, today, we call this type of waves whispering-gallery waves.
+were perfectly conducting. He termed this phenomenon the whispering-gallery 
+phenomenon and, today, we call this type of waves whispering-gallery waves.
 
-Our story thus begins with the endless voyage of a whisper
-along a concave surface and all the secrets it may or may not
-convey...
+Our journey thus begins on the wings of the whisper, forever gliding
+along the concave surface of a perfectly smooth wall. However, no 
+journey worth recounting happens without any bumps in the road.
 
 \section{The Study of Passive Dielectric Microcavities}
 
@@ -37,18 +37,19 @@ back to light in the mid-1980s when it was realized that \textit{dielectric reso
 \index{dielectric resonators}
 had the potential to attain unparalleled electromagnetic energy storage
 capabilities via the use of whispering-gallery waves \cite{YAM1993}.
-Research in this area exploded when their application as 
+Research in this area measurably increased when their application as 
 extremely sensitive biosensors was theoretically explored 
 and later experimentally achieved \cite{SER95,VOL2002,ARM2003,VOL2008}.
 
-The whispering-gallery phenomena in dielectric media can be explained
+The whispering-gallery phenomenon in dielectric media can be explained
 via the same basic physics as the whispering gallery of St Paul's Cathedral, 
 but with a crucial difference: the mechanism by which the light (or sound) is confined.
 Both the cathedral and the metallic sphere described by Lord Rayleigh as known as 
-\textit{closed cavities}: the whisper does not leave the interior of the gallery
-and the electric field does not leave the confines of its metallic prison. The
-walls of the cavity do not allow the waves to penetrate their depth. On the other hand, 
-dielectric cavities retain light by way of \textit{total internal reflection}, which 
+\textit{closed cavities}: the whisper does not leave the interior of the gallery,
+as the electric field does not leave the confines of its metallic prison due to the perfect
+reflections at the boundary. The walls of the cavity do not allow the waves to penetrate their depth. 
+On the other hand, dielectric cavities retain light by way of \textit{total internal reflection}, which
+implies the existence of an evanescent wave normal to the boundary, which in turn
 allows the wave to leak, or couple, to the exterior of the cavity. This has multiple
 experimental and theoretical consequences. 
 
@@ -108,31 +109,40 @@ Mathematically, closed cavities usually obey Helmholtz's equation
   \end{equation}
 where $\psi$ is the oscillation (pressure field, electric field, etc.)
 and $\mathcal{C}$ is the boundary of the cavity. This partial differential
-equation together with the Dirichlet boundary condition translates to an
+equation together with the \gls{dirichletBC} translates to an
 eigenvalue problem: solutions only exist for a discrete set of eigenvalues 
 $k_n$. These closed cavities have been a testbed for theoretical
 and experimental endeavours in the last three decades, as can be
 seen from the great amount of work done in the fields of quantum 
 chaos and random matrix theory (RMT), for instance. Quantum chaos attempts
 to classify the chaotic eigenstates of systems with non-separable Schrödinger
-equations using the underlying (semi)classical mechanics of the 
-cavity. Research in this area helps to define the classical-quantum
+equations using the underlying (semi-)classical mechanics of the 
+cavity \cite{BLU1990}. Research in this area helps to define the classical-quantum
 transition. Level-spacing statistics of closed cavities also provides
 a way to classify the eigenstates, depending on the statistical 
-ensemble the cavity obeys. 
+ensemble the cavity falls into. 
 
 Closed cavities, are, however, an idealization of the much more
 realistic open cavity. The discrete states of the former exist 
 indefinitely inside the cavity; they have an infinite lifetime. 
 They thus have infinite energy storage capabilities, but are impossible 
 to generate. The latter, which also obey Helmholtz equation, but with the 
-Sommerfeld radiation condition (a Robin boundary condition)
+Sommerfeld radiation condition (a \gls{robinBC})
   \begin{equation}
    \lim_{r\rightarrow\infty}r^{\frac{d-1}{2}}\left(\frac{\partial}{\partial r}-ik\right)\psi=0
   \end{equation}
-have a continuum of solutions. These solutions have finite lifetimes.
+have a continuum of solutions. A countably infinite set of resonances
+can be defined for those cavities. These resonances have finite lifetimes.
+The lifetimes are usually quantitatively described by the quality
+factor, or $Q$-value, which is defined via the positions of the poles
+on the complex $k$-plane 
+	\begin{equation}
+		Q = \frac{\Re{k_p}}{|2\Im{k_p}|}
+	\end{equation}
+and can be interpreted as the time it takes the light to escape the 
+cavity.
 An incoming field from infinity can interact with the modes of the
-cavity and escape the confines of the cavity. The \textit{time delay} introduced
+cavity and then escape the confines of the cavity. The \textit{time delay} introduced
 by the interaction is linked to the lifetime of the modes of the cavity. 
 
 This rather pictorial viewpoint can be made formal by the use of \textit{scattering theory}, 
@@ -141,18 +151,20 @@ interaction with the cavity and escapes to infinity once again. The object that 
 is the \gls{sMatrix}, which describes the relationship between the field after the interaction
 and the field before the interaction, i.e. it describes the effect of the potential
 on an incoming field. The scattering approach allows us to define the modes of 
-open cavities, a problem that is perhaps more complicated that it seems \cite{DUT2000,DUT2001,TUR2005} (Fox-Li modes, modes of
-wave-chaotic...). \todo{Discuss resonances and $Q$ values.}
+open cavities, a problem that is perhaps more complicated that it seems \cite{DUT2000,DUT2001,TUR2005}.
 
 Open dielectric cavities also allow a semi-classical approximation, mathematically
 obtained by letting the wavelength $\lambda$ to be very small compared to 
 the characteristic lengths involved in the system, or $k\rightarrow\infty$. 
 The resulting open billiard can and has been used to engineer the cavities
-to specific purposes \cite{KIM2013} \todo{Discuss CAT, biosensing, microlasers...}. The fact
+to specific purposes \cite{KIM2013}. The fact
 that the resulting system is Hamiltonian (but not necessarily Hermitian) 
 has been used to study open quantum systems and non-Hermitian quantum 
 mechanics experimentally \cite{BIT2010}. This stems from the similarities between the
-Helmholtz and Schrödinger equations. 
+Helmholtz and Schrödinger equations. Since the billiard system is Hamiltonian, 
+one can set up a phase space with Birkhoff coordinates \cite{BIR1927}. 
+Using the Husimi \cite{LEE1995} transform, this can be used to test
+the phase-space formulation of quantum mechanics \cite{ZUR2003}.
 
 Most applications of open dielectric cavities urge the use of very high $Q$
 resonances. In WGM biosensors, the $Q$ value dictates the performance
@@ -195,7 +207,7 @@ variable phase method.
 
 We will also discuss the application of the method to arbitrary 
 3D structures. We will attempt to model a type of antennae 
-called \gls{lcx}. Their highly non-trivial geometry and the specifics
+called \glspl{lcx}. Their highly non-trivial geometry and the specifics
 of their experimental realization will make our method rather hard 
 to implement in that case. We will thus use all-numerical methods 
 to extract the necessary information. Proper introduction to this project
@@ -203,7 +215,7 @@ will be given later.
 
 \section{Content of this Essay}
 
-In first chapter of this thesis, we detail our work on open
+In first chapter of this essay, we detail our work on open
 dielectric cavities with arbitrary refractive index profiles. 
 We generalize a scattering method by G.P.-A. \cite{GAP2013a} for 
 complex refractive indices and TE polarization. We first describe
