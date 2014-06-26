@@ -172,13 +172,66 @@ In the TM polarization, this leads to the equation
   \end{equation}
 where
 	\begin{equation}
-		\Gamma(k_\mu) = \frac{\gamma_\perp^2}{(k-k_\mu)^2-\gamma_\perp^2}.
+		\Gamma(k_\mu) = \frac{\gamma_\perp^2}{(k-k_\mu)^2-\gamma_\perp^2}
 	\end{equation}
+$\Psi_\mu(\bo{r})$ is the longitudinal component of the field. 
 
 \paragraph{Constant-flux States and Scattering}
+The derivation above, novel to SALT and slightly more accurate
+than the standard derivations \cite{GE2010a,GE2010b,EST2013}, shows
+that the effect of the quantum gain medium can be modeled as an extra
+term in the refractive index in the TM polarization, but leads to an altogether
+different differential equation in the TE polarization. To the author's knowledge,
+this is never specifically addressed in the SALT articles, except in the vectorial
+generalization of SALT \cite{GE2010b}. In the following, we will also focus on the
+TM polarization. 
 
-\todo[inline]{Detail non-Hermitian problem defined by CF states. Methods of solution 
-to the possibly non-linear equations.}
+The central feature of \gls{salt} is the introduction of the constant-flux (CF)
+states, which are defined by
+	\begin{subequations}
+	\begin{align}
+		\left[\nabla^2+\epsilon(\bo{r})K^2(k)\right]\psi(\bo{r})	&=	0	& \bo{r}\in\mathcal{C}		\label{eq:active.salt.cfCavity}\\
+		\left[\nabla^2+\epsilon(\bo{r})k^2\right]\psi(\bo{r})		&=	0	& \bo{r}\notin\mathcal{C}	\label{eq:active.salt.cfOutside}
+	\end{align}
+	\end{subequations}
+where $\mathcal{C}$ is the cavity region. Inside $\mathcal{C}$, 
+the frequency $K(k)$ is allowed to be complex, but outside the cavity
+we force $k$ to be real. This allows us to bestow physical meaning
+unto the CF states, as they do not suffer from the exponential
+growth of the QB states. Despite the non-linearity of the equations, 
+the CF states can be used as a basis for the laser modes, and can even 
+take into account saturation, spatial hole burning and non-uniform
+pumps through the 
+	\begin{equation*}
+		\label{eq:active.salt.tlms}
+		\frac{D(\bo{r})}{1+\sum_\mu\frac{4g^2}{\gamma_\perp\gamma_\parallel}\left|\Psi_\mu\right|^2}
+	\end{equation*}
+term. If we restrict our analysis to near-threshold modes, we can neglect the sum in the previous term
+and, writing the pump profile as a pump strength multiplied by a shape function $D(\bo{r})=D_0F(\bo{r})$, 
+we obtain
+	\begin{align}
+		\left[\nabla^2+k^2\left(\epsilon(\bo{r})+\frac{\gamma_\perp D_0F(\bo{r})}{k_\mu-k+i\gamma_\perp}\right)\right]\psi &=0 & \bo{r}\in\mathcal{C}
+	\end{align}
+where now the fields and the pump strength are dimensionless parameters measured in units of $D_{0c}=\hbar\gamma_\perp/(4\pi g^2)$
+and $e_c = \hbar\sqrt{\gamma_\parallel\gamma_\perp}/(2g)$, respectively \cite[p.~19--20]{GE2010b}. 
+The solutions of this equation describe the lasing action near lasing thresholds, the threshold lasing modes (TLMs). 
+In the case of uniform pumping, i.e. $F(\bo{r})=1$,
+CF are in a one-to-one correspondence with TLMs, as we can see by comparing
+\eqref{eq:active.salt.cfCavity} and \eqref{eq:active.salt.tlms}. To find
+the TLMs, one needs to compute the CF states and find the values of $K^2(k)$
+infer the values of $D_0$. When the exterior frequency $k$ is such that $D_0$
+is real, the resulting couple $(k_a, D_0^a)$ reveals the frequency and threshold
+of the lasing mode. This was done in \cite{GAG2014a}. 
+
+However, we will mostly be interested in the case of non-uniform pumping
+and/or inhomogeneous refractive index distribution. To find the couple
+$(k_a,D_0^a)$, we must solve \eqref{eq:active.salt.tlms} self-consistently
+for a real value of $D_0$ such that a pole of scattering matrix hits 
+the real $k$-line. In the following sections, we will propose two
+numerical methods that can compute the non-unitary scattering matrix
+of our problem and determine its poles. Our last method can also 
+treat the spatial hole burning term and compute the non-linear 
+\gls{sMatrix}.
 
 \subsection{Methods of Solution}
 \paragraph{Variable Phase Method}
@@ -213,8 +266,11 @@ The method starts with the angular momentum expansions
   \end{align}
   \end{subequations}
 Substituting these expansions in Helmholtz's equation and projecting
-onto the eigenstate $\sqrt{r}e^{-im''\theta}/\sqrt{2\pi}$ yields a
-system of coupled \glspl{ode} for each moment of the field $\psi_m$
+onto the eigenstate 
+	\begin{equation*}
+		\sqrt{r}e^{-im''\theta}/\sqrt{2\pi}
+	\end{equation*} 
+yields a system of coupled \glspl{ode} for each moment of the field $\psi_m$
 	\begin{equation}
 		\label{eq:active.vpm.equation}
 		\bo{\psi}''-\frac{\mat{M}^2-\mat{I}/4}{r^2}\bo{\psi}+\frac{k^2}{2\pi}\mat{N}^2\bo{\psi}=0
@@ -253,7 +309,7 @@ The $\mat{G}_k(r)$ matrix represents the phase shifts accumulated by each partia
 and caused by the $m'$th angular moment of the potential. The factorization procedure 
 effectively transforms the \gls{bcp} to an \gls{ivp}, with the data provided on the 
 \gls{lss}. The matrix ODE can thus be solved by using any good integration routine\footnote{Although
-make sure you use a stiff equation solver. See Appendix \ref{sec:app.basisEqn.vpm} for details.}.
+make sure you use a stiff equation solver. See Appendix \ref{sec:app.numTools.vpm} for details.}.
 
 The scattering matrix of the problem can also be obtained if we 
 compute the conjugate solution, solving with the incoming radiation $\bo{\psi}=\mat{G}_{-k}\mat{W}^-(kr)$
@@ -263,7 +319,7 @@ instead of the outgoing one. The physical wave function is thus given by
 	\end{equation}
 Using the finiteness condition of the field at origin, we have
 	\begin{equation}
-		\mat{S}_k = -\lim_{r\rightarrow0}\left(\mat{W}^{+}(kr)\right)^{-1}\mat{G}_k^{-1}(r)\mat{G}_{-k}(r)\mat{W}^-(kr).
+		\mat{S}_k = -\lim_{r\rightarrow0}\mat{W}^{+}(kr)^{-1}\mat{G}_k^{-1}(r)\mat{G}_{-k}(r)\mat{W}^-(kr).
 	\end{equation}
 
 \paragraph{Green's Function Method}
@@ -282,13 +338,16 @@ where $\epsilon(\bo{r};\omega)$ is the permittivity profile of the scatterer
 and $\epsilon_B(\omega)$ the constant permittivity of the environment, or background.
 This allows to write a formal solution using the Green's function of Helmholtz's equation
   \begin{equation}
-   \psi(\bo{r}) = \phi(\bo{r}) - k^2\mathop{\iint}_\mathcal{C}G(\bo{r},\bo{r}')\Delta\epsilon(\bo{r}';\omega)\psi(\bo{r}')d^2\bo{r}'
+  	\label{eq:active.vpm.fredholmEqn}
+  	\psi(\bo{r}) = \phi(\bo{r}) - k^2\mathop{\iint}_\mathcal{C}G_{+}(\bo{r},\bo{r}')\Delta\epsilon(\bo{r}';\omega)\psi(\bo{r}')d^2\bo{r}'
   \end{equation}
 where $\phi(\bo{r})$ is a solution of the homogeneous problem and
   \begin{equation}
-   G_\omega(\bo{r},\bo{r}') = -\frac{i}{4}H_0^{(\omega)}(k\sqrt{\epsilon_B}|\bo{r}-\bo{r}'|)
+  	G_\omega(\bo{r},\bo{r}') = -\frac{i}{4}H_0^{(\omega)}(k\sqrt{\epsilon_B}|\bo{r}-\bo{r}'|).
   \end{equation}
-and we use the \textit{outgoing} Green's function $G=G_+$.
+While \eqref{eq:active.vpm.fredholmEqn} is very general: it can be applied to 
+any $\Delta\epsilon(\bo{r};\omega)$, even to non-linear problems, 
+the method of solution we will use restricts us to linear problems.
 
 Instead of a \gls{pde}, we now must solve an implicit 
 integral equation for the field. It is a Fredholm 
@@ -343,31 +402,33 @@ and numerical musings of the others and presents both the modeling of the
 antennae and their experimental characterization.   
 
 The goal of the original project was to develop an antenna that is compatible with 
-WiFi standards (i.e. emits at $f=2.45\,\unit{GHz}$) and easily integrated
+WiFi standards (i.e. emits at $f=2.45\,\unit{GHz}$) and can be easily integrated
 to textile. These two requirements impose multiple restrictions on both
-the materials that can be used and the geometry of the antenna. For seamless
-integration, we would like the antenna to be spun directly into the textile. 
+the materials that can be used and the geometry of the antenna. For instance, 
+we would like the antenna to be spun directly into the textile as to have, 
+so to speak, a seamless integration of the antenna.
 
 Most solutions today merely affix a patch antenna to a less 
 encumbered part of the textile \cite{CAT2004,JAI2013}, e.g. 
 on the should pads of a shirt or the front of a t-shirt.
 A metallic plate shields the user from the electronic components 
 of the patch antenna. Because the properties of patch antennas are
-well known \cite{ELL2003}, it requires very little engineering and is thus cheap. However, integration 
+well known \cite{ELL2003}, very little engineering is required and this solution
+is thus quite cheap\footnote{The general availability of consumer-grade ``smart''
+textile on the Web should suffice to prove this point.}. However, integration 
 with the textile is far from seamless, as it is very apparent to the
 user that he has become a giant walking antenna. Our project thus 
 strives to find antenna designs that have emission properties
 as flexible as a patch antenna's while improving textile integration
-as to make it become transparent to the user.
+as to make it transparent to the user.
 
 The concept of a fibre-antenna rapidly established itself
-as an ideal solution in the research group. It provides a rich
-architecture upon which to build. Moreover, it can easily 
-be spun into textile as it can loaded into the spools that 
-deliver threads to looms. Its mechanical properties make it
-fit for daily use as it can resist a trip in the washing machine. 
-Integration of the electronic components inside that fibre 
-serves to shield both the user and the components. 
+as an ideal solution in our research group, as it provides a rich
+architecture upon which to build. A fibre-antenna has the potential
+of having good mechanical properties, of shielding the electronic
+components from both the user and the washing machine and 
+can be loaded directly unto the spools that deliver textile to industrial 
+looms, making it both easy to manufacture and transparent to the user.
 
 Before showing the details of our contribution, 
 we will first show the important quantities when
@@ -383,32 +444,11 @@ of solving Maxwell's equations seriously hampers analytical efforts
 and, due to the nature of electromagnetic radiation, numerical
 progress is not easier to achieve.
 
-In what follows, we present the basic equations of 
-antenna theory (Maxwell's) and discuss the nature 
-of sources in this framework (currents and charges). 
-
-\subsubsection{Maxwell's Equations}
-Recall the macroscopic Maxwell equations in matter
-\eqref{eq:passive.formalism.maxwellsEquations}, with the 
-induced conduction current density given by
-	\begin{equation}
-		\bo{j}_c = \sigma\bo{E}.
-	\end{equation}
-
-
-A technical point is in order. In the antenna literature, the induced
-currents and charge density are considered as the fundamental quantities 
-that \textit{produce} the fields. While worthwhile (see the Stratton-Chu section), 
-this viewpoint requires that either (i) we have \textit{a priori} knowledge of 
-the sources ($\bo{J}_t=\bo{J}_c+\bo{J}_s$ and $\rho$) or (ii) that we use the
-constitutive relations down the line. The first case applies to situations
-where the induced current is trivially known (e.g. the dipole antenna) or
-when $\sigma=0$ and $\bo{J}_s$ is known.
-
-Also, even though the $\bo{H}$ field was introduced as an auxiliary field to take
-into account the effect of an applied magnetic field to the material, we 
-take it as the fundamental field as it leads to more easily solvable
-equations and is a completely equivalent choice. 
+In what follows, we present the Stratton-Chu equations, 
+a rigorous solution of Maxwell's equations which relates 
+the electric and magnetic fields to the currents and charges 
+that ``produce'' them. They can alternatively compute the fields
+in all space if they are known on any given surface(s).
 
 \subsubsection{Stratton-Chu Solution}
 In antenna problems, we want to compute the field values as a function of 
@@ -425,20 +465,24 @@ sources and possibly excluded sub-volumes $V_i$ bound by surfaces $S_i$ that con
 of some kind. By the use of Green's and Stokes' theorems and other vectorial 
 identities, we find that the field outside the excluded sub-volumes
 can be expressed as
-%  \begin{align}
-%   \bo{E} &= \frac{1}{4\pi}\mathop{\iiint}_V \left(\rho\nabla G+i\omega G\bo{J}\right)dV
-%	+\frac{1}{4\pi}\oiint_{S_1,\cdots,S_N}\left[\bo{n}\cdot\bo{E}\nabla G+(\bo{n}\times\bo{E})\times\nabla G+i\omega G(\bo{n}\times\bo{H})\right]dS\label{eq:active.antennae.strattonChuE}\\
-%   \bo{H} &= \frac{1}{4\pi}\mathop{\iiint}_V \bo{J}\times\nabla G dV
-%	+\frac{1}{4\pi}\oiint_{S_1,\cdots,S_N}\left[-i\omega G(\bo{n}\times\bo{E})+(\bo{n}\times\bo{H})\times\nabla G+(\bo{n}\cdot\bo{H})\nabla G\right]dS\label{eq:active.antennae.strattonChuH}
-%  \end{align}
+	\begin{subequations}
+  \begin{align}
+   \bo{E} &= \frac{1}{4\pi}\mathop{\iiint}_V \left(\rho\nabla G+i\omega G\bo{J}\right)dV
+	+\frac{1}{4\pi}\oiint_{S_1,\cdots,S_N}\left[\bo{n}\cdot\bo{E}\nabla G+(\bo{n}\times\bo{E})\times\nabla G+i\omega G(\bo{n}\times\bo{H})\right]dS\label{eq:active.antennae.strattonChuE}\\
+  \bo{H} &= \frac{1}{4\pi}\mathop{\iiint}_V \bo{J}\times\nabla G dV
+	+\frac{1}{4\pi}\oiint_{S_1,\cdots,S_N}\left[-i\omega G(\bo{n}\times\bo{E})+(\bo{n}\times\bo{H})\times\nabla G+(\bo{n}\cdot\bo{H})\nabla G\right]dS\label{eq:active.antennae.strattonChuH}
+  \end{align}
 where $G$ is the Green's function of the problem
   \begin{equation}
    G(\bo{r},\bo{r}') = \frac{e^{ik|\bo{r}-\bo{r'}|}}{4\pi|\bo{r}-\bo{r}'|}.
   \end{equation}
+	\end{subequations}
 
 These two equations are rigorous solutions of Maxwell's equations. 
 They can be used with any antenna and provide ways to compute the 
-current distribution if is unknown (constitutes an integral equation in the current)
+current distribution if is unknown (constitutes an integral equation in the current\footnote{
+This is the basis of the popular computational method known as the \textit{method of moments}
+\cite[\S7.5]{ELL2003}.})
 and can be used to compute the far-field of antennae when either 
 (i) the current distribution is known or (ii) the near-field around the antenna
 is known. 
@@ -446,11 +490,17 @@ These two properties discriminate antennae into two categories, denoted Type I a
 
 Type I antennae have a well-approximated current distribution, which means that there are no
 sub-volumes to be excluded and therefore no surface integrals in expressions 
-\eqref{eq:antenna.strattonChuE} and \eqref{eq:antenna.strattonChuH}. 
+\eqref{eq:active.antennae.strattonChuE} and \eqref{eq:active.antennae.strattonChuH}. 
+	\begin{exmp}[Dipole Antenna]
+		This is an example.
+	\end{exmp}
 
 On the other hand, Type II antennae have well-approximated near-fields, leading
-us to exclude the volume containing the antenna. Expressions \eqref{eq:antenna.strattonChuE}
-and \eqref{eq:antenna.strattonChuH} contain only surface integrals, then. 
+us to exclude the volume containing the antenna. Expressions \eqref{eq:active.antennae.strattonChuE}
+and \eqref{eq:active.antennae.strattonChuH} contain only surface integrals, then.
+	\begin{exmp}[Near- to Far-Field Transformation]\label{ex:active.antennae.nearToFarTrans}
+		This is another example.
+	\end{exmp}
 
 \subsubsection{Antenna Parameters}
 In the design of our antenna, we will want to optimize the value
@@ -517,6 +567,25 @@ of Lorentz) network, the scattering matrix will be equal to its
 transpose, i.e. $S_{ij}=S_{ji}$. In a lossless network, the scattering
 matrix will be unitary. 
 
+\begin{figure}
+ \begin{center}
+ \begin{tikzpicture}
+  % -- Draw the overall shape.
+  \draw[very thick] (0,0) -- (8,0) -- ++(0,-2) -- ++(-3,0) -- ++(0,-2) -- ++(-2,0) -- ++(0,2) -- ++(-3,0) -- ++(0,2); 
+  
+  % -- We draw the reflected/transmitted arrows.
+  \draw[->,>=stealth] (8.25,-0.5) -- ++(1,0) node[near end,above] {$a_1$};
+  \draw[<-,>=stealth] (8.25,-1.5) -- ++(1,0) node[near end,above] {$b_1$};
+  \draw[<-,>=stealth] (-1.25,-0.5) -- ++(1,0) node[near start,above] {$a_2$};
+  \draw[->,>=stealth] (-1.25,-1.5) -- ++(1,0) node[near start,above] {$b_2$};
+  \draw[->,>=stealth] (3.5,-4.25) -- ++(0,-1) node[near end,right] {$a_3$};
+  \draw[<-,>=stealth] (4.5,-4.25) -- ++(0,-1) node[near end,right] {$b_3$};
+ \end{tikzpicture}
+ \end{center}
+ \caption[Example of a 3-port network]{Example of a 3-port network. The ``ends'' of the structure are generally used at its ports.}
+ \label{fig:active.antennae.network}
+\end{figure} 
+
 This is, of course, highly reminiscent of the scattering operator
 in quantum-mechanical scattering which relates the outgoing (scattered)
 components to the incoming (incident) components
@@ -527,71 +596,22 @@ In this case, the ``ports'' are the different angular momenta
 components rather than physical input/output connections. 
 The precise nature of ports is somewhat arbitrary in optical structures.
 
-The traces of these parameters, i.e. the value of $S_{ij}$ as a function of 
-the frequency of the input current, will be of primary interest. The frequency
-response can give information about the finesse of the resonances, as well as
-hinting at specific radiation mechanisms. The analysis below will be divided
-in two parts: the analysis of the traces on their own, and comparison with the 
-theoretical/simulation traces.
-
 \subsection{The Leaky Coaxial Cable}
-The modelization of \gls{lcx} is not a new field \cite{DEL1980,WAN2001,KIM2007,ADD2008}.
-They have been studied using a variety of analytical and numerical methods. Most of them 
-depend on a set of \textit{crucial} approximations that cannot be assumed to hold 
-in our particular case.
+A standard antenna design, the leaky coaxial cable, or \gls{lcx}, will be the primary 
+object of our present study. Its relatively design simple: a coaxial cable from which
+some parts of the metal coating are removed as to form ``windows'', made it a safe choice
+to toy with both the experimental fabrication procedure and its numerical modeling. 
+Usual LCXs are much longer than the wavelength at which they are meant to operate, with 
+a unit cell (see Figure \ref{fig:active.antennae.fibre-antenna}) of comparable size.
 
-\begin{description}
-	\item [Periodicity of the structure] The $z$-periodicity of the geometry and 
-		and material parameters paves the way for a Floquet-Bloch expansion of the 
-		fields. This is used in \cite{WAN2001}.
-	\item [Narrow slits] A perturbation theory, where slits are supposed to be 
-			small as compared to the wavelength, $kS_z\ll1$, is used in \cite{KIM2007}.
-	\item [Transmission line behaviour] One of the most important approximation, it stipulates
-			that the \gls{lcx} supports a single TEM propagating mode. This allows the 
-			unambiguous use of scalar voltages and currents as the physical observables
-			\cite{PAU2007}. It also allows
-			the use of simpler numerical methods, such as using the overlap between the 
-			propagating mode and the radiation continuum to quantify the radiation 
-			properties \cite{SHI1989,ADD2008}. 
-\end{description}
-
-In our case, the worst offender is the last one, as our metal deposition method
-does not allow for a fine control of the thicknesses deposited, nor ensure its
-smoothness. The TEM approximation relies on the metal layers behaving almost as 
-perfect conductors. Our metallic layers are typically smaller than the skin
-depth of the metal, which makes the approximation invalid. 
-
-Moreover, we cannot consider the structure to be periodic, as the total 
-length of the fibre-antenna is of the order of the wavelength ($\lambda\sim12\unit{cm}$) and the period
-of the slots is smaller than the wavelength. Given the size of the slots, 
-the author is comfortable to say that we neither are in the perturbation regime. 
-Figure \ref{fig:antenna.fibre-antenna} shows the actual design and the important parameters.
-
-\paragraph{Choice of simulation software}
-Given the wild scale in the size of the structures (from the nanometer to the millimeter), we use
-the FEM to solve the driven problem. The parameters of interest will be the scattering parameters, the
-radiation pattern and antenna efficiency, gain and directivity. We will first model the fibre-antennae
-that were fabricated. There will be a subsequent optimization phase.
-
-\todo[inline]
-{Discuss the passage from integral equations to finite element analysis.
-Definition of transmission problem, other kinds of boundary conditions, all
-difficult to account for in the traditional Fredholm form. Weak solution naturally
-incorporates the boundary conditions and, while it has some issues, is more
-easily solved.}
-
-%As finite element methods directly solve Maxwell's equations, 
-%they can be a useful tool to verify semi-analytical methods. 
-%In the last section, we reported some agreement issues 
-%between experimental and simulation data. We purported
-%that the discrepancy was due to the small size of the
-%silver layers that we could properly account for in 
-%the finite element model. This issue has been solved
-%by abandoning the idea of properly meshing the silver layers
-%and replacing them by appropriate impedance boundary conditions.
-%From HFSS's documentation, we see that the ``Layered Impedance 
-%Boundary Conditions'' module follows the theory set forth in 
-%\cite{MIT1968} and others. 
+Our antennae, contrary to typical LCXs, have lengths similar to that of the operating
+wavelength. Figure \ref{fig:active.antennae.fibre-antenna.xsection} shows a cross-section of
+of a typical LCX antenna and Figure \ref{fig:active.antennae.fibre-antenna.topview} shows
+a top view of the fibres our group actually made. They all contain three windows of varying
+widths $S_z$ and distance between windows $d_z$, making for fibres having all approximately
+$L\sim24\,\unit{cm}$. Table \ref{tab:active.antennae.rfxx-parameters} shows the geometrical parameters
+of the fabricated antennae, while Table \ref{tab:active.antennae.physicalParameters} shows the 
+physical parameters of the materials involved. 
 
 \begin{figure}
   \centering
@@ -647,6 +667,7 @@ easily solved.}
     \draw[<->,>=stealth,thick] (12,1) -- (15,1) node[midway,fill=white] {$d_R$};
     \draw[|-|,thick] (-0.01,2.8) -- (15.01,2.8) node[midway,fill=white] {$L=d_L+d_R+(n-1)P+S_z$};
     \draw[|-|,thick] (5.99,0.2) -- (10.01,0.2) node[midway,fill=white] {$P=S_z+d_z$};
+    \draw[|-|,thick] (5,2) -- (9,2) node[midway,fill=white] {unit cell};
    \end{tikzpicture}
    \vspace{0.25cm}
    \caption{Top view: the positions of the windows are usually asymmetric, i.e. $d_L\neq d_R$. The distance between
@@ -659,19 +680,51 @@ easily solved.}
   \label{fig:active.antennae.fibre-antenna}
 \end{figure}
 
-\paragraph{Specifications of the Devices}
-An image is worth a thousand words. Figure \ref{fig:antenna.fibre-antenna.xsection}
-shows a cross-section of the fibre. Figure \ref{fig:antenna.fibre-antenna.topview} 
-shows a top view of the antenna and display the positions of the windows. 
-Multiple designs have been fabricated, but we retain only those that 
-we have tried to simulate. Table \ref{tab:antenna.rfxx-parameters} 
-shows the actual geometrical parameters of the fibre-antennas.
+\paragraph{Modeling \glspl{lcx}}
+The modelization of \gls{lcx} is not a new field \cite{DEL1980,WAN2001,KIM2007,ADD2008}.
+They have been studied using a variety of analytical and numerical methods. Most of them 
+depend on a set of \textit{crucial} approximations that cannot be assumed to hold 
+in our particular case.
 
-\subparagraph{On the thickness of the silver shells}
-The thicknesses of the dielectric materials are provided by the manufacturer, 
-Polymicro Technologies, safe for the thicknesses of the silver layers. 
-For the time being, we have calculated those thicknesses by measuring
-the DC resistance of the inner and outer layers of silver and
+\begin{description}
+	\item [Periodicity of the structure] The $z$-periodicity of the geometry and 
+		and material parameters paves the way for a Floquet-Bloch expansion of the 
+		fields. This is used in \cite{WAN2001}.
+	\item [Narrow slits] A perturbation theory, where slits are supposed to be 
+			small as compared to the wavelength, $kS_z\ll1$, is used in \cite{KIM2007}.
+	\item [Transmission line behaviour] One of the most important approximation, it stipulates
+			that the \gls{lcx} supports a single TEM propagating mode. This allows the 
+			unambiguous use of scalar voltages and currents as the physical observables
+			\cite{PAU2007}. It also allows
+			the use of simpler numerical methods, such as using the overlap between the 
+			propagating mode and the radiation continuum to quantify the radiation 
+			properties \cite{SHI1989,ADD2008}. 
+\end{description}
+
+In our case, the worst offender is the last one, as our metal deposition method
+does not allow for a fine control of the thicknesses deposited, nor ensure its
+smoothness. The TEM approximation relies on the metal layers behaving almost as 
+perfect conductors. Our metallic layers are typically smaller than the skin
+depth of the metal, which makes the approximation invalid (we will explore
+this in depth later in this essay). 
+
+Moreover, we cannot consider the structure to be periodic, as the total 
+length of the fibre-antenna is of the order of the wavelength ($\lambda\sim12\unit{cm}$) and the period
+of the slots is smaller than the wavelength. Given the size of the slots, 
+the author is comfortable to say that we neither are in the perturbation regime. 
+Figure \ref{fig:active.antennae.fibre-antenna} shows the actual design and the important parameters.
+
+\paragraph{Specifications of the Devices}
+To be able to theoretically investigate the behaviour of these antennas, we must
+know their physical and geometrical properties. 
+The parameters of the dielectric materials are provided by the manufacturer of the
+optical fibres we use as a building platform,
+Polymicro Technologies, and are reproduced in \ref{tab:active.antennae.modelParameters}.
+
+The thickness of the metallic layers is more delicate and depends on the 
+minute details of the deposition method. 
+As a first approximation,  we can compute the thicknesses by measuring
+the D.C. resistance of the inner and outer layers of silver and
 using the relation \cite[p.~204]{CHE1989}
   \begin{equation}
     \label{eq:active.antennae.dcResistivity}
@@ -684,7 +737,7 @@ layer and $A$ its area. For the inner and outer layers, we have
     A_\text{outer}	&= \int_0^{2\pi}\int_T^{T+t_\text{Ag2}}r\,dr d\theta = \pi\left(2Tt_\text{Ag2}+t_\text{Ag2}^2\right)
   \end{align}
 where $T=t_\text{vac}+t_\text{Ag1}+t_\text{Si}+t_\text{pyamide}$. 
-Substituting these results into \eqref{eq:antenna.dcResistivity}
+Substituting these results into \eqref{eq:active.antennae.dcResistivity}
 yields
   \begin{subequations}
   \label{eq:active.antennae.thickGeneralEquations}
@@ -695,29 +748,142 @@ yields
   \end{subequations}
 where the $R$s are the measured D.C. resistances for each shell. 
 This can readily be solved using the quadratic equation. Using the bulk conductivity
-of silver (see Table \ref{tab:antenna.physicalParameters}) yields the 
-thicknesses found in Table \ref{tab:antenna.rfxx-parameters}.
+of silver (see Table \ref{tab:active.antennae.physicalParameters}) yields the
+thicknesses found in Table \ref{tab:active.antennae.rfxx-parameters}.
 
-\begin{figure}
- \begin{center}
- \begin{tikzpicture}
-  % -- Draw the overall shape.
-  \draw[very thick] (0,0) -- (8,0) -- ++(0,-2) -- ++(-3,0) -- ++(0,-2) -- ++(-2,0) -- ++(0,2) -- ++(-3,0) -- ++(0,2); 
-  
-  % -- We draw the reflected/transmitted arrows.
-  \draw[->,>=stealth] (8.25,-0.5) -- ++(1,0) node[near end,above] {$a_1$};
-  \draw[<-,>=stealth] (8.25,-1.5) -- ++(1,0) node[near end,above] {$b_1$};
-  \draw[<-,>=stealth] (-1.25,-0.5) -- ++(1,0) node[near start,above] {$a_2$};
-  \draw[->,>=stealth] (-1.25,-1.5) -- ++(1,0) node[near start,above] {$b_2$};
-  \draw[->,>=stealth] (3.5,-4.25) -- ++(0,-1) node[near end,right] {$a_3$};
-  \draw[<-,>=stealth] (4.5,-4.25) -- ++(0,-1) node[near end,right] {$b_3$};
- \end{tikzpicture}
+Notice that this assumes smooth metallic layers (no surface inhomogeneities) and
+constant conductivity within the whole volume. 
+
+\begin{table}
+  \newcolumntype{d}{D{.}{.}{3}}
+  \caption[Geometric and physical parameters of the \gls{lcx} antennae]
+	  {Geometric and physical parameters of the \gls{lcx} antennae.
+	  Units are repeated from column above if not indicated.}
+	\label{tab:active.antennae.modelParameters}
+ \begin{subtable}[t]{0.65\textwidth}
+ \caption[Geometric parameters of the RF21/RF33 fibre designs]
+	  {Geometric parameters of the fibre designs. 
+	  The thicknesses of the layers are listed in order, stating
+	  from the inner layer to the outer layer of the fibre-antenna.}
+ \label{tab:active.antennae.rfxx-parameters}
+ \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}c@{\extracolsep{\fill}}d@{\extracolsep{\fill}}d@{\extracolsep{\fill}}d@{\extracolsep{\fill}}d}
+  \hline\hline
+  Quantity			& Unit			& \multicolumn{1}{c}{RF21} 	& \multicolumn{1}{c}{RF27\parnote{Measurements are approximate; values for the inner and outer resistances were lost. We assume they are identical to the RF29.}}	& \multicolumn{1}{c}{RF29}	& \multicolumn{1}{c}{RF33}	\\
+  \hline
+  $t_\text{vac}$	& $\unit{\mu m}$& 99.874					& 99.900					& 99.646			& 99.924			\\
+  $t_\text{Ag1}$	& 				& 0.126						& 0.100						& 0.354				& 0.0766			\\
+  $t_\text{Si}$		& 				& 273						& 273 						& 273				& 273				\\
+  $t_\text{pyamide}$& 				& 24						& 24 						& 24 				& 24				\\
+  $t_\text{Ag2}$	& 				& 0.101						& 0.100						& 0.306				& 0.030				\\
+  $d_L$				& $\unit{mm}$	& 27						& 30						& 31				& 30.91				\\
+  $d_R$				& 				& 55						& 55						& 55				& 54.72				\\
+  $S_{z1}$\parnote{Each window has a different $S_z$ and $d_z$.}
+					& 				& 32						& 34						& 33				& 34.36				\\
+  $S_{z2}$			& 				& 32						& 34						& 34				& 34.06				\\
+  $S_{z3}$			& 				& 32						& 34						& 33.5				& 33.87				\\
+  $d_{z1}$			& 				& 28						& 28						& 29				& 27.44				\\
+  $d_{z2}$			& 				& 28						& 28						& 28.5				& 28.36				\\
+  $L$				& $\unit{cm}$	& 30.0						& 24.3						& 24.4				& 24.372			\\
+  $\theta_w$		& $\unit{deg}$	& 180						& 180						& 180 				& 180				\\
+  $R_\text{inner}$	& $\unit{\Omega}$& 60.0						& \multicolumn{1}{c}{---}	& 60				& 80.5				\\
+  $R_\text{outer}$	&				& 20.0						& \multicolumn{1}{c}{---}	& 20				& 59.8				\\
+  \hline\hline
+ \end{tabular*}
+ \begin{flushleft}
+ \parnotes
+ \end{flushleft}
+ \end{subtable}\hfill
+ \begin{subtable}[t]{0.3\textwidth}
+  \begin{center}
+ \caption{Physical parameters of the materials used in the fibre-antennae.}
+ \label{tab:active.antennae.physicalParameters}
+ \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}c@{\extracolsep{\fill}}d}
+  \hline\hline
+  Quantity			& Unit			& \multicolumn{1}{c}{Value}		\\
+  \hline
+  $\epsilon_\text{Si}$		& --			& 3.77		\\
+  $\epsilon_\text{pyamide}$	& --			& 3.50		\\
+  $\sigma_\text{Ag0}$		& $\unitfrac{MS}{m}$	& 63.0		\\
+  $\sigma_\text{AgO0}$		& 			&  6.79		\\
+  $\lambda_\text{Ag}$		& $\unit{nm}$		& 40		\\
+  \hline\hline
+ \end{tabular*}
+ \begin{flushleft}
+ \parnotes
+ \end{flushleft}
  \end{center}
- \caption[Example of a 3-port network]{Example of a 3-port network. The ``ends'' of the structure are generally used at its ports.}
- \label{fig:active.antennae.network}
-\end{figure}
+ \end{subtable}
+\end{table}
 
-\subsection{Analysis of Experimental Traces}
+\paragraph{Choice of simulation software}
+The LCXs to be modeled have a decidedly complex geometry that
+no possess no symmetry and metallic layers of high, though not infinite,
+conductivity. To properly take the effects of both situations into account, 
+one would need to use multi-scale discretization techniques at the very least.
+Unfortunately, the extremely wild range in the characteristic sizes of the structures
+(from the nanometer to the millimeter) makes meshing the LCX geometry a Herculean, 
+if not even Sisyphean, task. 
+The issue of meshing thin silvers layers has already been solved in the literature
+and involves replacing the silver shells by appropriate boundary conditions \cite{MIT1968} 
+
+The two requirements discussed above essentially destroy all hope of using any
+of the methods we have devised in the last sections of this essay. The eigenbasis
+expansions suffer from poor mesh control\footnote{There exists, for instance, 
+algorithms that compute the Discrete Fourier Transform for non-uniform
+samples, and such endeavors are worthwhile, but their sizable numerical
+cost and their only slightly better mesh control is not worth their effort in 
+our particular case.}, directly integrating Helmholtz's or Maxwell's equations
+is usually unstable\footnote{Not always however, as the FDTD method does just that.
+It requires, however, some numerical legwork.} and it is notoriously difficult
+to incorporate boundary conditions naturally in the framework of the Fredholm 
+integral methods \cite{MAR2003}. This leaves us with two choices: the \gls{fdtd}
+method and the \gls{fem}. The former can deal with arbitrary boundary conditions
+rather easily, but generates a fixed scale mesh \cite{OSK2010}. The latter, by the use of the weak
+form of Maxwell's equations, can easily incorporate any type of boundary conditions
+and work with multi-scale and even adaptive meshes. We thus use the commercial \gls{fem}
+software Ansys HFSS to model the frequency response of the the \gls{lcx} antennae.
+
+The software comes with bundled CAD capabilities. The cylinder is drawn inside 
+a cylinder of larger radius that acts as the ``environment''. Its borders are
+terminated by perfectly matched layers, or PMLs \cite{BER1994}, that absorb the field emanating 
+from the antenna. They serve to emulate the Sommerfeld radiation condition\footnote{
+This type of absorbing boundary conditions has been used for decades and has lead
+to a number of problems, which in turn led to a rich literature. It was shown that naïvely using 
+PMLs led to spurious solutions \cite{KON1976,KOS1984,KOS1985}. They are usually removed by
+adding the null term $\left(\nabla\cdot\bo{H}^*\right)\left(\nabla\cdot\bo{H}\right)$
+in the functional that is minimized. For more details about the functional and its
+other uses, see Appendix \ref{sec:app.numTools.vpm}.
+In the microcavities field, specifically in the finding of resonances, it was 
+found out that the PMLs caused large errors in the determination of the
+imaginary part of the resonant $k$ \cite{HOW1993,HOE1998,BOR2004} The problem
+was recently solved for microcavities having azimuthal symmetry \cite{OXB2007,CHE2013}.}
+and to ensure that the waves radiated by the antenna are not reflected back to it
+from the edges of the computational domain. In a driven problem like ours, some
+numerical back-reflections from the PMLs can and do occur, but cause little
+to no problem. The metallic layers are implemented as ``Layered Impedance Boundary
+Conditions'', which are essentially a generalization to an arbitrary number of
+layers of the formalism laid out in \cite{MIT1968}. The ports of the structure
+are its left and right coupling points, or simply ``ends.'' Technically, we could
+define the windows as open ports, but their frequency response is difficult to 
+measure experimentally and consider the light radiating through them as loss 
+in the system. In other words, $|\det\mat{S}|<1$. Solving the system boils down
+to the definition of the input field on the ports and letting the solver solve
+Maxwell's equations in the computational domain. The $S$-parameters correspond
+to the fraction of the power that either (i) returned back into the source port
+or (ii) traveled all the way to the other port. This is done for both ports in turn. 
+The far-field associated with each run is computed via the near- to far-field 
+transformation that is discussed in Example \ref{ex:active.antennae.nearToFarTrans}, 
+most likely using the boundary of the antenna as the \gls{lss}.
+
+
+The traces of the $S$-parameters, i.e. the value of $S_{ij}$ as a function of 
+the frequency of the input fields, will be of primary interest. The frequency
+response can give information about the finesse of the resonances, as well as
+hinting at specific radiation mechanisms. The analysis below will be divided
+in two parts: the analysis of the traces on their own, and comparison with the 
+theoretical/simulation traces.
+
+\subsubsection{Analysis of Experimental Traces}
 Before showing the correspondence (or lack thereof) between the
 simulated and measured traces, we will analyze the traces by themselves
 and try to extract any information we can. The main tool 
@@ -849,6 +1015,29 @@ The RF33 fibre-antenna, the final antenna produced, is the most mature
 one in terms of experimental protocol and is therefore most
 worthy of study. 
 
+We have also taken the Fourier transform of the experimental
+and simulation data (for $\delta_1=0$). To our discontent, 
+it seems that the datasets do not share periodic properties. 
+Figure \ref{fig:antenna.fourierAnalysis} shows the intensity
+of the FFT transform. To see if the periodic components corresponded
+to particular lengths in the system, we converted the associated
+wavelenghts to frequencies and plotted them as vertical lines in the figure. 
+$f_1$ is the fundamental mode of infinite LCXF, namely
+  \begin{equation}
+   f_1 = \frac{c}{\left(S_z+d_z\right)\left(\sqrt{\epsilon_\text{Si}}+1\right)}.
+  \end{equation}
+The frequency associated with the optical and the actual lengths of the window
+are
+  \begin{align*}
+   l_\text{opt}	&= \frac{c}{S_z\sqrt{\epsilon_\text{Si}}}	\\
+   l_\text{phy}	&= \frac{c}{S_z}.
+  \end{align*}
+
+Nothing thus far seems to explain the periodic properties of the 
+$S_{11}$ parameter of the experimental and simulation, although
+the optical length of the windows seems to explain a single 
+peak in the Fourier power spectrum. 
+
 \begin{figure}
  \centering
  \includegraphics{figs/active/RF33-sParameters.pdf}
@@ -874,9 +1063,9 @@ worthy of study.
 \end{figure}
 
 
-\subsection{Comparison with Simulation Results}
+\subsubsection{Comparison with Simulation Results}
 
-\subsubsection{Preliminary Results}
+\paragraph{Preliminary Results}
 We first model the RF21 design. Its parameters are summarized in 
 Table \ref{tab:antenna.rfxx-parameters}. 
 
@@ -973,66 +1162,6 @@ The most interesting thing, though, is that the FS
 model predicts metallic layers that are 10\% to 80\% thicker 
 than with the bulk conductivity model. 
 
-\begin{table}
-  \newcolumntype{d}{D{.}{.}{3}}
-  \caption[Geometric and physical parameters of the \gls{lcx} antennae]
-	  {Geometric and physical parameters of the \gls{lcx} antennae.
-	  Units are repeated from column above if not indicated.}
- \begin{subtable}[t]{0.65\textwidth}
- \caption[Geometric parameters of the RF21/RF33 fibre designs]
-	  {Geometric parameters of the fibre designs. 
-	  The thicknesses of the layers are listed in order, stating
-	  from the inner layer to the outer layer of the fibre-antenna.}
- \label{tab:antenna.rfxx-parameters}
- \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}c@{\extracolsep{\fill}}d@{\extracolsep{\fill}}d@{\extracolsep{\fill}}d@{\extracolsep{\fill}}d}
-  \hline\hline
-  Quantity			& Unit			& \multicolumn{1}{c}{RF21} 	& \multicolumn{1}{c}{RF27\parnote{Measurements are approximate; values for the inner and outer resistances were lost. We assume they are identical to the RF29.}}	& \multicolumn{1}{c}{RF29}	& \multicolumn{1}{c}{RF33}	\\
-  \hline
-  $t_\text{vac}$	& $\unit{\mu m}$& 99.874					& 99.900					& 99.646			& 99.924			\\
-  $t_\text{Ag1}$	& 				& 0.126						& 0.100						& 0.354				& 0.0766			\\
-  $t_\text{Si}$		& 				& 273						& 273 						& 273				& 273				\\
-  $t_\text{pyamide}$& 				& 24						& 24 						& 24 				& 24				\\
-  $t_\text{Ag2}$	& 				& 0.101						& 0.100						& 0.306				& 0.030				\\
-  $d_L$				& $\unit{mm}$	& 27						& 30						& 31				& 30.91				\\
-  $d_R$				& 				& 55						& 55						& 55				& 54.72				\\
-  $S_{z1}$\parnote{Each window has a different $S_z$ and $d_z$.}
-					& 				& 32						& 34						& 33				& 34.36				\\
-  $S_{z2}$			& 				& 32						& 34						& 34				& 34.06				\\
-  $S_{z3}$			& 				& 32						& 34						& 33.5				& 33.87				\\
-  $d_{z1}$			& 				& 28						& 28						& 29				& 27.44				\\
-  $d_{z2}$			& 				& 28						& 28						& 28.5				& 28.36				\\
-  $L$				& $\unit{cm}$	& 30.0						& 24.3						& 24.4				& 24.372			\\
-  $\theta_w$		& $\unit{deg}$	& 180						& 180						& 180 				& 180				\\
-  $R_\text{inner}$	& $\unit{\Omega}$& 60.0						& \multicolumn{1}{c}{---}	& 60				& 80.5				\\
-  $R_\text{outer}$	&				& 20.0						& \multicolumn{1}{c}{---}	& 20				& 59.8				\\
-  \hline\hline
- \end{tabular*}
- \begin{flushleft}
- \parnotes
- \end{flushleft}
- \end{subtable}\hfill
- \begin{subtable}[t]{0.3\textwidth}
-  \begin{center}
- \caption{Physical parameters of the materials used in the fibre-antennae.}
- \label{tab:antenna.physicalParameters}
- \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}c@{\extracolsep{\fill}}d}
-  \hline\hline
-  Quantity			& Unit			& \multicolumn{1}{c}{Value}		\\
-  \hline
-  $\epsilon_\text{Si}$		& --			& 3.77		\\
-  $\epsilon_\text{pyamide}$	& --			& 3.50		\\
-  $\sigma_\text{Ag0}$		& $\unitfrac{MS}{m}$	& 63.0		\\
-  $\sigma_\text{AgO0}$		& 			&  6.79		\\
-  $\lambda_\text{Ag}$		& $\unit{nm}$		& 40		\\
-  \hline\hline
- \end{tabular*}
- \begin{flushleft}
- \parnotes
- \end{flushleft}
- \end{center}
- \end{subtable}
-\end{table}
-
 \begin{figure}
   \centering
   \includegraphics[width=0.9\textwidth]{figs/active/comparisonThickness.pdf}
@@ -1061,8 +1190,7 @@ $\{Y_i\}$, it is defined as
 From the definition, we see that the simultaneous linear transformations $X_i\rightarrow b+aX_i$ and $Y_i\rightarrow d+cY_1$
 do not change the value of the Pearson coefficient. This means that even if the two samples
 do not have the same normalization or are shifted by a constant amount, the correlation 
-will stay the same. As such, the Pearson correlation measures the delegend(loc=1, prop={'size':6})
-gree at which 
+will stay the same. As such, the Pearson correlation measures the degree at which 
 both samples are linearly related. 
 
 Figure \ref{fig:antenna.sParameters} shows the experimental and simulated
@@ -1079,10 +1207,6 @@ and simulation data to do so. Figure \ref{fig:antenna.shiftCorrelation}
 shows our results. We see that there are little to no correlation
 between the simulation data and the experimental data with $r\in\{-0.04,0.05\}$. 
 
-A possible source of error is the thickness of the silver layers. We will incorporate
-the FS model in the next simulations and determine if it is
-a factor. 
-
 \begin{figure}
  \centering
  \includegraphics[width=0.8\textwidth]{figs/active/sParameters-concSweepS11.pdf}
@@ -1097,42 +1221,6 @@ a factor.
  \caption{Pearson correlation coefficient as a function of the frequency
 	  shift of the data.}
  \label{fig:antenna.shiftCorrelation}
-\end{figure}
-
-We have also taken the Fourier transform of the experimental
-and simulation data (for $\delta_1=0$). To our discontent, 
-it seems that the datasets do not share periodic properties. 
-Figure \ref{fig:antenna.fourierAnalysis} shows the intensity
-of the FFT transform. To see if the periodic components corresponded
-to particular lengths in the system, we converted the associated
-wavelenghts to frequencies and plotted them as vertical lines in the figure. 
-$f_1$ is the fundamental mode of infinite LCXF, namely
-  \begin{equation}
-   f_1 = \frac{c}{\left(S_z+d_z\right)\left(\sqrt{\epsilon_\text{Si}}+1\right)}.
-  \end{equation}
-The frequency associated with the optical and the actual lengths of the window
-are
-  \begin{align*}
-   l_\text{opt}	&= \frac{c}{S_z\sqrt{\epsilon_\text{Si}}}	\\
-   l_\text{phy}	&= \frac{c}{S_z}.
-  \end{align*}
-
-Nothing thus far seems to explain the periodic properties of the 
-$S_{11}$ parameter of the experimental and simulation, although
-the optical length of the windows seems to explain a single 
-peak in the Fourier power spectrum. 
-
-The author is not sure that is the proper method to
-analyze the Fourier spectrum, however.
-
-\begin{figure}
- \centering
- \includegraphics[width=0.8\textwidth]{figs/active/fourierAnalysisS11.pdf}
- \caption[Fourier Power Spectrum]
-	  {Absolute value of the Fourier transform of the $S_{11}$ parameter.
-	  The red lines denote the frequencies associated with certain lengths
-	  in the RF21 fibre design.}
- \label{fig:antenna.fourierAnalysis}
 \end{figure}
 
 

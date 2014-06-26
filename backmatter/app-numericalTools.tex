@@ -50,6 +50,161 @@ both sets of eigenvectors will form a complete basis.
 
 \paragraph{Normality of $\mat{L}^j$}
 
+\section{Vector Scattering and the Variable Phase Method}\label{sec:app.numTools.vpm}
+The \gls{vpm} is based upon an eigenfunction expansion of the 
+angular part of the scattering equations. This reduces \gls{pde}
+to a matrix \gls{ode} for the scattering amplitudes. In what
+follows, we will derive those matrix \glspl{ode} for both 
+2D scalar and 3D vector scattering. 
+
+\subsection{2D Scalar Scattering}
+Before applying the expansions, we will multiply the equation through 
+by $n$ and write the derivatives explicitly
+  \begin{equation}
+    \left[n\left(\frac{\partial^2}{\partial r^2}+\frac{1}{r}\frac{\partial}{\partial r}+\frac{1}{r^2}\frac{\partial^2}{\partial\theta^2}\right)+k^2n^3\right]H_z
+    =
+    2\frac{\partial H_z}{\partial r}\frac{\partial n}{\partial r}+\frac{2}{r^2}\frac{\partial H_z}{\partial\theta}\frac{\partial n}{\partial\theta}.
+  \end{equation}
+Expanding this equation yields (after some simplification)
+  \begin{multline}
+   \sum_{m,m'}
+    \left\{\frac{n_{m'}}{2\pi}\left(\frac{\psi_{m}''}{r^{1/2}}-\frac{(m^2-1/4)}{r^{5/2}}\psi_m\right)e^{i(m+m')\theta}\right\}
+	+\left(\frac{k}{2\pi}\right)^2\left(\sum_{m'}n_{m'}e^{im'\theta}\right)^3\left(\sum_m\frac{\psi_m}{r^{1/2}}e^{im\theta}\right)\\
+	=\frac{2}{2\pi}\sum_{m,m'}\left\{n_{m'}'\left[\frac{\psi_m'}{r^{1/2}}-\frac{\psi_m}{2r^{3/2}}\right]-\frac{mm'}{r^2}\frac{\psi_mn_{m'}}{r^{1/2}}\right\}e^{i(m+m')\theta}
+  \end{multline}
+Projecting onto $\sqrt{r}e^{-im''\theta}/\sqrt{2\pi}$
+  \begin{multline}
+    \sum_{m,m'}\int_0^{2\pi}\left\{\frac{n_{m'}}{(2\pi)^{3/2}}\left(\psi_m''-\frac{(m^2-1/4)\psi_m}{r^2}\right)+\frac{k^2c_{m'}\psi_m}{(2\pi)^{3/2}}\right\}e^{i(m+m'-m'')\theta}d\theta\\
+    \frac{2}{(2\pi)^{3/2}}\int_0^{2\pi}\left\{n_{m'}'\left[\psi_m'-\frac{\psi_m}{2r}\right]-\frac{mm'}{r^2}\psi_mn_{m'}\right\}e^{i(m+m'-m'')\theta}d\theta
+  \end{multline}
+where
+  \begin{equation}
+   c_{m'} = \sum_{m}\sum_{m''}n_mn_{m''}n_{m'-m''-m}.
+  \end{equation}
+Integrating, introducing the matrices
+  \begin{subequations}
+  \begin{align}
+   \left[\mat{N}(r)\right]_{mm''}	&= \sum_{m'}n_{m'}\delta_{m+m',m''}	\\
+   \left[\mat{Z}(r)\right]_{mm''}	&= \sum_{m'}mm'n_{m'}'\delta_{m+m',m''},
+  \end{align}
+  \end{subequations}
+we obtain the matrix ODE
+  \begin{equation}
+  \label{eq:vpm.TE.GeneralCase}
+  \bo{\psi}''-\frac{\mat{M^2}-\mat{I}/4}{r^2}\bo{\psi}+\frac{k^2}{2\pi}\mat{N}^2\bo{\psi}
+    =
+   2\mat{N}^{-1}\mat{N}'\left[\bo{\psi}'-\frac{\psi}{2r}\right]-\frac{2}{r^2}\mat{N}^{-1}\mat{Z}\bo{\psi}
+  \end{equation}
+In the free case, i.e. $n(r,\theta)=1$, we have that
+  \begin{equation}
+   n_{m'} = \sqrt{2\pi}\delta_{m'0}
+  \end{equation}
+such that we have
+  \begin{equation}
+    \label{eq:vpm.freeCase}
+    \bo{\psi}''-\frac{\mat{M}^2-\mat{I}/4}{r^2}\bo{\psi}+k^2\bo{\psi}=0,
+  \end{equation}
+the Bessel equation. For the general case, it makes sense
+to posit a matrix solution of the form
+  \begin{equation}
+   \bo{\psi}=\mat{G}_k(r)\mat{W}(kr)
+  \end{equation}
+where $\left[\mat{W}(kr)\right]_{mm}=H_m^{(\pm)}(kr)$ where
+we choose the sign for either incoming or outgoing 
+wave boundary condition. Substituting this into \eqref{eq:vpm.TE.GeneralCase}
+and using \eqref{eq:vpm.freeCase} gives
+  \begin{multline}
+    \label{eq:vpm.masterEquation}
+    \mat{G}''+2\mat{G}'\frac{d}{dr}\left(\log\mat{W}\right)+\frac{1}{r^2}\left[\mat{G},\mat{M^2}-\mat{I}/4\right]+\frac{k^2}{2\pi}\left(\mat{N}^2-2\pi\right)
+     \\ =
+    2\mat{N}^{-1}\mat{N}'\left[\mat{G}'+\mat{G}\frac{d}{dr}\left(\log\mat{W}\right)-\frac{\mat{G}}{2r}\right]-\frac{2}{r^2}\mat{N}^{-1}\mat{ZG}.
+  \end{multline}
+In the case of TM polarization, the right-hand side 
+of \eqref{eq:vpm.masterEquation} vanishes. 
+
+We start with the matrix case. We parametrize the solution as
+  \begin{equation}
+    \mat{F}_k(r) = \mat{G}_k(r)\mat{W}(kr)
+  \end{equation}
+where $\mat{W}(kr)$ has the outgoing wave functions $rh_\ell^{(+)}(kr)$ on its diagonal. 
+With the Sommerfeld condition, we can conclude that $\mat{G}_k(\infty) = \mat{I}$ and 
+$\mat{G}_k'(\infty)=\mat{0}$. We have the differential equation
+  \begin{multline}
+   -\mat{G}_k(r)''-2\mat{G}_k(r)'\left(\frac{\partial}{\partial r}\ln\mat{W}(kr)\right)
+    +\frac{1}{r^2}\left[\mat{L}^2,\mat{G}_k(r)\right]+\mat{V}(r)\mat{G}_k(r)=0
+  \end{multline}
+The incoming wave solutions solves the same equation, but with
+$\mat{W}(kr)\mapsto \mat{W}(kr)^\dagger$. Denoting this solution 
+by $\mat{G}_{-k}(r)$, we find that the wave function is
+  \begin{equation}
+    \bo{\psi}(r) = \mat{G}_{-k}(r)\mat{W}(kr)^\dagger+\mat{G}_k(r)\mat{W}(kr)\mat{S}_k(k)
+  \end{equation}
+where $\mat{S}_k(k)$ is the scattering matrix. Because of the
+$1/r$ factor in our expansion, $\bo{\psi}(0)$ must vanish 
+for the field to be finite at the origin. We can then write the 
+scattering matrix as
+  \begin{equation}
+   \mat{S}_k = -\lim_{r\rightarrow0}\mat{W}^{-1}(kr)\mat{G}^{-1}_k(r)\mat{G}_{-k}(r)\mat{W}(kr)^\dagger
+  \end{equation}
+These equations come from \cite{FOR2012}, modulo some minor changes.
+
+Not surprisingly, we will have to deal with exactly the same issue as before: 
+notice the product $\mat{W}^\dagger(kr)\mat{A}\mat{W}^{-1}(kr)$. For diagonal
+matrices $\mat{W}$, we can rewrite this product as
+  \begin{equation*}
+    \mat{A}\circ\left(\text{diag}(\mat{W}^\dagger)\otimes\text{diag}(\mat{W}^{-1})\right)
+  \end{equation*}
+which is our beloved Schur product that caused some issues in \gls{sqa}. 
+
+\subsection{3D Vector Scattering}
+In the electromagnetic case, we start with the curl-curl equation
+  \begin{equation}
+    \nabla\times\nabla\times\bo{E}-k^2\epsilon(\bo{r})\bo{E}=0.
+  \end{equation}
+Expanding the field in a tensor spherical harmonics (to be discussed later) yields
+an implicit differential equation. In their paper, F+G argue that if they rather
+use the equation
+  \begin{equation}
+   \label{eq:vpm.modCurlCurl}
+   \nabla\times\nabla\times\bo{E}(\bo{r})-\epsilon(\bo{r})\nabla\left\{\nabla\cdot\left[\epsilon(\bo{r})\bo{E}(\bo{r})\right]\right\}
+      =k^2\epsilon(\bo{r})\bo{E}(\bo{r})
+  \end{equation}
+which yields the same eigenstates, the resulting differential equation is explicit. 
+Interestingly enough, this is exactly the extra term that is used to remove
+spurious solutions that appear in variational treatments. 
+
+Recall that we can write Maxwell's equations as the minimization of the energy-like functional
+  \begin{equation}
+   F\left[\bo{E}\right]=\mathop{\iiint}_V\left[\left(\nabla\times\bo{E}^*\right)\left(\nabla\times\bo{E}\right)-k^2\bo{E}^*\cdot\epsilon(\bo{r})\bo{E}\right]dV.
+  \end{equation}
+In the variational treatment, this leads to spurious solutions which can provably be removed \cite{KON1976,KOS1984,KOS1985} that adding the null term
+$\left(\nabla\cdot\bo{E}^*\right)\left(\nabla\cdot\epsilon(\bo{r})\bo{E}\right)$ in the integrand. 
+Taking the first variation of the new functional leads to \eqref{eq:vpm.modCurlCurl}.
+  
+We now expand both the permittivity $\epsilon(\bo{r})$ and the field in
+spherical harmonics. Because the electric field is a vector field, 
+we will need to use \textit{vector} spherical harmonics, given by
+  \begin{equation}
+    \bo{Y}_{jm}^\ell=\sum_{\sigma=-1}^{+1}\sum_{m'=\ell}^{+\ell}C^{jm}_{\ell m'1\sigma}Y_{\ell}^{m'}(\theta,\varphi)\bou{e}_\sigma
+  \end{equation}
+where $\ell=j,j\pm1$ for the three vector spherical harmonics, $C^{nm}_{n_1m_1,n_2m_2}$
+is a Clebsch-Gordan coefficient and the spherical basis vectors $\bou{e}_\sigma$ 
+are
+  \begin{align}
+    \bou{e}_1	&= -\frac{e^{i\varphi}}{\sqrt{2}}\left(\sin\theta\bou{r}+\cos\theta\bou{\theta}+i\bou{\varphi}\right)	\nonumber\\
+    \bou{e}_0	&= \cos\theta\bou{r}-\sin\theta\bou{\theta}								\\
+    \bou{e}_{-1}&= -\bou{e}_1^*												\nonumber
+  \end{align}
+Before going any further, let us state the capabilities of this approach. This kind of method
+can theoretically deal with arbitrary potentials (permittivities). However, it is best used
+when the scale of variations of the potential is not too big compared to the size
+of the scatterer. The size of the transforms and matrix ODEs, or in other words the resolution
+must be fixed beforehand. For fast variations of the potential, a smaller resolution must be used
+and this leads to overall large matrices. For highly non-uniform structures, finite element methods
+might be preferable. Radial inhomogeneities can be dealt with variable-step integrators. 
+Magnetic materials can be considered by substituting the curl-curl operator $\nabla\times\nabla\cdots$
+by $\nabla\times\frac{1}{\mu(\bo{r})}\nabla\times\cdots$. 
+
 \section{Lippmann-Schwinger Computation of the Scattering Matrix}\label{sec:app.numTools.lippmannSchwinger}
 \section{Computation of the Logarithmic Derivative $[H^{(\pm)}_\nu(z)]'/H^{(\pm)}_\nu(z)$}\label{sec:app.numTools.logDeriv}
 
