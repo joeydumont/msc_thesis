@@ -752,7 +752,8 @@ of silver (see Table \ref{tab:active.antennae.physicalParameters}) yields the
 thicknesses found in Table \ref{tab:active.antennae.rfxx-parameters}.
 
 Notice that this assumes smooth metallic layers (no surface inhomogeneities) and
-constant conductivity within the whole volume. 
+constant conductivity within the whole volume. We will return to this assumption
+shortly. 
 
 \begin{table}
   \newcolumntype{d}{D{.}{.}{3}}
@@ -824,7 +825,7 @@ Unfortunately, the extremely wild range in the characteristic sizes of the struc
 (from the nanometer to the millimeter) makes meshing the LCX geometry a Herculean, 
 if not even Sisyphean, task. 
 The issue of meshing thin silvers layers has already been solved in the literature
-and involves replacing the silver shells by appropriate boundary conditions \cite{MIT1968} 
+and involves replacing the silver shells by appropriate boundary conditions \cite{MIT1968}. 
 
 The two requirements discussed above essentially destroy all hope of using any
 of the methods we have devised in the last sections of this essay. The eigenbasis
@@ -875,13 +876,13 @@ The far-field associated with each run is computed via the near- to far-field
 transformation that is discussed in Example \ref{ex:active.antennae.nearToFarTrans}, 
 most likely using the boundary of the antenna as the \gls{lss}.
 
-
 The traces of the $S$-parameters, i.e. the value of $S_{ij}$ as a function of 
 the frequency of the input fields, will be of primary interest. The frequency
 response can give information about the finesse of the resonances, as well as
 hinting at specific radiation mechanisms. The analysis below will be divided
 in two parts: the analysis of the traces on their own, and comparison with the 
-theoretical/simulation traces.
+theoretical/simulation traces. Notice that our device is reciprocal, such that
+$S_{12}=S_{21}$. We only have three independent scattering parameters to study.
 
 \subsubsection{Analysis of Experimental Traces}
 Before showing the correspondence (or lack thereof) between the
@@ -900,7 +901,7 @@ Another interesting property that can be used to theoretically characterize
 the type of scattering occurring in our structures is the decay of the 
 autocorrelation function. In the 1980s, it was shown that if the underlying
 classical mechanics of the structure showed chaoticity, the corresponding
-\textit{unbounded} scattering problem retained the signature of chaos 
+open quantum scattering problem retained the signature of chaos 
 through the Lorentzian decay of the autocorrelation of the scattering matrix 
 elements \cite{BLU1988}. We will thus use a Lorentzian fit of the form 
 	\begin{equation}
@@ -910,7 +911,7 @@ where $\bo{p}$ is a vector of parameters to be fitted. The quality of the
 fit will serve as a qualitative way to determine the quality of the
 fibre-antenna. A good Lorentzian fit indicates irregularity of the spectral
 response and consequently of the bad quality of this particular fibre-antenna
-realization. The reasoning is that the resonances (or dips, rather) are the result
+realization. The reasoning is that the resonances (or dips in the traces, rather) are the result
 of the commensuration between the geometry and the wavelength of the light and 
 are thus expected to repeat periodically. 
 
@@ -920,8 +921,10 @@ consequently, its $S$-parameters are far from the desired
 ones (see Figure \ref{fig:active.lcx.rf10sParameters}), as they
 show a single dip at $f\sim800\,\unit{MHz}$. The rapid decrease
 of the autocorrelation reflects on the poor fabrication process.
+In other words, the lengths of the window are so different
+that the wave essentially undergoes random motion. 
 
-\begin{figure}
+\begin{figure}[h]
  \centering
  \includegraphics{figs/active/RF10-sParameters.pdf}
  \caption[Experimental $S_{22}$ trace of the RF10 fibre-antenna]
@@ -933,7 +936,7 @@ of the autocorrelation reflects on the poor fabrication process.
  \label{fig:active.lcx.rf10sParameters}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
  \centering
  \includegraphics{figs/active/RF10-autoCorrelation.pdf}
  \caption[Autocorrelation of the experimental trace of $S_{22}$ for the RF10 fibre-antenna]
@@ -944,9 +947,20 @@ of the autocorrelation reflects on the poor fabrication process.
 \end{figure}
 
 \paragraph{RF21}
+The traces of this particular realization shows definite dips, particularly
+in the transmission coefficient $S_{12}$, with associated although weaker
+dips in both reflection coefficients. The two dips, occurring at $f\sim1.8\,\unit{GHz}$
+and $f\sim3.0\,\unit{GHz}$, correspond to optical wavelengths $\lambda_\text{opt}=c/(nf)$ 
+of approximately $8.5\,\unit{cm}$ and $5.3\,\unit{cm}$, respectively. They correspond
+to the lengths of the first and last scattering cells, approximately; the existence
+of these two dips thus seems predicated on the asymmetry of the cells ($d_L\neq d_R$). The fact that all
+traces show dips at these frequencies implies that energy is lost in the system. Neglecting
+the losses to the metallic layers (they are thinner than the skin depth, minimizing the losses),
+we can assume that the lost energy is radiated away through the windows. This design thus 
+has two operating frequencies, both outside the desired range, however. 
 
 
-\begin{figure}
+\begin{figure}[h]
  \centering
  \includegraphics{figs/active/RF21-sParameters.pdf}
  \caption[Experimental $S_{22}$ trace for the RF21 fibre]
@@ -954,7 +968,7 @@ of the autocorrelation reflects on the poor fabrication process.
  \label{fig:active.lcx.rf21sParameters}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
  \centering
  \includegraphics{figs/active/RF21-autoCorrelation.pdf}
  \caption[Autocorrelation of the experimental $S_{22}$ trace for the RF21 fibre-antenna]
@@ -963,7 +977,7 @@ of the autocorrelation reflects on the poor fabrication process.
 \end{figure}
 
 \paragraph{RF27 and RF29}
-As we can see from Table \ref{tab:antenna.rfxx-parameters}, these two antennae
+As we can see from Table \ref{tab:active.antennae.rfxx-parameters}, these two antennae
 are rather similar. It is thus not surprising that their $S$-parameters
 show similar behaviour (compare Figures \ref{fig:active.lcx.rf27sParameters} and
 \ref{fig:active.lcx.rf29sParameters}). Their small differences can be explained
@@ -1013,30 +1027,42 @@ that the dip is not due to the geometry of the fibre-antenna.
 \paragraph{RF33}
 The RF33 fibre-antenna, the final antenna produced, is the most mature
 one in terms of experimental protocol and is therefore most
-worthy of study. 
+worthy of study. Notice that the baseline for this fibre is 
+higher than that of the other fibres. The dips also show lower finesse,
+although it is possible to make the LCX operate as an antenna
+at some of the frequency dips. Specifically, there is a dip at
+$f\sim2.6\,\unit{GHz}$, which is close to our requirements. 
+There is however, an increase in the reflection coefficients
+at this frequency, hinting that the antenna might not be 
+efficient at that frequency. There seems to be a repetition 
+of the trace at every $2\,\unit{GHz}$. 
+
+The autocorrelation of the trace of $S_{22}$ shows a strong
+periodic component, which we have isolated by taking the 
+FFT of the signal. 
 
 We have also taken the Fourier transform of the experimental
 and simulation data (for $\delta_1=0$). To our discontent, 
 it seems that the datasets do not share periodic properties. 
-Figure \ref{fig:antenna.fourierAnalysis} shows the intensity
+Figure \ref{fig:active.lcx.rf33fft} shows the intensity
 of the FFT transform. To see if the periodic components corresponded
 to particular lengths in the system, we converted the associated
-wavelenghts to frequencies and plotted them as vertical lines in the figure. 
-$f_1$ is the fundamental mode of infinite LCXF, namely
+wavelengths to frequencies and plotted them as vertical lines in the figure. 
+$f_1$ is the fundamental mode of infinite \gls{lcx} \cite{WAN2001}, namely
   \begin{equation}
-   f_1 = \frac{c}{\left(S_z+d_z\right)\left(\sqrt{\epsilon_\text{Si}}+1\right)}.
+   f_1 = \frac{c}{\left(S_z+d_z\right)\left(\sqrt{\epsilon_\text{Si}}+1\right)} \sim 1.6\,\unit{GHz}.
   \end{equation}
 The frequency associated with the optical and the actual lengths of the window
 are
   \begin{align*}
-   l_\text{opt}	&= \frac{c}{S_z\sqrt{\epsilon_\text{Si}}}	\\
-   l_\text{phy}	&= \frac{c}{S_z}.
+   l_\text{opt}	&= \frac{c}{S_z\sqrt{\epsilon_\text{Si}}} \sim 4.5\,\unit{GHz}	\\
+   l_\text{phy}	&= \frac{c}{S_z} \sim 8\,\unit{GHz}.
   \end{align*}
 
 Nothing thus far seems to explain the periodic properties of the 
-$S_{11}$ parameter of the experimental and simulation, although
-the optical length of the windows seems to explain a single 
-peak in the Fourier power spectrum. 
+experimental $S_{22}$ trace, although it might just be that 
+$f_1$ depends on the sizes $d_L$ and $d_R$ and what we see is
+the fundamental mode of our quasi-LCX. 
 
 \begin{figure}
  \centering
@@ -1064,10 +1090,37 @@ peak in the Fourier power spectrum.
 
 
 \subsubsection{Comparison with Simulation Results}
+The specifications of each RFxx was based on the numerical simulation
+of the antennae. However, once they were built, it became clear the 
+numerical modeling did not correlate well with the experimental
+realizations. As we will see, the experimental traces rarely possessed
+the same features as the numerical ones and the far-field patterns 
+did not match. 
+
+The main cause for such poor agreement between theory and experiment
+was hypothesized to be related to the metallic layers. As discussed
+above, the experimental method the group used did not allow for any
+control over the thickness of metal deposited, and did not guarantee
+its mechanical properties nor its chemical ones. In other words, 
+the layers could be grainy and contain impurities. The former was taken
+into account directly in the HFSS software, as the ``Layered Impedance
+Boundary Conditions'' module allows for inhomogeneities in the surfaces.
+The author of this essay thus tried to model the effects of impurities 
+on the conductivity and the effect of the resulting small thicknesses
+of the layers. The next section details the modeling efforts.  
 
 \paragraph{Preliminary Results}
-We first model the RF21 design. Its parameters are summarized in 
-Table \ref{tab:antenna.rfxx-parameters}. 
+Because of its easily interpretable traces and of its (at the time)
+quality, the RF21 fibre is the one we analyze. Figure
+\ref{fig:active.lcx.rf21sParameters-sim} shows both the experimental traces
+and the numerically predicted ones. Note that this simulation did not contain
+any effective boundary conditions, but assumed that the silver layers had a 
+constant $2\,\unit{\mu m}$ thickness. We can see transmission-line behaviour
+in the $S_{12}$ parameter, as the wave is transmitted without much loss
+regardless of frequency. Clearly, this model does not represent reality
+well. Removing the silver layers and replacing them by effective boundary
+conditions does not solve the problem, as is shown in Figure 
+\ref{fig:active.lcx.rf21sParameters-concSweep}. 
 
 \begin{figure}
  \centering
@@ -1077,34 +1130,10 @@ Table \ref{tab:antenna.rfxx-parameters}.
 	  	the experimental data while the dotted lines represent the simulation data.
 	  	The top $x$ axis shows the $S$-parameters as a function of the ratio of the 
 	  	vacuum wavelength $\lambda_f$ over the period of the windows $P$.}
- \label{fig:antenna.sParameters}
+ \label{fig:active.lcx.rf21sParameters-sim}
 \end{figure}
 
-Notice the small thickness
-of the silver layers (126 and 101 nm) compared to the other 
-sizes involved. It takes a highly non-uniform mesh to model
-these small relative sizes. Moreover, since the silver has a high
-conductivity, it takes an even smaller mesh to model. Our first 
-attempts at modeling this structure proved unsuccessful.
-
-In the experimental data (\see Figure \ref{fig:antenna.sParameters}), 
-we see deep dips in the transmission spectrum ($S_{12}$) at approximately
-1.8 GHz and 3 GHz. There are corresponding dips in the reflection parameters,
-$S_{11}$ and $S_{22}$, which leads us to believe that remaining power 
-was radiated through the slots. The existence of two dips seems predicated on the asymmetry
-of the fibre ($d_L\neq d_R$). 
-
-We also notice that the simulation data does not in any way correlate
-to the experimental data. This is probably due to the fact that, in the our
-HFSS model, we had to put the thickness of the silvers layers to $2\,\unit{\mu m}$
-instead of the values listed in Table \ref{tab:antenna.rfxx-parameters}. In 
-this regime, the fibre-antenna behaves like an ordinary transmission line. 
-However, as the mesher does not allow us to go under $2\,\unit{\mu m}$, we cannot
-conclude that is really due to the thickness of the Ag layers, only suspect it.
-
-In our previous simulations, it was clear that something was amiss:
-there was no correlation between the simulation and
-experimental data. AFM pictures (see Figure \ref{fig:antenna.AFM})  have suggested that the deposited
+AFM pictures (see Figure \ref{fig:active.lcx.AFM})  have suggested that the deposited
 metal is in fact a mixture of silver and silver oxide. To evaluate
 the effective conductivity of the mixture, we have used Bruggeman's model \cite{LAN1978}.
 The model starts from a homogeneous medium, call it medium 1, 
@@ -1126,7 +1155,9 @@ The positive solution is, defining $q=\left(d\delta_1-1\right)\sigma_1+\left(d\d
    \label{eq:antenna:bruggeman}
    \sigma_e = \frac{1}{2d-2}\left[q+\sqrt{q^2+4(d-1)\sigma_1\sigma_2}\right].
   \end{equation}
-  
+Using this effective conductivity in \eqref{eq:active.antennae.thickGeneralEquations} yields 
+the associated thicknesses. 
+
 \begin{figure}
  \centering
  \includegraphics[width=0.8\textwidth]{figs/active/out/AFM.pdf}
@@ -1134,20 +1165,39 @@ The positive solution is, defining $q=\left(d\delta_1-1\right)\sigma_1+\left(d\d
  		{AFM pictures of silver deposited onto glass plates. \textbf{(a)} Flakes of silver oxide seem to be forming onto the deposited
 	  	silver layer. \textbf{(b)} Sample image showing the inhomogeneity of the
 	  	silver layer.}
- \label{fig:antenna.AFM}
+ \label{fig:active.lcx.AFM}
 \end{figure}
 
-Conductivity 
+It also came to light that the conductivity 
 of thin metal films can be a function of their thicknesses. 
-The Fuchs-Sondheimer model states
-that
+The state-of-the-art model to describe this dependence is the 
+\textit{Fuchs-Sondheimer} model, which essentially computes the 
+electron distribution in the metal as a function of its thickness. 
+From Ohm's law, it is then trivial to obtain the value of the 
+conductivity \cite{FUC1938,SON1952,PUR2007}. The general relationship
+is
+	\begin{multline}
+		\frac{\sigma_F}{\sigma_0} = 
+			1-\frac{3(1-p)}{8\kappa}\\+\frac{3}{4\kappa}\left(1-p\right)^2
+			\sum_{\nu=1}^\infty p^{\nu-1}
+			\left\{
+				\int_{\kappa\nu}^\infty\frac{e^{-\xi}}{\xi}d\xi\left(\kappa^2\nu^2-\frac{\kappa^4\nu^4}{12}\right)
+				+e^{-\kappa\nu}\left(\frac{1}{2}-\frac{5\kappa\nu}{6}-\frac{\kappa^2\nu^2}{12}+\frac{\kappa^3\nu^3}{12}\right)	
+			\right\}
+	\end{multline}
+where $\kappa=t/\lambda_0$ where $\lambda_0$ is the mean free path of the electrons in the metal and
+$t$ the thickness of the sample. The parameter $p$ is the proportion of electrons that are reflected
+elastically at the boundary. For rough edges, we expect the electrons to be scattered off randomly 
+and thus $p\sim0$. Notice that the above expression is extremely unwieldy and yields to a highly
+non-linear root search when substituted in \eqref{eq:active.antennae.thickGeneralEquations}. 
+We will use the much more convenient form 
   \begin{equation}
       \sigma_F = \frac{\sigma_0}{1+\frac{3\lambda}{8d}\left(1-p\right)}
   \end{equation}
-where $0\leq p\leq1$ is a specularity parameter that depends on the 
-reflectivity of the electron gas, and $\lambda$ is the 
-electron free mean path in the metal. This model states that conductivity
-diminishes as the thickness of the metallic layer gets smaller.
+which leads to a simpler cubic equation for the thickness.
+This model states that conductivity
+diminishes as the thickness of the metallic layer gets smaller, 
+as one would expect.
 
 In Figure \ref{fig:antenna.thicknessRatios}, we compare the 
 thicknesses obtained via the bulk conductivity model (Bruggeman 
@@ -1193,7 +1243,7 @@ do not have the same normalization or are shifted by a constant amount, the corr
 will stay the same. As such, the Pearson correlation measures the degree at which 
 both samples are linearly related. 
 
-Figure \ref{fig:antenna.sParameters} shows the experimental and simulated
+Figure \ref{fig:active.lcx.rf21sParameters-sim} shows the experimental and simulated
 $S_{11}$ parameter. At first look, it might seem like the general form 
 of the curves are similar, but our quantitative analysis will show 
 that that would be wrong. To make sure that our simulation data was not simply
@@ -1212,7 +1262,7 @@ between the simulation data and the experimental data with $r\in\{-0.04,0.05\}$.
  \includegraphics[width=0.8\textwidth]{figs/active/sParameters-concSweepS11.pdf}
  \caption[Experimental and simulated $S_{11}$ parameter for the RF21 fibre]
 	 {Experimental and simulated $S_{11}$ parameter for the RF21 fibre.}
- \label{fig:antenna.sParameters}
+ \label{fig:active.lcx.rf21sParameters-concSweep}
 \end{figure}
 
 \begin{figure}
@@ -1223,23 +1273,18 @@ between the simulation data and the experimental data with $r\in\{-0.04,0.05\}$.
  \label{fig:antenna.shiftCorrelation}
 \end{figure}
 
+We unfortunately conclude this section by noting that the above phenomena
+are not sufficient to explain the lack of correlation between the experimental
+and simulation datasets. The models do predict dramatically different properties
+for the metallic layers, but it seems that this does not affect the $S$-parameters
+all that much. One explanation is that the effect of the surface inhomogeneities
+are \textit{not} taken into account when computing the thicknesses. By using a
+\textit{ad hoc} model to compute the effects of randomly distributed inhomogeneities
+on the base conductivity $\sigma_0$ of the metallic layers \cite{CUR2012}, one could obtain a better
+estimate of the thicknesses and possibly a better fit between the experimental and simulated datasets.
 
-
-% \section{Antenna Propagation}
-% 
-% \todo[inline]{Describe goal of project; advantages of using fibers
-% 	      over patch antennae...}
-% 	      
-% \subsection{Antenna Theory Primer}
-% \todo[inline]{Basic definitions of directivity, gain...}
-% \todo[inline]{Stratton solution}
-% 
-% \subsection{Designs}
-% 
-% \todo[inline]{Feasability of design via dipole antenna. Analytical solution
-% 	      of dipole antenna. Issue with thin silver shells.}
-% 
-% \todo[inline]{Theory of infinite LCXs as guide for finite LCX. Discuss in more
-% 	      detail about the thin silver shells (methods used to model them,
-% 	      non-agreement with experimental data and its probable causes).
-% 	      Discuss Bruggemann's model and Fuchs-Sondheimer methods.}
+We can see, however, that while of the details of the $S$-parameters are not well reproduced, some
+dips appear both in experimental and simulated traces. The irregular scattering, due to the experimental
+variations of the geometry, could account for the suppression of some dips and the possible shifts. 
+However, it is difficult to predict \textit{a priori} which ones will be suppressed and which ones will
+be shifted, as we do not have ``robustness'' information. 
