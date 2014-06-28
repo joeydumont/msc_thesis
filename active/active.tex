@@ -234,93 +234,93 @@ treat the spatial hole burning term and compute the non-linear
 \gls{sMatrix}.
 
 \subsection{Methods of Solution}
-\paragraph{Variable Phase Method}
-This elegant method has its roots deep in the literature of quantum-mechanical
-scattering. It is based on the fact that, for central potentials, the 
-\gls{sMatrix} is diagonal and that its elements can be written as
-$e^{i\delta_k}$, where $\delta_k$ is the phase shift suffered by the 
-$k$th partial wave. One can thus find a first order, non-linear differential
-equation \cite{CAL1967} for each $\delta_k$. The method transforms the \gls{bcp} to an \gls{ivp}, as the phase shift
-is bounded. In our present case, the potential is not a central one and the
-\gls{sMatrix} is not diagonal. We will need to solve a coupled system 
-of differential equations to represent the coupling between the different
-partial waves. The \gls{vpm} will give rise to an \gls{ivp} matrix \gls{ode}.
-
-The initial motivation for the use of \gls{vpm} was the computation 
-of the field inside the scatterer. In the \gls{sqa}, modifying 
-the linear algebra operations of the reduction phase yields
-an algorithm that computes the field from given $\bo{A}$ and $\bo{B}$
-coefficients. It is unfortunately highly unstable, to the point 
-of being unusable. The authors of \cite{FOR2012} suggested that
-the \gls{vpm} was stable, suggesting its use over the onion
-discretization of \gls{sqa}. While the \gls{vpm} has some inherent
-issues and our implementation is far from complete, we present
-here the main development both for the interested reader and for 
-future reference. 
-
-The method starts with the angular momentum expansions
-  \begin{subequations}
-  \begin{align}
-   H_z(r,\theta)	&= \frac{1}{\sqrt{2\pi}}\sum_{m=-\infty}^\infty \frac{1}{\sqrt{r}}\psi_m(r)e^{im\theta}	\\
-   n(r,\theta)		&= \frac{1}{\sqrt{2\pi}}\sum_{m'=-\infty}^\infty n_{m'}(r)e^{im'\theta}.
-  \end{align}
-  \end{subequations}
-Substituting these expansions in Helmholtz's equation and projecting
-onto the eigenstate 
-	\begin{equation*}
-		\sqrt{r}e^{-im''\theta}/\sqrt{2\pi}
-	\end{equation*} 
-yields a system of coupled \glspl{ode} for each moment of the field $\psi_m$
-	\begin{equation}
-		\label{eq:active.vpm.equation}
-		\bo{\psi}''-\frac{\mat{M}^2-\mat{I}/4}{r^2}\bo{\psi}+\frac{k^2}{2\pi}\mat{N}^2\bo{\psi}=0
-	\end{equation}
-where 
-	\begin{equation*}
-		\left[\mat{N}(r)\right]_{mm''}=\sum_{m'}n_{m'}(r)\delta_{m+m',m''}.
-	\end{equation*}
-Notice that the free case is recovered when $n(r,\theta)=1$, as 
-then $n_{m'}=\delta_{m'0}$ and 
-	\begin{equation}
-		\bo{\psi}''-\frac{\mat{M^2}-\mat{I}/4}{r^2}\bo{\psi}+k^2\bo{\psi}=0
-	\end{equation}
-a system of uncoupled Bessel equations. At this point, we 
-introduce the matrix \gls{ode}, i.e. \eqref{eq:active.vpm.equation} with as many 
-rows as columns. Each column solves the ODE, but has different boundary conditions
-\cite[\S15.2]{NEW1982}. Since the scattering solution must obey Sommerfeld's radiation
-condition, we use the factorization
-	\begin{equation}
-		\bo{\psi} = \mat{G}_k(r)\mat{W}^{+}(kr)
-	\end{equation}
-where $\left[\mat{W}^{\omega}(kr)\right]_{mm''}=H_m^{(\omega)}(kr)\delta_{mm''}$.
-Outside the \gls{lss}, the solution must be $\mat{W}^+(kr)$. In the general potential
-scattering theory, the \gls{lss} is usually a sphere at infinity, which yields the 
-initial value conditions
-	\begin{align}
-		\mat{G}_k(\infty)	&=\mat{I}	&	\mat{G}_k'(\infty)=\mat{0}.
-	\end{align}
-with 
-	\begin{equation}
-		\mat{G}_k''+2\mat{G}_k'\frac{d\log\mat{W}^\omega}{dr}+\frac{1}{r^2}\left[\mat{G}_k,\mat{M}^2-\mat{I}/4\right]
-					+\frac{k^2}{2\pi}\left(\mat{N}^2-2\pi\mat{I}\right)=0.
-	\end{equation}
-
-The $\mat{G}_k(r)$ matrix represents the phase shifts accumulated by each partial wave $m$ 
-and caused by the $m'$th angular moment of the potential. The factorization procedure 
-effectively transforms the \gls{bcp} to an \gls{ivp}, with the data provided on the 
-\gls{lss}. The matrix ODE can thus be solved by using any good integration routine\footnote{Although
-make sure you use a stiff equation solver. See Appendix \ref{sec:app.numTools.vpm} for details.}.
-
-The scattering matrix of the problem can also be obtained if we 
-compute the conjugate solution, solving with the incoming radiation $\bo{\psi}=\mat{G}_{-k}\mat{W}^-(kr)$
-instead of the outgoing one. The physical wave function is thus given by 
-	\begin{equation}
-		\bo{\psi} = \mat{G}_{-k}(r)\mat{W}^-(kr)+\mat{G}_k(r)\mat{W}^+(kr)\mat{S}_k(k).
-	\end{equation}
-Using the finiteness condition of the field at origin, we have
-	\begin{equation}
-		\mat{S}_k = -\lim_{r\rightarrow0}\mat{W}^{+}(kr)^{-1}\mat{G}_k^{-1}(r)\mat{G}_{-k}(r)\mat{W}^-(kr).
-	\end{equation}
+%\paragraph{Variable Phase Method}
+%This elegant method has its roots deep in the literature of quantum-mechanical
+%scattering. It is based on the fact that, for central potentials, the 
+%\gls{sMatrix} is diagonal and that its elements can be written as
+%$e^{i\delta_k}$, where $\delta_k$ is the phase shift suffered by the 
+%$k$th partial wave. One can thus find a first order, non-linear differential
+%equation \cite{CAL1967} for each $\delta_k$. The method transforms the \gls{bcp} to an \gls{ivp}, as the phase shift
+%is bounded. In our present case, the potential is not a central one and the
+%\gls{sMatrix} is not diagonal. We will need to solve a coupled system 
+%of differential equations to represent the coupling between the different
+%partial waves. The \gls{vpm} will give rise to an \gls{ivp} matrix \gls{ode}.
+%
+%The initial motivation for the use of \gls{vpm} was the computation 
+%of the field inside the scatterer. In the \gls{sqa}, modifying 
+%the linear algebra operations of the reduction phase yields
+%an algorithm that computes the field from given $\bo{A}$ and $\bo{B}$
+%coefficients. It is unfortunately highly unstable, to the point 
+%of being unusable. The authors of \cite{FOR2012} suggested that
+%the \gls{vpm} was stable, suggesting its use over the onion
+%discretization of \gls{sqa}. While the \gls{vpm} has some inherent
+%issues and our implementation is far from complete, we present
+%here the main development both for the interested reader and for 
+%future reference. 
+%
+%The method starts with the angular momentum expansions
+%  \begin{subequations}
+%  \begin{align}
+%   H_z(r,\theta)	&= \frac{1}{\sqrt{2\pi}}\sum_{m=-\infty}^\infty \frac{1}{\sqrt{r}}\psi_m(r)e^{im\theta}	\\
+%   n(r,\theta)		&= \frac{1}{\sqrt{2\pi}}\sum_{m'=-\infty}^\infty n_{m'}(r)e^{im'\theta}.
+%  \end{align}
+%  \end{subequations}
+%Substituting these expansions in Helmholtz's equation and projecting
+%onto the eigenstate 
+%	\begin{equation*}
+%		\sqrt{r}e^{-im''\theta}/\sqrt{2\pi}
+%	\end{equation*} 
+%yields a system of coupled \glspl{ode} for each moment of the field $\psi_m$
+%	\begin{equation}
+%		\label{eq:active.vpm.equation}
+%		\bo{\psi}''-\frac{\mat{M}^2-\mat{I}/4}{r^2}\bo{\psi}+\frac{k^2}{2\pi}\mat{N}^2\bo{\psi}=0
+%	\end{equation}
+%where 
+%	\begin{equation*}
+%		\left[\mat{N}(r)\right]_{mm''}=\sum_{m'}n_{m'}(r)\delta_{m+m',m''}.
+%	\end{equation*}
+%Notice that the free case is recovered when $n(r,\theta)=1$, as 
+%then $n_{m'}=\delta_{m'0}$ and 
+%	\begin{equation}
+%		\bo{\psi}''-\frac{\mat{M^2}-\mat{I}/4}{r^2}\bo{\psi}+k^2\bo{\psi}=0
+%	\end{equation}
+%a system of uncoupled Bessel equations. At this point, we 
+%introduce the matrix \gls{ode}, i.e. \eqref{eq:active.vpm.equation} with as many 
+%rows as columns. Each column solves the ODE, but has different boundary conditions
+%\cite[\S15.2]{NEW1982}. Since the scattering solution must obey Sommerfeld's radiation
+%condition, we use the factorization
+%	\begin{equation}
+%		\bo{\psi} = \mat{G}_k(r)\mat{W}^{+}(kr)
+%	\end{equation}
+%where $\left[\mat{W}^{\omega}(kr)\right]_{mm''}=H_m^{(\omega)}(kr)\delta_{mm''}$.
+%Outside the \gls{lss}, the solution must be $\mat{W}^+(kr)$. In the general potential
+%scattering theory, the \gls{lss} is usually a sphere at infinity, which yields the 
+%initial value conditions
+%	\begin{align}
+%		\mat{G}_k(\infty)	&=\mat{I}	&	\mat{G}_k'(\infty)=\mat{0}.
+%	\end{align}
+%with 
+%	\begin{equation}
+%		\mat{G}_k''+2\mat{G}_k'\frac{d\log\mat{W}^\omega}{dr}+\frac{1}{r^2}\left[\mat{G}_k,\mat{M}^2-\mat{I}/4\right]
+%					+\frac{k^2}{2\pi}\left(\mat{N}^2-2\pi\mat{I}\right)=0.
+%	\end{equation}
+%
+%The $\mat{G}_k(r)$ matrix represents the phase shifts accumulated by each partial wave $m$ 
+%and caused by the $m'$th angular moment of the potential. The factorization procedure 
+%effectively transforms the \gls{bcp} to an \gls{ivp}, with the data provided on the 
+%\gls{lss}. The matrix ODE can thus be solved by using any good integration routine\footnote{Although
+%make sure you use a stiff equation solver. See Appendix \ref{sec:app.numTools.vpm} for details.}.
+%
+%The scattering matrix of the problem can also be obtained if we 
+%compute the conjugate solution, solving with the incoming radiation $\bo{\psi}=\mat{G}_{-k}\mat{W}^-(kr)$
+%instead of the outgoing one. The physical wave function is thus given by 
+%	\begin{equation}
+%		\bo{\psi} = \mat{G}_{-k}(r)\mat{W}^-(kr)+\mat{G}_k(r)\mat{W}^+(kr)\mat{S}_k(k).
+%	\end{equation}
+%Using the finiteness condition of the field at origin, we have
+%	\begin{equation}
+%		\mat{S}_k = -\lim_{r\rightarrow0}\mat{W}^{+}(kr)^{-1}\mat{G}_k^{-1}(r)\mat{G}_{-k}(r)\mat{W}^-(kr).
+%	\end{equation}
 
 \paragraph{Green's Function Method}
 Seeing the differential methods fail, the author of this essay, 
@@ -356,7 +356,7 @@ operator. This ensures the existence
 and uniticity of the solution \cite{GOH1981,COL2013}.
 We solve the surface integral equation in real space by meshing
 the cavity $\mathcal{C}$. The details of the meshing is left to 
-Appendix \ref{sec:app.basisEqn.greenFunction}. Let us denote the set
+Appendix \ref{sec:app.numTools.lippmannSchwinger}. Let us denote the set
 of cells of our mesh by $\Delta$. We can thus cast the integral
 equation as
 	\begin{equation}
@@ -388,7 +388,7 @@ matrix can be computed via
 	\begin{equation}
 		S_{mM} = \delta_{mM} - \frac{ik^2}{2}\mathop{\iint}_\mathcal{C}e^{-im{\theta'}}J_m(kr')\Delta\epsilon(\bo{r}')\psi^{(M)}(\bo{r}')d^2\bo{r}'.
 	\end{equation}
-In Appendix \ref{sec:app.basisEqn.greenFunction}, we lay out the method in more detail, 
+In Appendix \ref{sec:app.numTools.lippmannSchwinger}, we lay out the method in more detail, 
 discuss the numerical implementation and present a generalization for the complete 
 vectorial electromagnetic fields.
 
@@ -491,16 +491,10 @@ These two properties discriminate antennae into two categories, denoted Type I a
 Type I antennae have a well-approximated current distribution, which means that there are no
 sub-volumes to be excluded and therefore no surface integrals in expressions 
 \eqref{eq:active.antennae.strattonChuE} and \eqref{eq:active.antennae.strattonChuH}. 
-	\begin{exmp}[Dipole Antenna]
-		This is an example.
-	\end{exmp}
 
 On the other hand, Type II antennae have well-approximated near-fields, leading
 us to exclude the volume containing the antenna. Expressions \eqref{eq:active.antennae.strattonChuE}
 and \eqref{eq:active.antennae.strattonChuH} contain only surface integrals, then.
-	\begin{exmp}[Near- to Far-Field Transformation]\label{ex:active.antennae.nearToFarTrans}
-		This is another example.
-	\end{exmp}
 
 \subsubsection{Antenna Parameters}
 In the design of our antenna, we will want to optimize the value
@@ -549,6 +543,81 @@ directivities.
 
 Radiation efficiency $\eta$ is defined as the ratio of the total radiated power 
 to the power accepted by the antenna \cite{IEEE145-1993}.
+
+	\begin{exmp}[Dipole Antenna \cite{ELL2003}]
+		Perhaps the most basic antenna design, it has the form shown in 
+		Figure \ref{fig:active.antennae.dipoleAntenna}. 
+		
+				\begin{figure}
+					\begin{center}
+					\begin{tikzpicture}
+						\draw (-0.7, 0.1) -- (-0.1, 0.1) -- (-0.1,2) -- (0.1,2) -- (0.1,-0.1) -- (-0.7,-0.1) -- cycle;
+						\draw[|-|] (-0.9,-0.1) -- (-0.9,2) node[midway,fill=white] {$\ell$};
+					\end{tikzpicture}
+					
+					\vspace{0.1cm}
+					\begin{tikzpicture}[yscale=-1]
+						\draw (-0.7, 0.1) -- (-0.1, 0.1) -- (-0.1,2) -- (0.1,2) -- (0.1,-0.1) -- (-0.7,-0.1) -- cycle;
+						\draw[|-|] (-0.9,-0.1) -- (-0.9,2) node[midway,fill=white] {$\ell$};
+					\end{tikzpicture}
+					\end{center}
+					\caption[Geometry of the dipole antenna]
+							{Geometry of the dipole antenna. It consists of a pair of thin
+							wires whose diameters are much smaller than their length $\ell$.
+							They are actually separated by an infinitesimal drawing. It has
+							been made visible for the drawing. Current is fed to the antenna
+							from one of the incoming wires. The $z$-coordinate has its origin
+							directly in between the two wires.}
+					\label{fig:active.antennae.dipoleAntenna}
+				\end{figure}
+		
+		\noindent It is also called the
+		slender dipole antenna, as we consider the limit where the diameter of
+		the wire is much smaller than the wavelength, making the dipole antenna
+		a 1-dimensional problem. The current flowing through the dipole can be
+		approximated by 
+			\begin{equation}
+				I(z) = I_m\sin\left[k(\ell-|z|)\right].
+			\end{equation}
+		It is thus categorized as a Type I antenna. We can use the volumetric part
+		of the Stratton-Chu solution to compute the far-field of such antennae. Introducing
+		a directional weight function $\mathcal{A}_{\{\theta,\varphi\}}$ such that
+			\begin{equation}
+				\mathcal{P}_{\{\theta,\varphi\}}(\theta,\varphi) = |\mathcal{A}_{\{\theta,\varphi\}}|^2
+			\end{equation}
+		and using the far-field approximation of the Green function in Stratton-Chu's equation, we obtain
+			\begin{equation}
+				\mathcal{A}_\theta(\theta) = -I_m\sin\theta\int_{-\ell}^\ell\sin\left[k(\ell-|z|)\right]e^{ikz\cos\theta}dz
+			\end{equation}
+		which can be integrated to yield
+			\begin{equation}
+				\mathcal{A}_\theta(\theta) = -\frac{2I_m}{k\sin\theta}\left[\cos(k\ell\cos\theta)-\cos(k\ell)\right].
+			\end{equation}
+		This is the functional form of the field on the azimuthal great circle as the radius of the sphere goes
+		to infinity.  Figure \ref{fig:active.antennae.dipoleFarField} shows a cross-section of the 3D far-field
+		along any $\varphi$ for the half-wave dipole antenna ($\ell=\lambda/4$).
+		
+		\begin{figure}
+			\centering
+			\includegraphics{figs/active/farField-dipole.pdf}
+			\caption{Cross-section of the 3D far-field of the half-wave dipole antenna.}
+			\label{fig:active.antennae.dipoleFarField}
+		\end{figure}
+	\end{exmp}
+	
+		\begin{exmp}[Near- to Far-Field Transformation]\label{ex:active.antennae.nearToFarTrans}
+			If, instead of knowing the currents and charges in a given volume $V$, we know the 
+			fields on the boundaries $S_i$ of a given number of volumes $V_i$ in which there supposedly exist
+			unknown charges and currents producing those fields. This often arises when using \gls{fem}
+			and \gls{fdtd} software, as both methods solve the fields in a given computational volume. The
+			far-field is not directly available to them, as this would require a very large computational volume.
+			Usually, then, one can specify a boundary which encloses all scattering objects (the \gls{lss}). 
+			Since the fields are known, we can use the surface part of \eqref{eq:active.antennae.strattonChuE}
+			together with the far-field expansion of $G(\bo{r},\bo{r}')$ to compute the far-field via a simple
+			quadrature of the near-field. For instance, this is how the commercial software COMSOL computes the
+			far-field.
+		\end{exmp}
+	
 
 \paragraph{Scattering Parameters}
 The scattering parameters (or $S$-parameters) are
@@ -852,8 +921,7 @@ This type of absorbing boundary conditions has been used for decades and has lea
 to a number of problems, which in turn led to a rich literature. It was shown that naïvely using 
 PMLs led to spurious solutions \cite{KON1976,KOS1984,KOS1985}. They are usually removed by
 adding the null term $\left(\nabla\cdot\bo{H}^*\right)\left(\nabla\cdot\bo{H}\right)$
-in the functional that is minimized. For more details about the functional and its
-other uses, see Appendix \ref{sec:app.numTools.vpm}.
+in the functional that is minimized.
 In the microcavities field, specifically in the finding of resonances, it was 
 found out that the PMLs caused large errors in the determination of the
 imaginary part of the resonant $k$ \cite{HOW1993,HOE1998,BOR2004} The problem

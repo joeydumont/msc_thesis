@@ -164,7 +164,7 @@ shows that the scalar components $H_z$ and $E_z$ are the fundamental ones:
   \end{subequations}
 Derivation of the differential equation for $E_z$ and $H_z$ can be
 done via equations \eqref{eq:passive.formalism.longitudinalComponents}, but
-is quite cumbersome. A component-wise approach is thus presented in Appendix \ref{sec:app.basicEquationScattering}. 
+is quite cumbersome. 
 
 More specific boundary conditions can be derived with the use of these equations.
 Applying the tranverse and longitudinal decomposition on \eqref{eq:passive.formalism.generalBoundaryConditions}
@@ -216,7 +216,7 @@ The numerical implementation of the method, being somewhat problematic, will
 be discussed at length. 
 
 \subsection{$\mat{S}$ and $\mat{Q}$ Matrices Reloaded}
-In dielectric cavities, we need to solve the following equations (see Appendix \ref{sec:app.basicEquationScattering})
+In dielectric cavities, we need to solve the following equations
   \begin{multline}
     \left\{\nabla^2+k^2n^2\left[1-\left(\frac{\beta}{kn}\right)^2\right]\right\}\begin{Bmatrix} H_z \\ E_z \end{Bmatrix}
       = \frac{1}{1-\left(\frac{\beta}{kn}\right)^2}
@@ -696,6 +696,7 @@ inside the inner circle is constant and call it $n_\text{in}$. The Helmholtz equ
 becomes the Bessel equation \eqref{eq:app.Bessel.diffEquation}. Enforcing
 finiteness of the field at $r=0$, we have the solution
   \begin{equation}
+  	\label{eq:passive.formalism.innerCircleSoln}
    \Ket{\psi(r)} = \sum_{m}2a_m^0J_m(n_\text{in}kr)\Ket{\Phi_m^0}	\qquad (r<r_0)
   \end{equation}
 where we have introduced bra-ket notation for the angular part of the 
@@ -763,6 +764,7 @@ Solving the $N$ eigenvalue problems \eqref{eq:passive.numerical.eigenvalue} give
 the solution in all space. We can now apply the boundary conditions \eqref{eq:passive.formalism.cylindricalBoundaryConditions}
 at the interface of each shell $j\rightarrow j+1$. The process generates two sets of equations
   \begin{subequations}
+  \label{eq:passive.numerical.boundaryCondition}
   \begin{align}
    \sum_\mu\left[a_\mu^j\rho_j^{+\sqrt{\xi_\mu^j}}+b_\mu^j\rho_j^{-\sqrt{\xi_\mu^j}}\right]\Ket{\Phi_\mu^j}
    &=
@@ -772,7 +774,7 @@ at the interface of each shell $j\rightarrow j+1$. The process generates two set
    \eta_{j+1}\frac{d}{dr}\sum_\mu\left[b_\mu^{j+1}\rho_{j+1}^{+\sqrt{\xi_\mu^{j+1}}}+b_\mu^{j+1}\rho_{j+1}^{-\sqrt{\xi_\mu^{j+1}}}\right]\Ket{\Phi_\mu^{j+1}}
   \end{align}
   \end{subequations}
-where $\eta_j = 1\, (1/n(r_j,\theta))$ in TM (TE) polarization. The interior scattering matrices
+where $\eta_j = 1\, (1/n^2(r_j,\theta))$ in TM (TE) polarization. The interior scattering matrices
 are constructed via pre-multiplying by the left eigenvectors $\Bra{\tilde{\Phi}_\mu^j}$ on each side. 
 Combining both resulting equations leads to the linear system 
   \begin{equation}
