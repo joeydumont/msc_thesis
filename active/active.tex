@@ -11,13 +11,14 @@ In the first section, we test the limits of the our analytical formalism
 and of our numerical advances. To more accurately model
 microlasers, we model the interaction of light with the underlying
 quantum gain medium, i.e. we solve the Maxwell-Bloch, or Schrödinger-Bloch, 
-matter equations. We will specifically use the \gls{salt}, a recently 
+matter equations. We will specifically use the steady state \textit{ab initio}
+laser theory, or \gls{salt}, a recently 
 formulated steady state laser theory. In this theory, the effect 
 of the active medium is reduced to an additional frequency and pump-dependent
 term in the refractive index. This extra term has a Lorentzian frequency
 dependence, as physically expected, and has non-zero real and imaginary
-parts. The fragility of our extension of SQA is then exposed and some replacement
-methods are suggested. 
+parts. The fragility of our extension of SQA is then exposed and an 
+integral method is developed to replace it.
 
 The second section studies the experimental response
 of different realizations of a specific type of antenna
@@ -25,7 +26,7 @@ known as \glspl{lcx}. The genesis of this study lies in
 the hopes of designing an antenna that can be seamlessly
 integrated into textile. The sheer complexity of the
 antenna, as we will show, bars the use of the methods developed
-in this essay in favour of the all-numerical \gls{fem}. 
+in this essay in favour of an all-numerical method, the \gls{fem}. 
 This particular choice will be motivated and the design 
 parameters of the antenna thoroughly explained. 
 
@@ -37,23 +38,20 @@ of the light-matter interaction involved in bidimensional
 microlasers. Its steady-state nature allows us to apply
 the formalism developed in the previous section 
 to the theory. However, in light of the several shortcomings
-of the \gls{sqa}'s numerical implementation, we have studied 
-two other numerical methods. The first one, the \gls{vpm}, is based on 
-differential equations and shares some of the problems of 
-the onion method, but has a nice physical interpretation
-in terms of phases and is more easily generalizable to 
-3D scattering. 
+of the \gls{sqa}'s numerical implementation, we have dveloped another
+numerical method. 
 To find a more robust solution, we completely forgo 
 differential equations in favour of integral ones. 
 Our brief incursion into the rich field of integral equations
 is a rather recent one, and might leave the reader hungry for more.
 
 \subsection{Primer on Steady State ab initio Laser Theory (SALT)}
-Our exposition of \gls{salt} will be divided into two main sections:
-the first will describe the details of the interaction of light with
-the quantum gain medium and provide a steady-state solution
+Here, we briefly expose the parts of SALT that we will need.
+Our exposition of \gls{salt} is divided into two main sections:
+the first describes the details of the interaction of light with
+the quantum gain medium and provides a steady-state solution
 of the resulting Maxwell-Bloch equations. The second
-will discuss the constant-flux states and their computation
+discusses the constant-flux states\index{constant-flux states} and their computation
 using the aforementioned numerical methods. 
 
 \paragraph{Solving the Matter Equations}
@@ -67,7 +65,7 @@ We separate the fields in transverse and longitudinal
 components, as we did for the passive cavities. Assuming 
 that the propagation constant $\beta$ vanishes, we can 
 separate two polarization states and write decoupled differential
-equations for the longitudinal components of the fields
+equations\index{partial differential equations} for the longitudinal components of the fields
 	\begin{subequations}
 	\begin{align}
 		\left[\nabla^2+k^2n^2\right]E_z	&= \frac{1}{\mu}\nabla E_z\cdot\nabla\mu -k^2\mu P_z	\tag{\theequation.TM}\\
@@ -76,15 +74,19 @@ equations for the longitudinal components of the fields
 											-ik\nabla\times\bo{P}^{NL}							\tag{\theequation.TE}\label{eq:active.salt.TEeqn}
 	\end{align}
 	\end{subequations}
-where the last equation is the \textit{proper} generalization for TE modes. 
+where the last equation is the \textit{proper} generalization for TE modes
+\footnote{In the SALT literature, it is always said that the generalization
+to TE is ``trivial'', or ``follows immediately''. This is far removed from
+the truth. The TE differential equation is completely different from the
+TM one.}. 
 To derive these equations, we made the implicit assumptions that the 
 non-linear electric susceptibility tensor, 
 	\begin{equation}
 		\bo{P}^{NL} = \bo{\chi_e}^{NL}(\bo{r};\omega)\bo{E}(\bo{r}),
 	\end{equation}
-is at least a diagonal tensor, or a scalar. In the TM polarization, 
+is either a diagonal tensor or a scalar. In the TM polarization, 
 $E_r=E_\theta=0\Rightarrow P_r=P_\theta=0$, such that $\bo{P}^{NL}$
-has a single non-zero component, while in the TE polarization only
+has a single non-zero component, $P_z$ while in the TE polarization it is
 the $P_r$ and $P_\theta$ components are non-zero. The vectors resulting
 from the cross-product and curl in \eqref{eq:active.salt.TEeqn} possess
 only a $z$-component, as needed. 
@@ -176,14 +178,14 @@ where
 	\end{equation}
 $\Psi_\mu(\bo{r})$ is the longitudinal component of the field. 
 
-\paragraph{Constant-flux States and Scattering}
+\paragraph{Constant-flux States and Threshold Lasing Modes}
 The derivation above, novel to SALT and slightly more accurate
 than the standard derivations \cite{GE2010a,GE2010b,EST2013}, shows
 that the effect of the quantum gain medium can be modeled as an extra
 term in the refractive index in the TM polarization, but leads to an altogether
 different differential equation in the TE polarization. To the author's knowledge,
-this is never specifically addressed in the SALT articles, except in the vectorial
-generalization of SALT \cite{GE2010b}. In the following, we will also focus on the
+this is never specifically addressed in the SALT articles. 
+In the following, we will also focus on the
 TM polarization. 
 
 The central feature of \gls{salt} is the introduction of the constant-flux (CF)
@@ -203,22 +205,23 @@ the CF states can be used as a basis for the laser modes, and can even
 take into account saturation, spatial hole burning and non-uniform
 pumps through the 
 	\begin{equation*}
-		\label{eq:active.salt.tlms}
 		\frac{D(\bo{r})}{1+\sum_\mu\frac{4g^2}{\gamma_\perp\gamma_\parallel}\left|\Psi_\mu\right|^2}
 	\end{equation*}
 term. If we restrict our analysis to near-threshold modes, we can neglect the sum in the previous term
 and, writing the pump profile as a pump strength multiplied by a shape function $D(\bo{r})=D_0F(\bo{r})$, 
 we obtain
 	\begin{align}
-		\left[\nabla^2+k^2\left(\epsilon(\bo{r})+\frac{\gamma_\perp D_0F(\bo{r})}{k_\mu-k+i\gamma_\perp}\right)\right]\psi &=0 & \bo{r}\in\mathcal{C}
+		\label{eq:active.salt.tlms}
+		\left[\nabla^2+k^2\left(\epsilon(\bo{r})+\frac{\gamma_\perp D_0F(\bo{r})}{k_\mu-k+i\gamma_\perp}\right)\right]\psi(\bo{r}) &=0 & \bo{r}\in\mathcal{C}
 	\end{align}
-where now the fields and the pump strength are dimensionless parameters measured in units of $D_{0c}=\hbar\gamma_\perp/(4\pi g^2)$
-and $e_c = \hbar\sqrt{\gamma_\parallel\gamma_\perp}/(2g)$, respectively \cite[p.~19--20]{GE2010b}. 
+where now the fields and the pump strength are dimensionless parameters measured in units of 
+$e_c = \hbar\sqrt{\gamma_\parallel\gamma_\perp}/(2g)$ and 
+$D_{0c}=\hbar\gamma_\perp/(4\pi g^2)$, respectively \cite[p.~19--20]{GE2010b}. 
 The solutions of this equation describe the lasing action near lasing thresholds, the threshold lasing modes (TLMs). 
 In the case of uniform pumping, i.e. $F(\bo{r})=1$,
-CF are in a one-to-one correspondence with TLMs, as we can see by comparing
+the CFs are in a one-to-one correspondence with the TLMs, as we can see by comparing
 \eqref{eq:active.salt.cfCavity} and \eqref{eq:active.salt.tlms}. To find
-the TLMs, one needs to compute the CF states and find the values of $K^2(k)$
+the TLMs, one needs to compute the CF states, find the values of $K^2(k)$ and
 infer the values of $D_0$. When the exterior frequency $k$ is such that $D_0$
 is real, the resulting couple $(k_a, D_0^a)$ reveals the frequency and threshold
 of the lasing mode. This was done in \cite{GAG2014a}. 
@@ -227,13 +230,10 @@ However, we will mostly be interested in the case of non-uniform pumping
 and/or inhomogeneous refractive index distribution. To find the couple
 $(k_a,D_0^a)$, we must solve \eqref{eq:active.salt.tlms} self-consistently
 for a real value of $D_0$ such that a pole of scattering matrix hits 
-the real $k$-line. In the following sections, we will propose two
-numerical methods that can compute the non-unitary scattering matrix
-of our problem and determine its poles. Our last method can also 
-treat the spatial hole burning term and compute the non-linear 
-\gls{sMatrix}.
+the real $k$-line. In the following, we develop a method that allows
+us to compute the \gls{sMatrix} for complex potentials.
 
-\subsection{Methods of Solution}
+\subsection{Numerical Method II: Lippmann-Schwinger}
 %\paragraph{Variable Phase Method}
 %This elegant method has its roots deep in the literature of quantum-mechanical
 %scattering. It is based on the fact that, for central potentials, the 
@@ -322,20 +322,19 @@ treat the spatial hole burning term and compute the non-linear
 %		\mat{S}_k = -\lim_{r\rightarrow0}\mat{W}^{+}(kr)^{-1}\mat{G}_k^{-1}(r)\mat{G}_{-k}(r)\mat{W}^-(kr).
 %	\end{equation}
 
-\paragraph{Green's Function Method}
 Seeing the differential methods fail, the author of this essay, 
 then on the brink of despair, first took notice of the 
 power of integral methods. Simply rewriting Helmholtz's 
 equation as
   \begin{equation}
-   \left[\nabla^2+\epsilon_B(\omega)k^2\right]\psi=-k^2\Delta\epsilon(\bo{r};\omega)\psi
+   \left[\nabla^2+n_0^2(\omega)k^2\right]\psi=-k^2\Delta\epsilon(\bo{r};\omega)\psi
   \end{equation}
 where 
   \begin{equation}
-  \Delta\epsilon(\bo{r};\omega)=\epsilon(\bo{r};\omega)-\epsilon_B(\omega)
+  	\Delta n^2(\bo{r};\omega)=n_c^2(\bo{r};\omega)-n_0^2(\omega)
   \end{equation}
-where $\epsilon(\bo{r};\omega)$ is the permittivity profile of the scatterer
-and $\epsilon_B(\omega)$ the constant permittivity of the environment, or background.
+where $n_c^2(\bo{r};\omega)$ is the permittivity profile of the scatterer
+and $n^2_0(\omega)$ the constant permittivity of the environment, or background.
 This allows to write a formal solution using the Green's function of Helmholtz's equation
   \begin{equation}
   	\label{eq:active.vpm.fredholmEqn}
@@ -343,10 +342,10 @@ This allows to write a formal solution using the Green's function of Helmholtz's
   \end{equation}
 where $\phi(\bo{r})$ is a solution of the homogeneous problem and
   \begin{equation}
-  	G_\omega(\bo{r},\bo{r}') = -\frac{i}{4}H_0^{(\omega)}(k\sqrt{\epsilon_B}|\bo{r}-\bo{r}'|).
+  	G_\omega(\bo{r},\bo{r}') = -\frac{i}{4}H_0^{(\omega)}(kn_0|\bo{r}-\bo{r}'|).
   \end{equation}
-While \eqref{eq:active.vpm.fredholmEqn} is very general: it can be applied to 
-any $\Delta\epsilon(\bo{r};\omega)$, even to non-linear problems, 
+While \eqref{eq:active.vpm.fredholmEqn} is very general (it can be applied to 
+any $\Delta n^2(\bo{r};\omega)$, even to non-linear ones),
 the method of solution we will use restricts us to linear problems.
 
 Instead of a \gls{pde}, we now must solve an implicit 
@@ -362,7 +361,8 @@ equation as
 	\begin{equation}
 		\psi_j = \phi_j -k^2\sum_{j'\in\Delta} G_{jj'}\Delta\epsilon_{j'}A_{j'}\psi_{j'}
 	\end{equation}
-where $\psi_j=\psi(\bo{r}_j)$ and similarly for the other quantities. We can
+where $\psi_j=\psi(\bo{r}_j)$ and similarly for the other quantities and 
+where $A_j$ is the area of cell $j$.  We can
 rewrite this as the matrix problem\footnote{This, of course, only holds if the
 kernel is linear.} 
 	\begin{equation}
@@ -393,6 +393,39 @@ discuss the numerical implementation and present a generalization for the comple
 vectorial electromagnetic fields.
 
 \subsection{Examples}
+To demonstrate the method, we compute a lasing mode
+of the homogeneous, circular cavity laser. We take $k_\mu=9.25$
+and $\gamma_\perp=0.125$ and compute the threshold of a particular
+lasing mode. This is done by following the upwards movement 
+of the poles of the scattering matrix as $D_0$ is increased.
+We show the determinant of the \gls{sMatrix} of the system 
+for $D_0=0.027$ in Figure \ref{fig:active.salt.detSmat}.
+There is a lasing mode at $k=9.37343358$. It has a low lasing threshold mainly 
+because of the extremely high $Q$-factor of its related QB state \cite{GAG2014a}. 
+
+While we see that one of the poles has moved directly 
+onto the real $k$-axis and is therefore a physical lasing
+mode, perhaps the most striking feature of the pole structure
+is the movement of the other poles (contrast with Figure \ref{fig:passive.formalism.symmetrySmatrix}). 
+As we had predicted in section on the properties of the \gls{qMatrix} (p.~\pageref{sec:passive.formalism.SpoleStructure}), 
+the poles are still symmetric, but along a curve in the complex 
+$k$-plane rather than along the real $k$-line. Although it is difficult to derive the exact
+form of the curve, we can see that it is of Lorentzian shape, 
+as is the imaginary part of the refractive index. Notice also
+the clustering of zeros and poles at $k=9.25$, the centre of the
+gain transition. This is where the refractive index change is the highest.
+
+\begin{figure}
+	\centering
+	\includegraphics{figs/active/determinantSmatrixSALT.pdf}
+	\caption[Map of the determinant of the $\mat{S}$-matrix of the
+			amplified system]
+			{Map of the determinant of the $\mat{S}$-matrix of the 
+			homogeneous, circular cavity laser. We have used $n_c=3.2$, $n_o=1$ and
+			$R_0=1$. The gain transition parameters are $\gamma_\perp=0.125$ and $k_\mu=9.25$. 
+			This yields a threshold of $D_0=0.027$ for the mode at $k=9.37343358$.}
+	\label{fig:active.salt.detSmat}
+\end{figure}
 
 \section{Smart Textile Antennae}
 The last part of this essay recounts the author's contributions
@@ -437,7 +470,7 @@ parameters.
 
 \subsection{Basic Antenna Theory}
 Even today, a full 140 years after the publication of 
-Maxwell's \textit{Treatise on Electricity and Magnetism}, 
+Maxwell's seminal \textit{Treatise on Electricity and Magnetism}, 
 the electromagnetic modeling of radiating structures 
 is an ongoing research problem. The notorious difficulty 
 of solving Maxwell's equations seriously hampers analytical efforts
@@ -496,6 +529,9 @@ On the other hand, Type II antennae have well-approximated near-fields, leading
 us to exclude the volume containing the antenna. Expressions \eqref{eq:active.antennae.strattonChuE}
 and \eqref{eq:active.antennae.strattonChuH} contain only surface integrals, then.
 
+We will give examples relating these two types of antennae to the 
+Stratton-Chu equations when we have defined the antenna parameters.
+
 \subsubsection{Antenna Parameters}
 In the design of our antenna, we will want to optimize the value
 of some parameters. We will now describe some of these parameters.
@@ -511,11 +547,11 @@ as
 The value of the directivity is less than unity if the power density radiated at angle $(\theta,\varphi)$
 is less than the average power radiated. For instance, an isotropic antenna will possess a unit directivity
 for all angles while a highly directional antenna will have a sharp peak  in its directivity function 
-at some angle $(\theta,\varphi)$.
+at some angle $(\theta^*,\varphi^*)$.
 
 Another interesting concept to introduce is \textit{partial directivity}. 
-The power density can be divided into two contributions: the $\theta$-polarized
-and the $\varphi$-polarized polarization and we can write
+The power density can be divided into two contributions: the $\theta$-
+and $\varphi$-polarized contributions and we can write
   \begin{equation}
     \mathcal{P}(\theta,\varphi) = \mathcal{P}_\theta(\theta,\varphi)+\mathcal{P}_\varphi(\theta,\varphi)
   \end{equation}
@@ -534,9 +570,9 @@ as
 where $P$ is the power fed into the antenna. Because of the 
 losses, 
 	\begin{equation*}
-		P/r^2>\int_0^\pi\int_0^{2\pi}\mathcal{P}(\theta',\varphi')\sin\theta'd\theta'd\varphi'
+		P/r^2\geq\int_0^\pi\int_0^{2\pi}\mathcal{P}(\theta',\varphi')\sin\theta'd\theta'd\varphi'
 	\end{equation*}
-such that $G(\theta,\varphi)<D(\theta,\varphi)$. 
+such that $G(\theta,\varphi)\leq D(\theta,\varphi)$. 
 
 We can also define partial gains in the exact same fashion we defined partial
 directivities.
@@ -577,13 +613,14 @@ to the power accepted by the antenna \cite{IEEE145-1993}.
 		a 1-dimensional problem. The current flowing through the dipole can be
 		approximated by 
 			\begin{equation}
-				I(z) = I_m\sin\left[k(\ell-|z|)\right].
+				I(z) = I_m\sin\left[k(\ell-|z|)\right]
 			\end{equation}
+		where $I_m$ is the intensity of the current.
 		It is thus categorized as a Type I antenna. We can use the volumetric part
 		of the Stratton-Chu solution to compute the far-field of such antennae. Introducing
 		a directional weight function $\mathcal{A}_{\{\theta,\varphi\}}$ such that
 			\begin{equation}
-				\mathcal{P}_{\{\theta,\varphi\}}(\theta,\varphi) = |\mathcal{A}_{\{\theta,\varphi\}}|^2
+				\mathcal{P}_{\{\theta,\varphi\}}(\theta,\varphi) = \left|\mathcal{A}_{\{\theta,\varphi\}}\right|^2
 			\end{equation}
 		and using the far-field approximation of the Green function in Stratton-Chu's equation, we obtain
 			\begin{equation}
@@ -616,7 +653,11 @@ to the power accepted by the antenna \cite{IEEE145-1993}.
 			together with the far-field expansion of $G(\bo{r},\bo{r}')$ to compute the far-field via a simple
 			quadrature of the near-field. For instance, this is how the commercial software COMSOL computes the
 			far-field.
-		\end{exmp}
+			
+			In our previous example, we could define the \gls{lss} as the cylinder enclosing
+			the whole of the dipole antenna. The Stratton-Chu integrals can then be evaluated 
+			with the known field on the cylinder and yield the far-field. 
+			\end{exmp}
 	
 
 \paragraph{Scattering Parameters}
@@ -626,11 +667,11 @@ Suppose we have an electronic device comprising
 $N$ ports, or points of entry. Imagine shining light onto, 
 or make a current flow into,
 one of the ports, say port $j$. A certain percentage
-of the power carried by this light be reflected 
+of the power carried by this light/current be reflected 
 by this port and the rest will be transmitted to the
 other ports or absorbed in the medium. The \textit{reflection}
-coefficient is given by $S_{jj}$ while the transmission
-coefficients are given $S_{ji}$ ($i\neq j$) where $\mat{S}$
+coefficients are given by $S_{jj}$ while the transmission
+coefficients are given by $S_{ji}$ ($i\neq j$) where $\mat{S}$
 is the scattering matrix of the network. In a reciprocal (in the sense
 of Lorentz) network, the scattering matrix will be equal to its
 transpose, i.e. $S_{ij}=S_{ji}$. In a lossless network, the scattering
@@ -667,9 +708,9 @@ The precise nature of ports is somewhat arbitrary in optical structures.
 
 \subsection{The Leaky Coaxial Cable}
 A standard antenna design, the leaky coaxial cable, or \gls{lcx}, will be the primary 
-object of our present study. Its relatively design simple: a coaxial cable from which
+object of our present study. Its relatively simple design: a coaxial cable from which
 some parts of the metal coating are removed as to form ``windows'', made it a safe choice
-to toy with both the experimental fabrication procedure and its numerical modeling. 
+to toy with both the experimental fabrication procedure and the numerical modeling. 
 Usual LCXs are much longer than the wavelength at which they are meant to operate, with 
 a unit cell (see Figure \ref{fig:active.antennae.fibre-antenna}) of comparable size.
 
@@ -753,7 +794,7 @@ physical parameters of the materials involved.
 The modelization of \gls{lcx} is not a new field \cite{DEL1980,WAN2001,KIM2007,ADD2008}.
 They have been studied using a variety of analytical and numerical methods. Most of them 
 depend on a set of \textit{crucial} approximations that cannot be assumed to hold 
-in our particular case.
+in our particular case:
 
 \begin{description}
 	\item [Periodicity of the structure] The $z$-periodicity of the geometry and 
@@ -772,23 +813,29 @@ in our particular case.
 
 In our case, the worst offender is the last one, as our metal deposition method
 does not allow for a fine control of the thicknesses deposited, nor ensure its
-smoothness. The TEM approximation relies on the metal layers behaving almost as 
+smoothness. The TEM approximation depends on the metal layers behaving almost as 
 perfect conductors. Our metallic layers are typically smaller than the skin
 depth of the metal, which makes the approximation invalid (we will explore
-this in depth later in this essay). 
+this later in this essay). 
 
 Moreover, we cannot consider the structure to be periodic, as the total 
 length of the fibre-antenna is of the order of the wavelength ($\lambda\sim12\unit{cm}$) and the period
 of the slots is smaller than the wavelength. Given the size of the slots, 
 the author is comfortable to say that we neither are in the perturbation regime. 
 Figure \ref{fig:active.antennae.fibre-antenna} shows the actual design and the important parameters.
+We will use the fact that the first radiation harmonics of a \gls{lcx} is giben 
+by the relation \cite{WAN2001}
+	\begin{equation}
+		f_1 = \frac{c}{P\left(\sqrt{\epsilon_r+1}\right)}
+	\end{equation}
+to guide the numerical modeling.
 
 \paragraph{Specifications of the Devices}
 To be able to theoretically investigate the behaviour of these antennas, we must
 know their physical and geometrical properties. 
 The parameters of the dielectric materials are provided by the manufacturer of the
 optical fibres we use as a building platform,
-Polymicro Technologies, and are reproduced in \ref{tab:active.antennae.modelParameters}.
+Polymicro Technologies, and are reproduced in Table \ref{tab:active.antennae.modelParameters}.
 
 The thickness of the metallic layers is more delicate and depends on the 
 minute details of the deposition method. 
@@ -889,7 +936,7 @@ shortly.
 The LCXs to be modeled have a decidedly complex geometry that
 no possess no symmetry and metallic layers of high, though not infinite,
 conductivity. To properly take the effects of both situations into account, 
-one would need to use multi-scale discretization techniques at the very least.
+one would need, at the very least, to use multi-scale discretization techniques.
 Unfortunately, the extremely wild range in the characteristic sizes of the structures
 (from the nanometer to the millimeter) makes meshing the LCX geometry a Herculean, 
 if not even Sisyphean, task. 
@@ -902,7 +949,7 @@ expansions suffer from poor mesh control\footnote{There exists, for instance,
 algorithms that compute the Discrete Fourier Transform for non-uniform
 samples, and such endeavors are worthwhile, but their sizable numerical
 cost and their only slightly better mesh control is not worth their effort in 
-our particular case.}, directly integrating Helmholtz's or Maxwell's equations
+our particular case.}, direct integration Helmholtz's or Maxwell's equations
 is usually unstable\footnote{Not always however, as the FDTD method does just that.
 It requires, however, some numerical legwork.} and it is notoriously difficult
 to incorporate boundary conditions naturally in the framework of the Fredholm 
@@ -913,8 +960,8 @@ form of Maxwell's equations, can easily incorporate any type of boundary conditi
 and work with multi-scale and even adaptive meshes. We thus use the commercial \gls{fem}
 software Ansys HFSS to model the frequency response of the the \gls{lcx} antennae.
 
-The software comes with bundled CAD capabilities. The cylinder is drawn inside 
-a cylinder of larger radius that acts as the ``environment''. Its borders are
+The software comes with bundled CAD capabilities. To model the LCXs, we draw a coax 
+cable inside a cylinder of larger radius that acts as the ``environment''. Its borders are
 terminated by perfectly matched layers, or PMLs \cite{BER1994}, that absorb the field emanating 
 from the antenna. They serve to emulate the Sommerfeld radiation condition\footnote{
 This type of absorbing boundary conditions has been used for decades and has lead
@@ -942,7 +989,7 @@ to the fraction of the power that either (i) returned back into the source port
 or (ii) traveled all the way to the other port. This is done for both ports in turn. 
 The far-field associated with each run is computed via the near- to far-field 
 transformation that is discussed in Example \ref{ex:active.antennae.nearToFarTrans}, 
-most likely using the boundary of the antenna as the \gls{lss}.
+using the environment's boundary as the \gls{lss}.
 
 The traces of the $S$-parameters, i.e. the value of $S_{ij}$ as a function of 
 the frequency of the input fields, will be of primary interest. The frequency
@@ -1108,15 +1155,11 @@ of the trace at every $2\,\unit{GHz}$.
 The autocorrelation of the trace of $S_{22}$ shows a strong
 periodic component, which we have isolated by taking the 
 FFT of the signal. 
-
-We have also taken the Fourier transform of the experimental
-and simulation data (for $\delta_1=0$). To our discontent, 
-it seems that the datasets do not share periodic properties. 
 Figure \ref{fig:active.lcx.rf33fft} shows the intensity
 of the FFT transform. To see if the periodic components corresponded
 to particular lengths in the system, we converted the associated
-wavelengths to frequencies and plotted them as vertical lines in the figure. 
-$f_1$ is the fundamental mode of infinite \gls{lcx} \cite{WAN2001}, namely
+wavelengths to frequencies. 
+The fundamental mode of infinite \gls{lcx} \cite{WAN2001} is
   \begin{equation}
    f_1 = \frac{c}{\left(S_z+d_z\right)\left(\sqrt{\epsilon_\text{Si}}+1\right)} \sim 1.6\,\unit{GHz}.
   \end{equation}
@@ -1158,12 +1201,12 @@ the fundamental mode of our quasi-LCX.
 
 
 \subsubsection{Comparison with Simulation Results}
-The specifications of each RFxx was based on the numerical simulation
+The specifications of each RFXX was based on the numerical simulation
 of the antennae. However, once they were built, it became clear the 
 numerical modeling did not correlate well with the experimental
-realizations. As we will see, the experimental traces rarely possessed
+realizations. As we will see, the experimental traces rarely possess
 the same features as the numerical ones and the far-field patterns 
-did not match. 
+do not match. 
 
 The main cause for such poor agreement between theory and experiment
 was hypothesized to be related to the metallic layers. As discussed
@@ -1201,6 +1244,7 @@ conditions does not solve the problem, as is shown in Figure
  \label{fig:active.lcx.rf21sParameters-sim}
 \end{figure}
 
+\paragraph{Modeling the Effect ot Thin Metallic Layers}
 AFM pictures (see Figure \ref{fig:active.lcx.AFM})  have suggested that the deposited
 metal is in fact a mixture of silver and silver oxide. To evaluate
 the effective conductivity of the mixture, we have used Bruggeman's model \cite{LAN1978}.
@@ -1224,7 +1268,7 @@ The positive solution is, defining $q=\left(d\delta_1-1\right)\sigma_1+\left(d\d
    \sigma_e = \frac{1}{2d-2}\left[q+\sqrt{q^2+4(d-1)\sigma_1\sigma_2}\right].
   \end{equation}
 Using this effective conductivity in \eqref{eq:active.antennae.thickGeneralEquations} yields 
-the associated thicknesses. 
+the associated thicknesses. We use $d=3$ throughout.
 
 \begin{figure}
  \centering
@@ -1258,27 +1302,24 @@ $t$ the thickness of the sample. The parameter $p$ is the proportion of electron
 elastically at the boundary. For rough edges, we expect the electrons to be scattered off randomly 
 and thus $p\sim0$. Notice that the above expression is extremely unwieldy and yields to a highly
 non-linear root search when substituted in \eqref{eq:active.antennae.thickGeneralEquations}. 
-We will use the much more convenient form 
+We will use the much more convenient form (valid for $\kappa\ll1$) \cite{FUC1938}
   \begin{equation}
-      \sigma_F = \frac{\sigma_0}{1+\frac{3\lambda}{8d}\left(1-p\right)}
+      \sigma_F = \frac{\sigma_0}{1+\frac{3\lambda}{8t}\left(1-p\right)}
   \end{equation}
 which leads to a simpler cubic equation for the thickness.
 This model states that conductivity
 diminishes as the thickness of the metallic layer gets smaller, 
 as one would expect.
 
-In Figure \ref{fig:antenna.thicknessRatios}, we compare the 
-thicknesses obtained via the bulk conductivity model (Bruggeman 
-effective conductivity) and the Fuchs-Sondheimer model with 
-effective conductivity for the RF33 fibre. Given that the AFM pictures
+In Figure \ref{fig:antenna.thicknessRatios}, we show the changes
+in the predicted conductivities and thicknesses of the silvers layers
+if we take the Bruggeman and Fuchs-Sondheimer models into account. 
+Given that the AFM pictures
 show surface inhomogeneity, we assume diffuse scattering in 
-the FS model ($p=0$). We see that choosing a dimensionality 
-of 3 or 2 does not significantly affect the thicknesses, but
-we see a difference of about 20\% in the effective conductivities.
+the FS model ($p=0$). Both the changes in effective conductivities
+and thicknesses cover an order of magnitude, which should lead
+to changes in the $S$-parameters. 
 
-The most interesting thing, though, is that the FS
-model predicts metallic layers that are 10\% to 80\% thicker 
-than with the bulk conductivity model. 
 
 \begin{figure}
   \centering
@@ -1313,7 +1354,7 @@ both samples are linearly related.
 
 Figure \ref{fig:active.lcx.rf21sParameters-sim} shows the experimental and simulated
 $S_{11}$ parameter. At first look, it might seem like the general form 
-of the curves are similar, but our quantitative analysis will show 
+of the curves are similar, but our quantitative analysis shows
 that that would be wrong. To make sure that our simulation data was not simply
 shifted in frequency due to an small error in the geometry, we have
 also calculated the correlation for a shifted dataset 
@@ -1323,7 +1364,10 @@ of the experimental data.}. This changes
 the Pearson correlation because we must elide some of the experimental
 and simulation data to do so. Figure \ref{fig:antenna.shiftCorrelation}
 shows our results. We see that there are little to no correlation
-between the simulation data and the experimental data with $r\in\{-0.04,0.05\}$. 
+between the simulation data and the experimental data with $r\in\{-0.04,0.05\}$, 
+and this is true for all silver concentrations. Although it is not shown, were
+also performed with the Fuchs-Sondheimer model: the $S$-parameters did not
+vary appreciably from those shown here.
 
 \begin{figure}
  \centering
@@ -1346,8 +1390,9 @@ are not sufficient to explain the lack of correlation between the experimental
 and simulation datasets. The models do predict dramatically different properties
 for the metallic layers, but it seems that this does not affect the $S$-parameters
 all that much. One explanation is that the effect of the surface inhomogeneities
-are \textit{not} taken into account when computing the thicknesses. By using a
-\textit{ad hoc} model to compute the effects of randomly distributed inhomogeneities
+are \textit{not} taken into account when computing the thicknesses; they are only
+accounted for \textit{a posteriori} in the FEM software. By using a
+\textit{ab initio} model to compute the effects of randomly distributed inhomogeneities
 on the base conductivity $\sigma_0$ of the metallic layers \cite{CUR2012}, one could obtain a better
 estimate of the thicknesses and possibly a better fit between the experimental and simulated datasets.
 

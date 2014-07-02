@@ -32,9 +32,10 @@ rcParams['legend.numpoints'] = 5
 # -------------- Constants Declaration ---------------- #
 sigma1 = 6.3e7
 sigma2 = 6.79e6
-a = 99.924e-6
+a = 99.646e-6
+tInner = 0.354e-6
 L = 24.372e-2
-Rinner = 80.5
+Rinner = 80.5 
 pi = 3.14159
 
 lamb = 40e-9
@@ -50,7 +51,10 @@ def thicknessBulkConductivity(radShell,lengthFibre,BulkCond,Resistance):
 
 def thicknessFuchsSondheimer(radShell, lengthFibre, BulkCond, Resistance, Specularity, Ell):
 	p = [1, 2*radShell, -lengthFibre/(pi*Resistance*BulkCond), -3*lengthFibre*Ell*(1-Specularity)/(pi*Resistance*BulkCond)]
-	return max(roots(p))
+	return roots(p)[1]
+
+def conductivityFuchsSondheimer(BulkCond,thick, ell,Specularity):
+	return BulkCond/(1+3*ell/(8*thick)*(1-Specularity))
 
 # ------------------ MAIN FUNCTION -------------------- #
 #-- We test the trigonometric for the cubic function. 
@@ -70,7 +74,7 @@ print(sigma1/(1.0+3.0*lamb/(8.0*t)))
 
 #-- We plot the differences.
 size = 100
-concentration = linspace(0.0,1.0,size)
+concentration = linspace(1.0,0.0,size)
 
 
 fig1 = figure(figsize=(6,3))
@@ -79,21 +83,30 @@ results = zeros((size,7))
 for i in range(size):
 	# Compute effective cond.
 	results[i,0] = concentration[i]
-	results[i,1] = effectiveConductivity(sigma1,sigma2,2,results[i,0])
+	results[i,1] = effectiveConductivity(sigma1,sigma2,3,results[i,0])
 	results[i,2] = thicknessBulkConductivity(a,L,results[i,1],Rinner)
 	results[i,3] = thicknessFuchsSondheimer(a,L,results[i,1],Rinner,0,lamb)
-	results[i,4] = effectiveConductivity(sigma1,sigma2,3,results[i,0])
-	results[i,5] = thicknessBulkConductivity(a,L,results[i,4],Rinner)
-	results[i,6] = thicknessFuchsSondheimer(a,L,results[i,4],Rinner,0,lamb)
+	results[i,4] = conductivityFuchsSondheimer(results[i,1],results[i,3],lamb,0)
 
-plot(results[:,0], results[:,4]/results[:,1], 'b--', label=r"$\frac{\sigma_e(d=3)}{\sigma_e(d=2)}$")
-plot(results[:,0], results[:,3]/results[:,2], 'k-', label=r"Thickness Ratio FS/Bulk (d=2)")
-plot(results[:,0], results[:,6]/results[:,5], 'g-', label=r"Thickness Ratio FS/Bulk (d=3)")
-plot(results[:,0], (results[:,6]/results[:,5])/(results[:,3]/results[:,2]), 'r--', label=r"Thickness Ratio (d=3)/(d=2)")
+print(results[0,2])
+	
 
 ax1.set_xlabel(r"Silver concentration ($\delta_1$)")
 
-legend(loc=0)
+
+
+
+ax2 = ax1.twinx()
+ax2.set_ylabel(r"$\sigma/\sigma_0$")
+ax2.plot(results[:,0], results[:,1]/sigma1, 'k-', label=r"Bruggeman")
+ax2.plot(results[:,0], results[:,4]/sigma1, 'k--', label=r"Bruggeman+FS")
+ax1.plot(results[:,0], results[:,2]/results[0,2], 'b-', label=r"Bruggeman")
+ax1.plot(results[:,0], results[:,3]/results[0,2], 'b--', label=r"Bruggeman+FS")
+ax1.set_ylabel("$t/t_0$", color='b')
+for tl in ax1.get_yticklabels():
+    tl.set_color('b')
+
+ax1.legend(loc=2)
 
 savefig("comparisonThickness.pdf", bbox_inches='tight')
 

@@ -19,7 +19,7 @@ plt.rcParams['legend.numpoints'] = 3
 
 # --------------- Function Definition ----------------- #
 def weightAlphaTheta(theta, ell):
-	return -np.cos(ell*np.cos(theta)-np.cos(ell))/np.sin(theta)
+	return -(np.cos(ell*np.cos(theta))-np.cos(ell))/np.sin(theta)
 
 # ------------------ MAIN FUNCTION -------------------- #
 # Half-wave dipole
@@ -35,5 +35,6 @@ for i in range(len(ell)):
 
 ax.set_rmax(1.0)
 ax.set_theta_zero_location('N')
+plt.annotate("$z$-axis", xy=(0, 0), xytext=(0.18 ,0.8), arrowprops=dict(arrowstyle="<-",facecolor='r'), fontsize=10)
 
 plt.savefig("farField-dipole.pdf", bbox_inches='tight')

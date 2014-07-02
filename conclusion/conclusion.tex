@@ -1,6 +1,94 @@
 % !TeX root = ../msc_thesis_jayd.tex
 \chapter{Conclusion}
+\section{Summary}
+We have presented some results about the modelization of bidimensional
+resonators, both passive and active, and have designed a leaky coax
+antenna for smart textile applications. 
+
+Throughout this essay, we have made use of the \gls{sMatrix} formalism
+to compute the resonances of the devices under study. For passive
+(and lossless) cavities, the formalism was augmented by the
+introduction of the time-delay matrix, or \gls{qMatrix}, which
+is related to the overlap of the normal modes of the resonator.
+The eigenvalues of this matrix turned out to be related to the
+poles of the \gls{sMatrix} and be composed of a sum of Lorentzian
+curves.  The eigenvalues were in fact the time-delays associated with
+the interaction of the incoming light field with the scatterer. 
+The eigenvectors of the \gls{qMatrix} describe a set of modes that exist for
+every continuous value of $k$. The set of modes has the property of 
+interacting in a \textit{self-replicating} manner with the cavity. 
+While the interaction does not disturb the angular momentum distribution,
+it incurs a phase shift on the incoming field, and the energy derivative
+of this shift is the time-delay suffered by the mode. It can be directly
+related to the $Q$-factor of the mode. The introduction of the 
+\gls{qMatrix} transforms the search for the poles of the \gls{sMatrix}
+in the complex plane in a search for the maxima of the time-delay spectrum
+on the real $k$-line.
+
+The properties of the \gls{qMatrix}, and its simple interpretation, 
+mostly depend on the unitarity of the \gls{sMatrix}. When the 
+potential is complex, this is no longer true. It is however still
+possible to define a Hermitian \gls{qMatrix} with the sought-after properties,
+but it requires the evaluation of the \gls{qMatrix} along a curve in 
+the complex $k$-plane. This makes the interpretation of the spectrum
+of $\mat{Q}$ as a time-delay more difficult, and most importantly 
+makes their relationship with the poles of the \gls{sMatrix} clouded.
+It also nullifies the computational advantages of working with $k\in\mathbb{R}$.
+The author thus concluded that for active (or lossy) cavities, it is best
+to stick with the \gls{sMatrix} alone. 
+
+This seemed a perfect segue into the study of active cavities, where
+the SALT is used to model the effect of a quantum gain medium as
+an additional term in the refractive index\footnote{This is valid for the TM
+mode only.}. The latter is dispersive and complex, possibly non-linear.
+This motivated the development of a more stable numerical method. 
+We used a Lippmann-Schwinger approach. The method is calibrated using
+the homogeneous circular cavity laser and we discuss the pole structure
+of the scattering matrix.
+
+We then turn our attention to the design of a LCX antenna. The complex
+geometry of the antenna and the perplexing features of the metallic
+layers made for a complicated modeling task. Some attempts were made
+at explaining the major discrepancies between the experimental
+and simulation datasets. We quantified the effects of mixing
+different materials and of thin films using the Bruggeman
+and Fuchs-Sondheimer models, respectively. Using FEM software
+to incorporate these models, as well as taking into account
+possible surface inhomogeneities via a dedicated module in the
+software, the author concluded that an \textit{ab initio}
+model of the effect of the surface inhomogeneities was needed
+in order to properly assess the thicknesses of the silver layers.
+
+This last paragraph should convince the reader that data alone is 
+not sufficient to explain everything. The first section showed that
+theory can give both qualitative and quantitative insight into
+the systems under study. Data is of course necessary to confirm 
+or infirm theory, but, for intellectual and practical reasons, cannot
+stand alone. The intellectual exercise of probing the working of the 
+universe, in itself, better the state of our knowledge. The resulting
+theories provide guidelines for future research and new experiments
+\footnote{Guidelines that must sometimes be broken, of course \cite{KUH1996}.}
+and ease the interpretation of the data. On the more practical side, the 
+guidelines can dramatically reduce the cost of the design phase of 
+any kind of device. 
+
+\section{Perspectives}
+While most of this essay limited its scope to bidimensional cavities, 
+many of the tools can be directly generalized to three dimensions. Much
+work was done by the author to find methods that would work reasonably
+well in 3D, but it was never seen to completion. The last appendix of this
+essay presents some of the basic tools for 3D scattering. They are published
+here in the hope that they may be useful in the future. 
+
+One of the main approximations generally used in the study of microcavities
+in the assumption that the fields exist in infinitely long cylinders. 
+This works reasonably well, but is not enough for accurate comparison with 
+experiments. One interesting project would be to use a full 3D numerical
+method and investigate the 2D limit of electromagnetism in microcavities, 
+if it is well-defined. This could in turn be used to properly model 
+polarization effects, which could perhaps be put to use as an 
+extra degree of freedom in biodetection devices.
 
 \section{Technical Acknowledgements}
-This work would not have been possible without \cite{SAN2010}. We also wish to thank
-\cite{GEI2013}.
+This work would not have been possible without \cite{SAN2010}, a C++ linear algebra
+library. We also wish to thank \cite{GEI2013} for the color-blind compliant color maps.

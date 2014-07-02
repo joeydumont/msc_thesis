@@ -85,7 +85,7 @@ us to write the constitutive relations in the much simpler form
 \index{constitutive relations|)}
 where the integration limits follow the causality requirement.
 Substituting these results into the Maxwell equations and 
-and using the Fourier transform yields the set\footnote{Notice that, in our system of units, $\omega=k$ and thus
+and using the Fourier transform\index{Fourier transform} yields the set\footnote{Notice that, in our system of units, $\omega=k$ and thus
 we will make use of frequency and wavenumber interchangeably.
 We will also suppress all explicit frequency dependence
 from our notation, as it rapidly becomes cumbersome. Also, even though the $\bo{H}$ 
@@ -101,12 +101,13 @@ equations and is a completely equivalent choice. }
   \end{align}
 where $\mu=1+\chi_m$ is the permeability and $\epsilon=1+\chi_e-\sigma/i\omega$
 the permittivity.
-In the remainder of this thesis, we will concerned by the solution
+In the remainder of this essay, we will concerned by the solution
 of this precise set of equations. We also recall the
 \textit{electromagnetic boundary conditions}
 \index{boundary conditions!electromagnetic}
 associated with 
 a discontinuous jump in the permeability or permittivity
+\cite{STR1941,JAC1962}
   \begin{align}
     \label{eq:passive.formalism.generalBoundaryConditions}
     \hat{\bo{n}}\cdot\left(\bo{B}_2-\bo{B}_1\right)	&= 0,		&	\hat{\bo{n}}\times\left(\bo{E}_2-\bo{E}_1\right)	&=0,	\\
@@ -155,7 +156,9 @@ Substitution in \eqref{eq:passive.formalism.generalCurlEquations} yields
   \end{align}
 The symmetry of these equations allow the decoupling of the tranverse and longitudinal components. 
 Solving the system \eqref{eq:passive.formalism.tranverseComponents} 
-shows that the scalar components $H_z$ and $E_z$ are the fundamental ones:
+shows that the scalar components $H_z$ and $E_z$ are the fundamental ones, 
+as we can write the tranverse fields as a function of the longitudinal
+ones:
   \begin{subequations}
   \begin{align}
     \bo{E}_\perp	&= \frac{i}{k^2n^2-\beta^2}\left[\beta\nabla_\perp E_z+k\mu\nabla_\perp H_z\times\bou{z}\right]	\\
@@ -164,7 +167,7 @@ shows that the scalar components $H_z$ and $E_z$ are the fundamental ones:
   \end{subequations}
 Derivation of the differential equation for $E_z$ and $H_z$ can be
 done via equations \eqref{eq:passive.formalism.longitudinalComponents}, but
-is quite cumbersome. 
+is quite cumbersome. The details are thus not shown in this essay.
 
 More specific boundary conditions can be derived with the use of these equations.
 Applying the tranverse and longitudinal decomposition on \eqref{eq:passive.formalism.generalBoundaryConditions}
@@ -191,7 +194,7 @@ derive the conditions $\partial_tE_{z1}=\partial_tE_{z2}$, $\partial_tH_{z1}=\pa
 shown to be equivalent to the continuity of the longitudinal components, 
 \textit{viz.} \eqref{eq:passive.formalism.contLongComponents} \cite{SCH2004b}.
 Combining all our previous results yields the four independent 
-boundary conditions:
+boundary conditions\index{boundary conditions!electromagnetic}:
   \begin{subequations}
   \label{eq:passive.formalism.cylindricalBoundaryConditions}
   \begin{align}
@@ -209,14 +212,14 @@ parameters of the cavity.
 The previous section has provided us with the differential equations that 
 we will need to solve to properly model bidimensional cavities. In this section, 
 we will set up a scattering matrix (\gls{sMatrix}) formalism, augmented by the
-time-delay matrix \textit{\gls{qMatrix}}
+time-delay matrix (\textit{\gls{qMatrix}})
 that will allow us to quantify the response of the cavities
 to an applied field and provide us with a novel way to determine their resonances. 
 The numerical implementation of the method, being somewhat problematic, will 
 be discussed at length. 
 
 \subsection{$\mat{S}$ and $\mat{Q}$ Matrices Reloaded}
-In dielectric cavities, we need to solve the following equations
+In dielectric cavities\index{dielectric resonators}, we need to solve the following equations
   \begin{multline}
     \left\{\nabla^2+k^2n^2\left[1-\left(\frac{\beta}{kn}\right)^2\right]\right\}\begin{Bmatrix} H_z \\ E_z \end{Bmatrix}
       = \frac{1}{1-\left(\frac{\beta}{kn}\right)^2}
@@ -243,7 +246,7 @@ that are confined on a two-dimensional surface, the cavity modes.
 These modes must be independent of $z$ and we therefore take 
 $\beta=0$. This is the main approximation of our model. It has been shown
 to hold only approximately in experimental conditions \cite{DUB2008,BIT2010}, 
-but we take the resulting equations to be the exact one. This allow a 
+but we take the resulting equations to be the exact ones. This allows a 
 simpler analysis for qualitative exploration; quantitative agreement
 could be reached via perturbation methods or by using the integral method
 we flesh out in Appendix \ref{sec:app.numTools.lippmannSchwinger}. This approximation 
@@ -281,20 +284,20 @@ where $V(\boldsymbol{r})$  is the additional potential term just mentioned.
 If the r.h.s. is such that equation is amenable to a solution by 
 separation of variables, one obtains a radial potential of the form
 	\begin{equation}
-		V_\text{eff}(r) = k^2(1-n^2(r))+\frac{m^2-1/4}{r^2}.
+		V_\text{eff}(r) = k^2(1-n^2(r))+\frac{m^2-1/4}{r^2}-V(r).
 	\end{equation}
-For the example of the homogeneous, circular cavity, this yields a
+For instance, the homogeneous, circular cavity yields a
 potential as seen in Figure \ref{fig:passive.formalism.quantumConnection}. 
-The jump at the boundary allows the existence of quasi-bound states inside
+The jump at the boundary allows the existence of quasi-bound (QB) states\index{quasi-bound states} inside
 the cavity, as opposed to bound states, as the light can tunnel outside the
 potential barrier.
 
 It is worth mentioning that the TM polarization behaves exactly has a 
 quantum wavefunction does, the field and its normal derivative being
-continuous at the interface, while the TM polarization is akin to 
+continuous at the interface, while the TE polarization is akin to 
 a sonorous vibrations, as they may also obey ``jump'' conditions
 at an interface \cite{COL2013}. Because of this, the TM polarization
-is more present in the E.M. literature than the TE polarization.
+is more present in the microcavities literature than the TE polarization.
 
 \begin{figure}
 	\centering
@@ -311,16 +314,21 @@ is more present in the E.M. literature than the TE polarization.
  \input{figs/passive/dielectric.pdf_tex}
  \caption[Geometry of a bidimensional cavity]
 	 {Geometry of a dimensional cavity. $R_0$ is the radius of the smallest circle
-	 that encloses the physical microcavity. $R_V$ is the radius of a fictional circle
+	 that encloses the physical microcavity, i.e. the last scattering surface. 
+	 $R_V$ is the radius of a fictitious circle
 	 that we will take to go to infinity.}
+\label{fig:passive.formalism.geometry}
 \end{figure}
 
-
-To solve these equations, we will adopt a scattering viewpoint. 
+We now return to the solution of the differential equations. 
+We will adopt a scattering viewpoint. 
 Imagine that the dielectric cavity is embedded in an infinite
 medium of constant refractive index  $n_o=\sqrt{\epsilon\mu}$, 
-outside the cavity, $\bo{r}\not\in{\mathcal{C}}$, 
+as seen in Figure \ref{fig:passive.formalism.geometry}. 
+Outside the cavity, $\bo{r}\not\in{\mathcal{C}}$, 
 the r.h.s. of \eqref{eq:passive.formalism.fieldEquations} vanish. 
+We call the surface that bounds the support of the function 
+$n_o^2-n_c^2$ the \gls{lss}
 The resulting equations are Helmholtz's and therefore have the well-known solution
   \begin{equation}
     \label{eq:passive.formalism.hankelSolution}
@@ -331,10 +339,10 @@ and second kind. The Hankel functions are chosen in lieu of their
 usual homologues $J_m(z)$ and $Y_m(z)$ as their asymptotic forms 
 have incoming/outgoing cylindrical wave character, 
 $H_m^{(\pm)}\propto \exp(\pm ikr)/\sqrt{r}$, thus ensuring that
-Sommerfeld's radiation condition is fulfilled. The scattering
+the Sommerfeld radiation condition\index{Sommerfeld radiation condition} is fulfilled. The scattering
 viewpoint essentially describes the relationship between the 
 outgoing coefficients, $B_m$, and the incoming coefficients, $A_m$
-via the \textit{scattering matrix}
+via the \textit{scattering matrix}\index{scattering matrix}
   \begin{equation}
   	\label{eq:passive.formalism.defSmatrix}
     B_m = \sum_{m'}S_{mm'}A_{m'}. 
@@ -358,7 +366,7 @@ probability.
 When the \gls{sMatrix} is defined by the pair \eqref{eq:passive.formalism.hankelSolution}
 and \eqref{eq:passive.formalism.defSmatrix}, it contains all near- and
 far-field information. This is sharp contrast with the usual quantum 
-scattering matrix, which is usually defined for an \gls{lss} having 
+scattering matrix, which is usually defined for a \gls{lss} having 
 $r\rightarrow\infty$, i.e. in the far-field \cite{NEW1982}. In the scattering off dielectric structures, the potential 
 $1-n^2$ has compact support in $\mathbb{R}^d$ and the \gls{lss} is taken to be 
 a $(d-1)$-sphere containing the support of the potential.
@@ -370,8 +378,8 @@ on Helmholtz's equation and looking for solutions of
    \label{eq:passive.formalism.resonanceCondition}
    \mat{S}^{-1}\bo{B}=0;
   \end{equation}
-a solution exists only if $|\det{\mat{S}(k)}|\rightarrow\infty$, 
-at a pole of the \gls{sMatrix}. 
+for which a solution exists only if $|\det{\mat{S}(k)}|\rightarrow\infty$, 
+i.e. at a pole of the \gls{sMatrix}. 
 For real potentials, there cannot exist a solution on the real $k$ line because
 of the flux conservation (unitarity) property of the \gls{sMatrix}. We 
 must extend the search to the complex $k$ plane.
@@ -379,25 +387,25 @@ must extend the search to the complex $k$ plane.
 Equation \eqref{eq:passive.formalism.resonanceCondition} shows that the cavity 
 \textit{creates} energy from nothing. In more physical terms, the cavity
 has an infinite response to an infinitesimal energy input. This definition
-of a resonance implies that we should look in the $\Im{k}<0$ half-plane
+of a resonance\index{resonance} implies that we should look in the $\Im{k}<0$ half-plane
 for the poles of the \gls{sMatrix}. The solutions to this equation 
-are known as quasi-bound states, as their intensity is usually larger
+are known as QB states\index{quasi-bound states} as their intensity is usually larger
 in the vicinity of the cavity and, contrary to their truly bound counterparts, 
 have a small but non-zero value outside it. The ever so slowly decaying wavefunction
 is thus non-normalizable (i.e. $\psi\notin L^2$). In this formulation, the field
 has the following non-physical behaviour in the far-field
   \begin{align*}
    \psi_\text{FF}(\bo{r},t) 			&= \psi(\bo{r})e^{-i\omega t}	\\
-						&\propto \exp\left[i(k'-ik'')\right]\exp\left[-ic(k'-ik'')t\right]\exp[im\theta]	\\
+						&\propto \exp\left[i(k'-ik'')r\right]\exp\left[-ic(k'-ik'')t\right]\exp[im\theta]	\\
    \left|\psi_\text{FF}(\bo{r},t)\right|^2 	&\propto e^{2k''r}e^{-2ck''t} 
   \end{align*}
 where $k=k'-ik''$. The field thus exponentially increases with $r$, 
 but exponentially \textit{decreases} with $t$. We can see, however, 
 that the time scale of the exponential decrease is linked to the
-imaginary part of the wavenumber by $\tau=\left(2k''c\right)^{-1}$.
+imaginary part of the wavenumber by $\tau=\left(2ck''\right)^{-1}$.
 We will use this relationship later in this essay.
 
-It is interesting to note that the kind of resonances supported
+It is interesting to note that the kind of resonances\index{resonance} supported
 by dielectric cavities are of the same kind as those supported
 by a forced, undamped harmonic oscillator. The incoming wave field
 plays the part of the applied force. In the treatment of 
@@ -410,7 +418,7 @@ of the experimentally unattainable complex poles of the scattering matrix.
 However, when losses/gain are added into the model, the poles of the scattering
 matrix begin to move in the complex plane; loss of unitarity implies that
 it is possible that these poles may eventually move to the real $k$-line, 
-making them experimentally possible. This is in fact the backbone 
+making them experimentally feasible. This is in fact the backbone 
 of the \gls{salt} \cite{GE2010a,GE2010b}.
 
 Instead of directly looking for the poles, we will look for the signatures
@@ -508,7 +516,7 @@ Using the central potential, we can write
     Q_{mm} = -ie^{-i\delta_m}\left(i\frac{\partial\delta_m}{\partial k}\right)e^{i\delta_m} = \frac{\partial\delta_m}{\partial k}.
   \end{equation}
 The \gls{qMatrix} thus corresponds to the energy derivative of the 
-phase shift, which has long been associated with the time-delay
+phase shift, which has long been associated with the time-delay\index{time-delay}
 introduced by the potential \cite{EIS1948,SMI1960,CAR2002}. 
 
 The keen reader will have noticed that the above derivation
@@ -525,7 +533,6 @@ We thus have
   \end{equation}
 as the proper generalization. This form was also used by Smith in
 \cite{SMI1960}.
-
 It is possible to arrive at this result with our derivation, but
 with the extra term
 	\begin{equation}
@@ -537,8 +544,6 @@ $\Im{\epsilon(r,\theta)}$. A similar result was obtained in
 shares some properties of the Wigner-Smith time-delay matrix 
 \eqref{eq:passive.formalism.qMatrixDef}. We will derive some of
 these properties below. 
-
-\todo[inline]{Discuss the modes defined by the eigenvectors of $Q$.}
 
 \subsection{Properties of the $\mat{S}$ and $\mat{Q}$ matrices}
 The $\mat{S}$-matrix has multiple symmetries which can be used 
@@ -569,7 +574,7 @@ the values are real.
  \includegraphics[width=0.8\textwidth]{figs/passive/determinantSmatrix.pdf}
  \caption[Mirror symmetry of the scattering matrix]
 	 {Mirror symmetry of the scattering matrix. For this example, 
-	 we computed $\log\det\mat{S}(k)$ for the scattering matrix of the
+	 we computed $\log\left|\det\mat{S}(k)\right|$ for the scattering matrix of the
 	 circular, homogeneous cavity with $n_c=3.2$ and $n_o=1$.}
   \label{fig:passive.formalism.symmetrySmatrix}
 \end{figure}
@@ -587,6 +592,11 @@ leads to the relation, valid only when $k\in\mathbb{R}$
     \label{eq:passive.formalism.timeReversalSymmetryReal}
     S_{m'm}(n,k) = (-1)^{m'}S_{-m-m'}(n^*,k)(-1)^m.
   \end{equation}
+We can also write this in matrix form 
+	\begin{equation}
+		\mat{S}(n,k) = \mat{P}\mat{S}(n^*,k)^T\mat{P}
+	\end{equation}
+where $\left[\mat{P}\right]_{mm'} = (-1)^m\delta_{-mm'}$.
 This relationship will be incredibly useful in the numerical implementation.
 
 The \gls{qMatrix} also has some interesting properties. For real
@@ -623,8 +633,29 @@ Using Simonius' expansion and the definition of the \gls{qMatrix}, we can obtain
 the eigendelays $q_p$ of each resonance channel have the form
   \begin{equation}
    \label{eq:passive.formalism.lorentzianDelays}
-   q_p \propto \sum_j \frac{\Gamma_j}{\left(k-\Re{k_j}\right)^2-\Gamma_j^2/4}
+   q_p \propto \sum_j \frac{\Gamma_j}{\left(k-\Re{k_j}\right)^2-\Gamma_j^2/4}.
   \end{equation}
+When the potential is real, it can be shown that 
+	\begin{align}
+		\mat{Q}\bo{A}^p	&= \tau_p\bo{A}^p &
+		\mat{Q}\left(\mat{S}^\dagger\mat{P}\bo{A}^{p*}\right)	&=\tau_p\left(\mat{S}^\dagger\mat{P}\bo{A}^{p*}\right)
+	\end{align}
+share the same spectrum. Moreover, since $\mat{S}$ is unitary, we have 
+$\left\|\mat{S^\dagger P}\right\|=1$ such that normalization is conserved. 
+We can conclude that both sets of eigenvectors are related through a simple
+phase factor such that
+	\begin{equation}
+		\left[\psi^p_\text{in}\right]^* = e^{-i\theta_p}\psi^p_\text{out}.
+	\end{equation}
+An interaction with a general potential changes the combination
+of angular momenta of the incoming field (essentially the coefficients
+of the Fourier-Bessel expansion, in our case) to a different one, 
+forming a distinct outgoing field. The eigenvectors of the \gls{qMatrix}
+form \textit{self-replicating modes}, as the interaction with the cavity
+leave the angular momentum distribution unchanged and only phase shifts
+the incoming wave. In turn, the energy derivative of this phase shift
+gives information about the time-delay\index{time-delay} introduced 
+by the interaction in the form of \eqref{eq:passive.formalism.lorentzianDelays}.
 
 In the complex case, things become more complicated. Simonius' 
 expansion is no more valid, as the poles and zeros are not 
@@ -638,17 +669,17 @@ a curve in the complex $k$-plane. This shift depends non-trivially
 on the absorption. It thus becomes rather hard to extract any meaningful
 information for the \gls{qMatrix} for a general, complex, potential. 
 
-The \gls{sMatrix} also suffers some dramatic changes in its pole structure
+\label{sec:passive.formalism.SpoleStructure}The \gls{sMatrix} also suffers some dramatic changes in its pole structure
 \cite{JOF1973,KOK1981}, but the fact remains that the poles can still be
 interpreted as the resonances of the cavity, and that the complex positions
 yield information about the lifetimes of those resonances. Taking everything
 into consideration, it seems that, for complex potentials, it is easier to 
 work directly with the scattering matrix than to deal with the \gls{qMatrix}.
 
-\section{Numerical Implementation}
+\section{Numerical Method I: SQA}
 The numerical computation of the scattering matrix 
 depends on two constructs: a polar discretization 
-scheme and interior scattering matrices. We choose, for
+scheme colloquially denoted the onion discretization, and interior scattering matrices. We choose, for
 the former, a rather standard radial discretization 
 (see Fig. \ref{fig:passive.numerical.radialDiscretization}).
 For easier reference, we dub the method \gls{sqa}.
@@ -667,7 +698,7 @@ For easier reference, we dub the method \gls{sqa}.
   \label{fig:passive.numerical.radialDiscretization}
 \end{figure}
 
-The latter relate the solutions of the differential equation 
+The latter relate the solutions
 inside each radial shell to its neighboring shell. The final
 interior scattering matrix relates the solution in the last shell
 to the exterior solution, which is analytically known and is 
@@ -676,10 +707,11 @@ related to the \gls{sMatrix}\index{scattering matrix} of the cavity.
 Our method is based on an algorithm originally developed by 
 Rahachou and Zozoulenko \cite{RAH2004} and extended by \cite{GAP2013a}. 
 We generalize the method to accept complex refractive index
-profiles $n$ and wavenumbers $k$. 
+profiles $n$.
 
 \subsection{\textit{Divide et impera}}
-We wish to solve the Helholtz equation 
+We wish to solve the Hellholtz equation\footnote{The main text focuses on the
+TM polarization; TE is treated in Appendix \ref{sec:app.numTools.scatMat}.}
   \begin{equation}
    \left[\nabla^2+k^2n^2\right]\psi = 0
   \end{equation}
@@ -769,20 +801,20 @@ at the interface of each shell $j\rightarrow j+1$. The process generates two set
    \sum_\mu\left[a_\mu^j\rho_j^{+\sqrt{\xi_\mu^j}}+b_\mu^j\rho_j^{-\sqrt{\xi_\mu^j}}\right]\Ket{\Phi_\mu^j}
    &=
    \sum_\mu\left[b_\mu^{j+1}\rho_{j+1}^{+\sqrt{\xi_\mu^{j+1}}}+a_\mu^{j+1}\rho_{j+1}^{-\sqrt{\xi_\mu^{j+1}}}\right]\Ket{\Phi_\mu^{j+1}}	\\
-   \eta_j\frac{d}{dr}\sum_\mu\left[a_\mu^j\rho_j^{+\sqrt{\xi_\mu^j}}+b_\mu^j\rho_j^{-\sqrt{\xi_\mu^j}}\right]\Ket{\Phi_\mu^j}
+   \frac{d}{dr}\sum_\mu\left[a_\mu^j\rho_j^{+\sqrt{\xi_\mu^j}}+b_\mu^j\rho_j^{-\sqrt{\xi_\mu^j}}\right]\Ket{\Phi_\mu^j}
    &=
-   \eta_{j+1}\frac{d}{dr}\sum_\mu\left[b_\mu^{j+1}\rho_{j+1}^{+\sqrt{\xi_\mu^{j+1}}}+b_\mu^{j+1}\rho_{j+1}^{-\sqrt{\xi_\mu^{j+1}}}\right]\Ket{\Phi_\mu^{j+1}}
+   \frac{d}{dr}\sum_\mu\left[b_\mu^{j+1}\rho_{j+1}^{+\sqrt{\xi_\mu^{j+1}}}+b_\mu^{j+1}\rho_{j+1}^{-\sqrt{\xi_\mu^{j+1}}}\right]\Ket{\Phi_\mu^{j+1}}
   \end{align}
   \end{subequations}
-where $\eta_j = 1\, (1/n^2(r_j,\theta))$ in TM (TE) polarization. The interior scattering matrices
-are constructed via pre-multiplying by the left eigenvectors $\Bra{\tilde{\Phi}_\mu^j}$ on each side. 
+The interior scattering matrices
+are constructed via pre-multiplying by the left eigenvectors\index{left eigenvectors} $\Bra{\tilde{\Phi}_\mu^j}$ on each side. 
 Combining both resulting equations leads to the linear system 
   \begin{equation}
     \begin{pmatrix}\mat{A} & \mat{B} \\ \mat{C} & \mat{D} \end{pmatrix} \begin{pmatrix} \bo{a}^j \\ \bo{a}^{j+1}\end{pmatrix}
     =
     \begin{pmatrix}\mat{E} & \mat{F} \\ \mat{G} & \mat{H} \end{pmatrix} \begin{pmatrix} \bo{b}^j \\ \bo{b}^{j+1}\end{pmatrix}
   \end{equation}
-which can be inverted using Schur's complements \cite[p.~123]{MEY2001} to yield a relationship between the 
+which can be inverted using Schur's complements\index{Schur complements} \cite[p.~123]{MEY2001} to yield a relationship between the 
 $\bo{a}$ and $\bo{b}$ coefficients, i.e.
   \begin{equation}
    \mat{S}_j = \begin{pmatrix}\mat{E} & \mat{F} \\ \mat{G} & \mat{H} \end{pmatrix}^{-1}\begin{pmatrix}\mat{A} & \mat{B} \\ \mat{C} & \mat{D} \end{pmatrix}.
@@ -826,14 +858,15 @@ of the discretization. It can be grossly estimated by the
 ratio of the maximum and minimum elements of the matrix. 
 By assuming that there is no amplification in the system,
 all interior scattering matrices have
-$||\mat{S}||<1$ and we can approximate
+$||\mat{S}||\leq1$ and we can approximate
   \begin{equation}
    W \sim \left(\frac{r_j+\epsilon}{r_j-\epsilon}\right)^{2\lambda_\text{max}}\sim 1 + \frac{4\lambda_\text{max}\epsilon}{r_j}
   \end{equation}
 according to the binomial expansion.
 To evaluate the $\lambda_\text{max}$ parameter, we will
 have to take a detour and introduce the concept 
-of \textit{\glspl{gerschgorin}}.
+of \textit{\glspl{gerschgorin}} and some obscure
+properties of Fourier series.
 
 \paragraph{Gerschgorin Circles}
 Gerschgorin circles provide a way to bound the spectrum 
@@ -905,7 +938,7 @@ of square matrices by simply examining its entries.
 We now apply the Gerschgorin circles to our $\mat{L}^j$ matrix. 
 In Appendix \ref{sec:app.numTools.scatMat}, we show that a proper choice for $M$
 is $M=2kR_0\sqrt{\mathop{\max}_{(r,\theta)}\left(n^2(r,\theta)\right)}$. This criterion
-ensures that we sample the refractive index above the Nyquist frequency. The largest
+ensures that we sample the refractive index above the Nyquist frequency\index{Nyquist frequency}. The largest
 diagonal element (the farthest Gerschgorin circle) corresponds
 to the highest angular momentum and has a magnitude of 
 $4k^2R_0^2\mathop{\max}_{(r,\theta)}\left(n^2(r,\theta)\right)-k^2R_0^2n^2(r,\theta)\sim3k^2R_0^2n^2$.
@@ -941,7 +974,7 @@ A good choice of $\epsilon$ is thus
    \epsilon \ll \frac{1}{12nk} \ll \frac{\lambda}{2n}
   \end{equation}
 which mirrors the conventional wisdom. This empirical rule
-is applied in every computation in this thesis.
+is applied in every computation in this essay.
 
 \subsubsection{Hadamard Product}
 Like Frodo before Mount Doom, we must face a final challenge
@@ -1024,20 +1057,16 @@ to its vanishing one. Imposing this symmetry on the numerical scattering
 matrix allows the algorithm to return physical scattering matrices. 
 This limits the scope of our method to real energies ($k$) and has a
 high computational cost for complex refractive indices. This limitation, 
-coupled to the fragility of the generalization to $n\in\mathbb{C}$ suggests
-the use of other methods for complex energies and potentials (see next chapter).
+coupled to the fragility of the generalization to $n\in\mathbb{C}$\footnote{
+We discuss this fragility in more detail in Appendix \ref{sec:app.numTools.scatMat}.} suggests
+the use of other methods for complex energies and potentials.
 
 \subsubsection{Calibration}
 One of the most important step in algorithmic creation
-is the \textit{\gls{calPhase}}. Ours was calibrated
-against two cavities: the homogeneous circular cavity and 
-the annular cavity. Their analytical form is given below.
-We will use 
-  \begin{equation}
-   E = \max\left[\mat{S}_\text{ana}-\mat{S}_\text{SQA}\right] 
-  \end{equation}
-as a function of the discretization size $kR_02\epsilon$ to measure
-the error. 
+is the \textit{\gls{calPhase}}. We calibrate the method
+using the analytical form of the \gls{sMatrix} for the
+homogeneous, circular cavity and compare the results 
+from the literature. 
 
 \paragraph{Homogeneous, Circular Cavity}
 The scattering matrix of the homogeneous circular cavity
@@ -1056,7 +1085,7 @@ $A_m$ and $B_m$ sets, \textit{viz.} the scattering matrix
    S_{mm'}^\text{HD} = -  \frac{\eta_{co}J_m'(Z_c)H_m^{(-)}(Z_o)-J_m(Z_c){H^{(-)}_m}'(Z_o)}
 				{\eta_{co}J_m'(Z_c)H_m^{(+)}(Z_o)-J_m(Z_c){H^{(+)}_m}'(Z_o)}\delta_{mm'}.
   \end{equation}
-where $Z_c = n_ckR_0$, $Z_o=n_okR_0$ and $\eta_{co}= n_c/n_o\; (n_o/n_c)$ in TM (TE) polarization.
+where $Z_c = n_ckR_0$, $Z_o=n_okR_0$ and $\eta_{co}= n_c/n_o\; (n_o/n_c)$ in TM (or TE) polarization.
 
 Before, we showed the correspondence between the poles of the scattering matrix and its associated
 time delay spectrum analytically (see p.~\pageref{eq:passive.formalism.lorentzianDelays}). 
@@ -1069,7 +1098,12 @@ that we have not used a proper discretization $\Delta k$. The other ones line up
 of the time delay. 
 
 In Fig.~\ref{fig:passive.numerical.convergenceHomogeneousDisk}, we compare the analytical scattering
-matrix to the one computed via SQA. Notice that the convergence speed is the same for all curves, 
+matrix to the one computed via SQA. We use 
+  \begin{equation}
+   E = \max\left[\mat{S}_\text{ana}-\mat{S}_\text{SQA}\right] 
+  \end{equation}
+as a function of the discretization size $kR_02\epsilon$ to measure
+the error. Notice that the convergence speed is the same for all curves, 
 regardless of the value of $kR_0$. Convergence does not depend on the value of $M$
 as the homogeneous, circular cavity has a diagonal scattering matrix. 
 
@@ -1097,62 +1131,63 @@ as the homogeneous, circular cavity has a diagonal scattering matrix.
  \label{fig:passive.numerical.convergenceHomogeneousDisk}
 \end{figure}
 
-\paragraph{Annular Cavity}
-The annular cavity is a circular cavity with constant refractive index
-profile in which a circular hole has been cut, see Fig. \ref{fig:passive.numerical.annularCavityGeometry}
-for a picture. 
-Derivation of the scattering matrix of the annular cavity is a little
-more involved. Suffice it to say that it is given by 
-  \begin{equation}
-   \mat{S}^\text{AC} = -\left[n_o{\mat{H}^{(-)}}'(Z_o)-n_c\mat{H}^{(-)}(Z_o)\mat{GF}^{-1}\right]
-			\left[n_o{\mat{H}^{(+)}}'(Z_o)-n_c\mat{H}^{(+)}(Z_o)\mat{GF}^{-1}\right]^{-1}
-  \end{equation}
-where 
-  \begin{align}
-   \mat{F} &= \mat{H}^{(-)}(Z_c)+\mat{H}^{(+)}(Z_c)\mat{S}^\text{HD} & \mat{G} = {\mat{H}^{(-)}}'(Z_c)+{\mat{H}^{(+)}}'(Z_c)\mat{S}^\text{HD}.
-  \end{align}
-A proper derivation can be found in \cite{HEN2002b}; an improved
-one can be found in \cite[Appendix D]{GAP2013a}.
+%\paragraph{Annular Cavity}
+%The annular cavity is a circular cavity with constant refractive index
+%profile in which a circular hole has been cut, see Fig. \ref{fig:passive.numerical.annularCavityGeometry}
+%for a picture. 
+%Derivation of the scattering matrix of the annular cavity is a little
+%more involved. Suffice it to say that it is given by 
+%  \begin{equation}
+%   \mat{S}^\text{AC} = -\left[n_o{\mat{H}^{(-)}}'(Z_o)-n_c\mat{H}^{(-)}(Z_o)\mat{GF}^{-1}\right]
+%			\left[n_o{\mat{H}^{(+)}}'(Z_o)-n_c\mat{H}^{(+)}(Z_o)\mat{GF}^{-1}\right]^{-1}
+%  \end{equation}
+%where 
+%  \begin{align}
+%   \mat{F} &= \mat{H}^{(-)}(Z_c)+\mat{H}^{(+)}(Z_c)\mat{S}^\text{HD} & \mat{G} = {\mat{H}^{(-)}}'(Z_c)+{\mat{H}^{(+)}}'(Z_c)\mat{S}^\text{HD}.
+%  \end{align}
+%A proper derivation can be found in \cite{HEN2002b}; an improved
+%one can be found in \cite[Appendix D]{GAP2013a}.
+%
+%\begin{figure}
+%  \begin{center}
+%  \begin{tikzpicture}[scale=3]
+%   % -- Draw basic geometry
+%   \draw[very thick,fill=gray!30!white] (0,0) circle (1);
+%   \draw[very thick,fill=white] (0.35,0.35) circle (0.25);
+%  
+%   % -- Draw coordinate systems and distances.
+%   % Center line.
+%   \draw[dash pattern=on 5pt off 2pt,thick] (-1,0) -- (1,0);
+%   
+%   % Coordinates of big cavity.
+%   \draw[->,>=stealth,thick] (0,0) -- (-0.5,0.5) node[above left] {$r$};
+%   \draw (0.1,0) arc (0:135:0.1) node[midway,above] {$\theta$};
+%   
+%   % Radius of big cavity.
+%   \draw[->,>=stealth,thick] (0,0) -- (-0.96,-0.2588) node[near end,below] {$R_0$};
+%   
+%   % Center lines for inclusion.
+%   \draw[dash pattern=on 5 pt off 2pt, gray] (0.1,0.35) -- (0.6,0.35);
+%   \draw[dash pattern=on 5 pt off 2pt, gray] (0.35,0.1) -- (0.35,0.6);
+%   
+%   % Coordinates of inclusion w/r to big cavity.
+%   \draw[->,>=stealth,thick,BurntOrange] (0,0) -- (0.35,0.35) node[near end, above] {$d$};
+%   \draw[BurntOrange] (0.15,0) arc (0:45:0.15) node[midway,right] {$\Theta$};
+%  \end{tikzpicture}
+%  \end{center}
+%  \caption[Geometry of the annular cavity]
+%	  {Geometry of the annular cavity. The circular cavity has coordinate system
+%	  $(r,\theta)$ and radius $R_0$ Its refractive index is denoted by $n_c$. 
+%	  The circular inclusion has position $\color{BurntOrange}(d,\Theta)$
+%	  in the main coordinates and its refractive index is $n_h$. It isually is the same
+%	  as $n_0$, the refractive index of the environment.}
+%  \label{fig:passive.numerical.annularCavityGeometry}
+%\end{figure}
+%
+%
+%\todo[inline]{Calibration with annular cavity.}
 
-\begin{figure}
-  \begin{center}
-  \begin{tikzpicture}[scale=3]
-   % -- Draw basic geometry
-   \draw[very thick,fill=gray!30!white] (0,0) circle (1);
-   \draw[very thick,fill=white] (0.35,0.35) circle (0.25);
-  
-   % -- Draw coordinate systems and distances.
-   % Center line.
-   \draw[dash pattern=on 5pt off 2pt,thick] (-1,0) -- (1,0);
-   
-   % Coordinates of big cavity.
-   \draw[->,>=stealth,thick] (0,0) -- (-0.5,0.5) node[above left] {$r$};
-   \draw (0.1,0) arc (0:135:0.1) node[midway,above] {$\theta$};
-   
-   % Radius of big cavity.
-   \draw[->,>=stealth,thick] (0,0) -- (-0.96,-0.2588) node[near end,below] {$R_0$};
-   
-   % Center lines for inclusion.
-   \draw[dash pattern=on 5 pt off 2pt, gray] (0.1,0.35) -- (0.6,0.35);
-   \draw[dash pattern=on 5 pt off 2pt, gray] (0.35,0.1) -- (0.35,0.6);
-   
-   % Coordinates of inclusion w/r to big cavity.
-   \draw[->,>=stealth,thick,BurntOrange] (0,0) -- (0.35,0.35) node[near end, above] {$d$};
-   \draw[BurntOrange] (0.15,0) arc (0:45:0.15) node[midway,right] {$\Theta$};
-  \end{tikzpicture}
-  \end{center}
-  \caption[Geometry of the annular cavity]
-	  {Geometry of the annular cavity. The circular cavity has coordinate system
-	  $(r,\theta)$ and radius $R_0$ Its refractive index is denoted by $n_c$. 
-	  The circular inclusion has position $\color{BurntOrange}(d,\Theta)$
-	  in the main coordinates and its refractive index is $n_h$. It isually is the same
-	  as $n_0$, the refractive index of the environment.}
-  \label{fig:passive.numerical.annularCavityGeometry}
-\end{figure}
-
-
-\todo[inline]{Calibration with annular cavity.}
-
+\paragraph{Comparison to other methods}
 To make sure we can blindly accept the results of our numerical
 technique, we apply it to non-integrable geometries that have been
 studied by other means in the literature. Table \ref{tab:passive.numerical.comparisonLiterature}
@@ -1163,6 +1198,14 @@ highlighted in the figure, has a field profile (inset) that resembles
 a WGM. The localization of light in square cavities has since been 
 confirmed experimentally \cite{BIT2013} and observed in other geometries
 \cite{SON2013}.
+
+We also notice that the resonance at $k=4.53$ is degenerate. The highlighted
+mode has a high delay, but it coexists with a low delay mode. In practice, when
+there are imperfections, this might become a problem, as the high-$Q$ modes
+are highly sensitive to perturbations \cite{RAH2004}. Another interesting
+feature can be seen at $k\sim4.545$, where two modes show an avoided
+crossing. The vertical line the spectrum corresponds to where the modes
+``switch''. 
 
 \begin{table}
   \newcolumntype{d}{D{.}{.}{3}}
@@ -1215,7 +1258,7 @@ pumped active microcavities.
 
 \subsection{Loss of Integrability and the KAM Scenario}
 When $d=0$, the potential is central and angular momentum is 
-necessarily conserved. If the system is also unitary
+conserved. If the system is also unitary
 (no absorption nor gain), it can be shown that the system is
 integrable\footnote{The covariant form of Maxwell's equation and their
 associated Euler-Lagrange equation make this conservation perfectly clear.}. 
@@ -1252,7 +1295,7 @@ cavity serves as a proof-of-concept. In Fig.~\ref{fig:passive.gaussian.numerical
 the dotted blue lines show the delay spectrum of the centered Gaussian (CG) deformation, 
 an integrable cavity, and the full red lines the spectrum of the non-centered Gaussian
 (NG) deformation. Notice that the higher-delay modes are barely affected by 
-the inhomogeneity. While we do not know the field profile\todo{Compute field with integral method.}, 
+the inhomogeneity. While we do not know the field profile, 
 it is safe to assume the two high-delay modes behave like WGMs. Although it is not shown, 
 both modes have isotropic far-fields. The rather small shift in wavenumber can be
 understood by the slight rarefaction of the medium near the deformation. 
@@ -1300,11 +1343,11 @@ lens. The next section will explain this in more detail.
 \subsection{Geodesics and Ray Analysis\footnote{We use Schutz's \cite{SCH2009} notation in this section.
 Repeated indices are summed over; $g_{\alpha\beta}$ is the metric tensor; the notation 
 $M_{\alpha\beta,\gamma}$ indicates differentiation with respect to $\gamma$. The contravariant
-tensor $g^{\alpha\beta}$ is the inverse of $g_{\alpha\beta}$, i.e. $g^{\alpha\beta}g_{\beta\gamma}={\delta^\alpha}_\gamma$}.}
+tensor $g^{\alpha\beta}$ is the inverse of $g_{\alpha\beta}$, i.e. $g^{\alpha\beta}g_{\beta\gamma}={\delta^\alpha}_\gamma$.}}
 While our numerical method allows us tu perform full-wave
 simulations of cavities, it is often useful to consider the associated
-billiard system, which is the small wavelength approximation of 
-Helmholtz's equation. In homogeneous ARCS, photons follow straight path
+billiard\index{billiard} system, which is the small wavelength approximation of 
+Helmholtz's equation. In homogeneous ARCs\index{asymmetric resonant cavity}, photons follow straight path
 trajectories and are specularly reflected at the interfaces. In inhomogeneous
 \glspl{arc}, photons follow curved trajectories that obey Fermat's principle. 
 The general equations defining those \textit{geodesic} paths can be found
@@ -1397,7 +1440,7 @@ at this boundary.
 
 \section{Conclusion and Perspectives}
 This section solved the scattering problem of bidimensional
-dielectric cavities. Using information on the real $k$-line,
+dielectric cavities\index{dielectric resonators}. Using information on the real $k$-line,
 the \gls{qMatrix} allows for the computation of the complex poles
 of the scattering matrix, which in turn correspond to the resonances
 of the scatterer. The eigenvectors of the \gls{qMatrix} define 
@@ -1421,7 +1464,7 @@ given application. A few examples spring to mind, such as
 a dielectric optical switch, beam splitters, biosensors and others. 
 If the material is active, one cold optimize the form of the pump 
 profile to minimize thresholds and maximizing, for instance, output
-directionality and power. 
+directionality and power. This will be discussed in the following chapter.
 
 One subject we have failed to mention in the main text is the 
 fragility of the generalization of the \gls{sqa} to complex

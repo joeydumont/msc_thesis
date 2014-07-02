@@ -23,20 +23,21 @@ in TE polarization, but vanishes in the TM one. Together with the transmission c
 		\eta_c^2\frac{d\ket{\psi^i}}{dn}	& = \eta_o^2\frac{d}{dn}\left(\ket{\psi^\text{inc}}+\ket{\psi^\text{sca}}\right) &\bo{r}\in\partial\mathcal{C},
 	\end{align}
 	\end{subequations}
-where $\eta_i = 1\,(1/n_i^2)$ in the TM (or TE) polarization, 
+where $\eta_i = 1\,(1/n_i^)$ in the TM (or TE) polarization, 
 these equations form the general scattering problem for 2D microcavities. 
 
 The scattering matrix depends on the various parameters defined above. The environment
 is considered to be infinite and featureless, i.e. $\mathcal{C}^c=\mathbb{R}^2$ and 
 $n_0$ is a constant. The cavity region, $\mathcal{C}$, can be any bounded, connected set
-and is endowed with a refractive index $n_c=n_c(r,\theta)$, which is allowed to a function
-of position and frequency. The support of the function $n_o^2-n_c^2$ coincides with 
-the cavity region $\mathcal{C}$. The scattering operator is defined by the relationship
+(or a collection of such sets) and endowed with a refractive index $n_c=n_c(r,\theta)$, 
+which is allowed to a function of position and frequency. The support of the function 
+$n_o^2-n_c^2$ coincides with the cavity region $\mathcal{C}$. The scattering operator 
+is defined by the relationship
 	\begin{equation}
 		\Ket{\psi^\text{sca}} = \mathcal{S}\Ket{\psi^\text{inc}}
 	\end{equation}
 and relates incoming parts of the field to the outgoing ones \textit{outside}
-of the \gls{lss}.
+of the \gls{lss}, outside of the support of $n_o^2-n_c^2$.
 
 \section{Numerical Computation of the Scattering Matrix in SQA}\label{sec:app.numTools.scatMat}
 Since it is our primary tool, we will describe the numerical implementation
@@ -86,6 +87,7 @@ expansion coefficients $c^j_{m\mu}$ of the form
 		\mat{L}^j_\text{\{TE,TM\}}\bo{c}^j_\mu = \xi^j_\mu\bo{c}^j_\mu
 	\end{equation}
 where
+	\begin{subequations}
 	\begin{align}
 		\left[\mat{L}^j_\text{TM}\right]_{mm'}	&= m^2\delta_{mm'}-\frac{k^2r_j^2}{2\pi}\int_0^{2\pi}n^2(r_j,\theta)e^{i(m-m')\theta}d\theta\\
 		\left[\mat{L}^j_\text{TE}\right]_{mm'}	&= m^2\delta_{mm'}
@@ -95,6 +97,7 @@ where
 											-k^2r_j^2n^2(r_j,\theta)
 										\right]e^{i(m-m')\theta}d\theta.
 	\end{align}
+	\end{subequations}
 At first glance, $\mat{L}^j_\text{TE}$ prescribes the evaluation of
 the angular derivative of the refractive index. However, 
 using 
@@ -102,7 +105,7 @@ using
 		\frac{1}{n}\frac{dn}{d\theta} = \frac{d\ln n}{d\theta}
 	\end{equation}
 allows the use of integration by parts. The surface term 
-vanishes per the periodicity of the refractive index, and we 
+vanishes as per the periodicity of the refractive index, and we 
 are left with 
 	\begin{equation}
 		\left[\mat{L}^j_\text{TE}\right]_{mm'} = \left[\mat{L}^j_\text{TM}\right]_{mm'}
@@ -136,8 +139,7 @@ $n_{-j}=n_j^*$. When $k$ possess a non-vanishing imaginary part,
 some terms in the commutator become anti-Hermitian and of 
 alternating signs and are thus not canceled in the subtraction. 
 The $\mat{L}^j_\text{TM}$ matrix has the additional property that 
-the value of the elements depend only on their distance from the diagonal.
-Taking a closer look reveals the form
+the value of the elements depend only on their distance from the diagonal:
   \begin{equation}
    \mat{L}^j_\text{TM} = \mat{M}^2 +k^2r_j^2\begin{pmatrix} 
 		  n_0 & n_{-1} & \cdots & \cdots & n_{-2M}	\\
@@ -158,7 +160,7 @@ This is not sufficient, however, because we are not guaranteed that
 both sets of eigenvectors will form a \textit{complete} basis. 
 
 If the set of eigenvectors does not form a complete basis, the
-angular ODEs are said to be \textit{defective} and is diagonalizable.
+angular ODEs are said to be \textit{defective} and the $\mat{L}^j$ matrix is not diagonalizable.
 The alternative that is usually suggested is the use of Jordan forms, which
 define an ``almost diagonal'' matrix $J$ such that
 	\begin{equation}
@@ -178,8 +180,8 @@ that there always exist an eigenbasis consisting only of eigenvectors
 and of generalized eigenvectors \cite{MEY2001}. This can be used to 
 solve the defective angular ODEs.
 
-We do not use the Jordan form 
-numerically, as it is incredibly sensitive on the floating-point representation
+We do not use Jordan forms
+numerically, as they are incredibly sensitive on the floating-point representation
 of the elements of the matrix. We can, however, use SVD to detect whether the basis 
 is incomplete (by looking for vanishing singular values) and computing the generalized 
 eigenvectors that way \cite{PRE2007}. 
@@ -193,6 +195,7 @@ as
 Enforcing the boundary conditions at the interfaces between each shell yields the
 two sets of equations shown in \eqref{eq:passive.numerical.boundaryCondition}.
 It will be useful to write this in the form
+	\begin{subequations}
  \begin{equation}
    \sum_\mu\left[a_\mu^jF(\rho_{j+})+b_\mu^jG(\rho_{j+})\right]\Ket{\Phi_\mu^j}
     =
@@ -204,15 +207,16 @@ and
      =
     \sum_\mu\left[b_\mu^{j+1}H'(\rho_{j+1-})+a_\mu^{j+1}K'(\rho_{j+1-})\right]\Ket{\Phi_\mu^{j+1}}
   \end{equation}
+ 	\end{subequations}
 where $\rho_{j+}=r_j+\epsilon=r_{j+1}-\epsilon=\rho_{j+1-}$ so that both expressions are
-evaluated at the interface's radius. To write this in a more 
-friendly form, where $\eta_j = 1\, (1/n^2(r_j,\theta))$ in TM (or TE) polarization.
+evaluated at the interface between the two shells.
 Now, using the biorthogonality relation between the contravariant
 $\Ket{\Phi^j_\mu}$ and the covariant bases $\Ket{\tilde{\Phi}^j_\mu}$, i.e.
 	\begin{equation}
 		\Braket{\tilde{\Phi}^j_\mu|\Phi^j_{\mu'}} = \delta_{\mu\mu'}
 	\end{equation}
 regrouping the $a$ and $b$ coefficients together, we have
+	\begin{subequations}
   \begin{equation}
    \sum_\mu\left[a_\mu^jF(\rho_{j+})\delta_\mu^{\mu'}-a_\mu^{j+1}K(\rho_{j+1-})U_{\mu\mu'}^{j,j+1}\right]
     =
@@ -224,10 +228,14 @@ and
     =
    \sum_\mu\left[b_\mu^{j+1}H'(\rho_{j+1-})U_{\mu\mu'}^{j,j+1}-b_\mu^jG'(\rho_{j+})\delta_\mu^{\mu'}\right]
   \end{equation}
-where 
-  \begin{equation}
-    \mathbf{U}^{j,j+1} = \Braket{\tilde{\Phi}_{\mu'}^j|\Phi_\mu^{j+1}}
-  \end{equation}
+	\end{subequations}
+where
+	\begin{subequations} 
+	\begin{align}
+    	\mat{U}^{j,j+1}	&= \Braket{\tilde{\Phi}_{\mu'}^j|\Phi_\mu^{j+1}}	\\
+    	\mat{V}^{j,j+1} &= \Braket{\tilde{\Phi}_{\mu'}^j|\frac{n^2_c(r_j,\theta)}{n^2_c(r_{j+1},\theta)}|\Phi_\mu^{j+1}}
+  	\end{align}
+  	\end{subequations}
 Defining diagonal matrices for all radial functions
 and their derivatives, we can write these equations in matrix
 form 
@@ -235,7 +243,7 @@ form
     \label{eq:Smatrix.boundaryCond}
     \begin{bmatrix}
       \mathbf{F} 	& -\mathbf{U}^{j,j+1}\mathbf{K}	\\
-      \mathbf{F}'	& -\mathbf{U}^{j,j+1}\mathbf{K}'
+      \mathbf{F}'	& -\mathbf{V}^{j,j+1}\mathbf{K}'
     \end{bmatrix}
     \begin{bmatrix}
       \bo{a}^j	\\	\bo{a}^{j+1}
@@ -243,7 +251,7 @@ form
      = 
      \begin{bmatrix}
       -\mathbf{G}	& \mathbf{U}^{j,j+1}\mathbf{H}	\\
-      -\mathbf{G}'	& \mathbf{U}^{j,j+1}\mathbf{H}'
+      -\mathbf{G}'	& \mathbf{V}^{j,j+1}\mathbf{H}'
      \end{bmatrix}
          \begin{bmatrix}
       \bo{b}^j	\\	\bo{b}^{j+1}
@@ -276,11 +284,11 @@ Inverting \eqref{eq:Smatrix.boundaryCond} using the first complement, we obtain
 	&= 
 	  \begin{bmatrix}
 	    -\mathbf{G}	& \mathbf{U}^{j,j+1}\mathbf{H}	\\
-	    -\mathbf{G}'& \mathbf{U}^{j,j+1}\mathbf{H}'
+	    -\mathbf{G}'& \mathbf{V}^{j,j+1}\mathbf{H}'
 	  \end{bmatrix}^{-1}
 	  \begin{bmatrix}
 	    \mathbf{F} 	& -\mathbf{U}^{j,j+1}\mathbf{K}	\\
-	    \mathbf{F}'	& -\mathbf{U}^{j,j+1}\mathbf{K}'
+	    \mathbf{F}'	& -\mathbf{V}^{j,j+1}\mathbf{K}'
 	  \end{bmatrix}						\\
 	&=
 	 \begin{bmatrix}
@@ -289,7 +297,7 @@ Inverting \eqref{eq:Smatrix.boundaryCond} using the first complement, we obtain
 	 \end{bmatrix}
 	 \begin{bmatrix}
 	    \mathbf{F} 	& -\mathbf{U}^{j,j+1}\mathbf{K}	\\
-	    \mathbf{F}'	& -\mathbf{U}^{j,j+1}\mathbf{K}'
+	    \mathbf{F}'	& -\mathbf{V}^{j,j+1}\mathbf{K}'
 	  \end{bmatrix}
   \end{align}
 Going through the multiplication gives us the the following block matrices
@@ -299,22 +307,22 @@ Going through the multiplication gives us the the following block matrices
 			    + \mathbf{G}^{-1}\mathbf{U}^{j,j+1}\mathbf{HC}^{-1}\mathbf{F}'							\\
     \mathbf{S}^j_{12}	&= \mathbf{G}^{-1}\mathbf{U}^{j,j+1}\mathbf{K}
 			    +\mathbf{G}^{-1}\mathbf{U}^{j,j+1}\mathbf{HC}^{-1}\mathbf{G}'\mathbf{G}^{-1}\mathbf{U}^{j,j+1}\mathbf{K}
-			    -\mathbf{G}^{-1}\mathbf{U}^{j,j+1}\mathbf{HC}^{-1}\mathbf{U}^{j,j+1}\mathbf{K}'					\\
+			    -\mathbf{G}^{-1}\mathbf{U}^{j,j+1}\mathbf{HC}^{-1}\mathbf{V}^{j,j+1}\mathbf{K}'					\\
     \mathbf{S}^j_{21}	&= -\mathbf{C}^{-1}\mathbf{G}'\mathbf{G}^{-1}\mathbf{F}+\mathbf{C}^{-1}\mathbf{F}'					\\
-    \mathbf{S}^j_{22}	&=  \mathbf{C}^{-1}\mathbf{G}'\mathbf{G}^{-1}\mathbf{U}^{j,j+1}\mathbf{K} - \mathbf{C}^{-1}\mathbf{U}^{j,j+1}\mathbf{K}'
+    \mathbf{S}^j_{22}	&=  \mathbf{C}^{-1}\mathbf{G}'\mathbf{G}^{-1}\mathbf{U}^{j,j+1}\mathbf{K} - \mathbf{C}^{-1}\mathbf{V}^{j,j+1}\mathbf{K}'
   \end{align}
   \end{subequations}
 This is all fine and well, but it is instructive to write this 
 in another manner. Notice that the product $\mathbf{U}^{j,j+1}\mathbf{HC}^{-1}$ 
 appears almost everywhere. Let's write it as
   \begin{equation}
-   \mathbf{U}^{j,j+1}\mathbf{H}\left(\mathbf{U}^{j,j+1}\mathbf{H}'-\mathbf{G}'\mathbf{G}^{-1}\mathbf{U}^{j,j+1}\mathbf{H}\right)^{-1}
+   \mathbf{U}^{j,j+1}\mathbf{H}\left(\mathbf{V}^{j,j+1}\mathbf{H}'-\mathbf{G}'\mathbf{G}^{-1}\mathbf{U}^{j,j+1}\mathbf{H}\right)^{-1}
     = 
-    \left(\mathbf{U}^{j,j+1}\mathbf{H}'\mathbf{H}^{-1}(\mathbf{U}^{j,j+1})^{-1}-\mathbf{G}'\mathbf{G}^{-1}\right)^{-1} = \mathbf{R}^{-1}.
+    \left(\mathbf{V}^{j,j+1}\mathbf{H}'\mathbf{H}^{-1}(\mathbf{U}^{j,j+1})^{-1}-\mathbf{G}'\mathbf{G}^{-1}\right)^{-1} = \mathbf{R}^{-1}.
   \end{equation}
 We will also define
   \begin{equation}
-    \mathbf{T} = \mathbf{U}^{j,j+1}\mathbf{K}'\mathbf{K}^{-1}(\mathbf{U}^{j,j+1})^{-1}-\mathbf{G}'\mathbf{G}^{-1}.
+    \mathbf{T} = \mathbf{V}^{j,j+1}\mathbf{K}'\mathbf{K}^{-1}(\mathbf{U}^{j,j+1})^{-1}-\mathbf{G}'\mathbf{G}^{-1}.
   \end{equation}
 
 Rewriting the block scattering matrices with this, we get
@@ -363,8 +371,8 @@ matrices can be written as
 with 
   \begin{subequations}
   \begin{align}
-   \mathbf{R} &= -\mathbf{U}^{0,1}\bo{\Lambda}^1(\mathbf{U}^{0,1})^{-1}-n_\text{in}kr_0\mathbf{J}'\mathbf{J}^{-1}	\\
-   \mathbf{T} &= +\mathbf{U}^{0,1}\bo{\Lambda}^1(\mathbf{U}^{0,1})^{-1}-n_\text{in}kr_0\mathbf{J}'\mathbf{J}^{-1}.
+   \mathbf{R} &= -\mathbf{V}^{0,1}\bo{\Lambda}^1(\mathbf{U}^{0,1})^{-1}-n_\text{in}kr_0\mathbf{J}'\mathbf{J}^{-1}	\\
+   \mathbf{T} &= +\mathbf{V}^{0,1}\bo{\Lambda}^1(\mathbf{U}^{0,1})^{-1}-n_\text{in}kr_0\mathbf{J}'\mathbf{J}^{-1}.
   \end{align}
   \end{subequations}
 
@@ -372,8 +380,8 @@ with
 We then have
   \begin{subequations}
   \begin{align}
-   \mathbf{R}	&= \mathbf{U}^{j,j+1}\bo{\Lambda}^{j+1}(\mathbf{U}^{j,j+1})^{-1}+\bo{\Lambda}^j	\\
-   \mathbf{T}	&= -\mathbf{U}^{j,j+1}\bo{\Lambda}^{j+1}(\mathbf{U}^{j,j+1})^{-1}+\bo{\Lambda}^j
+   \mathbf{R}	&= \mathbf{V}^{j,j+1}\bo{\Lambda}^{j+1}(\mathbf{U}^{j,j+1})^{-1}+\bo{\Lambda}^j	\\
+   \mathbf{T}	&= -\mathbf{V}^{j,j+1}\bo{\Lambda}^{j+1}(\mathbf{U}^{j,j+1})^{-1}+\bo{\Lambda}^j
   \end{align}
   \end{subequations}
 which gives the block scattering matrices as
@@ -399,8 +407,8 @@ the last shell and outside the dielectric. The
 intermediate matrices are
   \begin{subequations}
   \begin{align}
-   \mathbf{R}	&= \mathbf{U}^{N,N+1}n_0kR_0{\mathbf{H}^{(+)}}'(\mathbf{H}^{(+)})^{-1}(\mathbf{U}^{N,N+1})^{-1}+\bo{\Lambda}^N	\\
-   \mathbf{T}	&= \mathbf{U}^{N,N+1}n_0kR_0{\mathbf{H}^{(-)}}'(\mathbf{H}^{(-)})^{-1}(\mathbf{U}^{N,N+1})^{-1}+\bo{\Lambda}^N
+   \mathbf{R}	&= \mathbf{V}^{N,N+1}n_0kR_0{\mathbf{H}^{(+)}}'(\mathbf{H}^{(+)})^{-1}(\mathbf{U}^{N,N+1})^{-1}+\bo{\Lambda}^N	\\
+   \mathbf{T}	&= \mathbf{V}^{N,N+1}n_0kR_0{\mathbf{H}^{(-)}}'(\mathbf{H}^{(-)})^{-1}(\mathbf{U}^{N,N+1})^{-1}+\bo{\Lambda}^N
   \end{align}
   \end{subequations}
 which gives the block scattering matrices as
