@@ -623,7 +623,7 @@ It is this exact property that allows us to say that the scattering matrix is $\
 %the Clebsch-Gordan coefficients and the Wigner $3j$-symbols, even though they are not specifically mentioned
 %above. Our implementation of the standard algorithm to compute them is presented in \ref{sec:app.numTools.wignerSymbols}.
 
-\section{Lippmann-Schwinger Computation of the Scattering Matrix}\label{sec:app.numTools.lippmannSchwinger}
+\section{Lippmann-Schwinger Computation of the Scattering Matrix: Scalar Case}\label{sec:app.numTools.lippmannSchwinger}
 The final method discussed in this Appendix is, according to the author, the most
 promising. Its implementation, however, is not totally complete. We will here share 
 its most salient details and some preliminary results. We will also show the formalism
@@ -673,6 +673,7 @@ and solve the field within $\mathcal{C}$. In what follows, we will
 need to use the partial wave expansion of Green's function, given by
 \cite{ECO2006}
 	\begin{equation}
+		\label{eq:app.numMethods.eigenbasisExpansionGreen}
 		G(\bo{r},\bo{r}') = -\frac{i}{4}H_0^{(+)}(kn_0|\bo{r}-\bo{r}') = -\frac{i}{4}\sum_m J_m(kn_0r_<)H_m^{(+)}(kn_0r_>)e^{im(\theta-\theta')}
 	\end{equation}
 where $r_<=\min(|\bo{r}|,|\bo{r}'|)$ and $r_>=\max(|\bo{r}|,|\bo{r}'|)$.
@@ -703,7 +704,10 @@ from the previous equation as
 \subsection{Numerical Solution}
 The integral formulation can accommodate dispersive, inhomogeneous and even non-linear refractive indices. 
 However, since we are mostly interested in linear scatterers, we will turn the integral problem
-into a system of linear equations. 
+into a system of linear equations\footnote{We could also use the eigenbasis expansion
+of the Green's function \eqref{eq:app.numMethods.eigenbasisExpansionGreen} and of
+the field and solve for the eigenmodes. This proves to be unstable, however, and
+difficult to generalize in the 3D cylindrical coordinates \cite{BEN1968}.}
 
 To do so, we must mesh the cavity region $\mathcal{C}$. We use a simple Delaunay triangulation, 
 with points distributed uniformly in the area of $\mathcal{C}$. We then suppose that the field
@@ -730,7 +734,7 @@ that the diagonal elements of the kernel diverge logarithmically, as
 		H_{0}^{(+)}(kn_0|\bo{r}-\bo{r}') \sim \ln(kn_0|\bo{r}-\bo{r}'|).
 	\end{equation}
 Even though the singularity is integrable and that analytical results
-exist in the literature \cite{YAG1980}, we simply ignore the diagonal
+exist in the literature \cite{YAG1980,VAN1991}, we simply ignore the diagonal
 contribution. This is fine for low accuracy work, but will need to be
 dealt with more appropriately in the future.
 
@@ -804,3 +808,7 @@ parts of the kernel.
 			and $n_0=1$.}
 	\label{fig:app.numMethods.convergenceIntegralMethod}
 \end{figure}
+
+\section{Lippmann-Schwinger Copmputation of the Scattering Matrix: Vector Case}
+We repeat the procedure of the previous section, but for the complete 3D vector
+field. Similar methods are presented in \cite{deL2013,FAL2013}. 

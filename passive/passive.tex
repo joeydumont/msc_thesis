@@ -18,7 +18,8 @@ set of microcavities.
 As with any problem in optics, we start from Maxwell's equations. Although 
 this specific chapter focuses on dielectric cavities, we will show Maxwell's equations
 in their full generality, as we will later study problems with currents and sources. 
-We use the Lorentz-Heaviside set of units with the speed of light, $c$, equal to 1. 
+We use the Lorentz-Heaviside set of units with the speed of light, $c$, equal to 1
+to obtain \cite{NOV2012} 
   \begin{subequations}
   \label{eq:passive.formalism.maxwellsEquations}
   \begin{align}
@@ -367,7 +368,7 @@ When the \gls{sMatrix} is defined by the pair \eqref{eq:passive.formalism.hankel
 and \eqref{eq:passive.formalism.defSmatrix}, it contains all near- and
 far-field information. This is sharp contrast with the usual quantum 
 scattering matrix, which is usually defined for a \gls{lss} having 
-$r\rightarrow\infty$, i.e. in the far-field \cite{NEW1982}. In the scattering off dielectric structures, the potential 
+$r\rightarrow\infty$, i.e. in the far-field \cite{ROD1967,JOA1975,NEW1982}. In the scattering off dielectric structures, the potential 
 $1-n^2$ has compact support in $\mathbb{R}^d$ and the \gls{lss} is taken to be 
 a $(d-1)$-sphere containing the support of the potential.
 
@@ -459,7 +460,7 @@ following relations
   \end{align}
   \end{subequations}
 where we assume a real potential.
-Forming the product\footnote{We use the identities \cite[Appendix II]{STR41}
+Forming the product\footnote{We use the identities \cite[Appendix II]{STR1941}
   \begin{equation*}
     \nabla\cdot\left(\phi\bo{A}\right) = \bo{A}\cdot\nabla\phi+\phi\nabla\cdot\bo{A}.
   \end{equation*}
@@ -517,7 +518,7 @@ Using the central potential, we can write
   \end{equation}
 The \gls{qMatrix} thus corresponds to the energy derivative of the 
 phase shift, which has long been associated with the time-delay\index{time-delay}
-introduced by the potential \cite{EIS1948,SMI1960,CAR2002}. 
+introduced by the potential \cite{EIS1948,SMI1960,NUS1972,CAR2002,NUS1997,HAB2007}. 
 
 The keen reader will have noticed that the above derivation
 fails for complex potentials. The author has not found a proper
@@ -553,9 +554,9 @@ expose in this thesis will concern the analytical continuation
 of the scattering matrix in the complex $k$ plane. 
 
 It is well known that the $\mat{S}$-matrix is unitary 
-for real values of $n$ and $k$ \cite{NEW1982}. However, 
+for real values of $n$ and $k$ \cite{NEW1982,LER2013}. However, 
 it loses this important property is lost when we extend
-to the complex plane. Looking at the complex conjugated versions
+to the complex plane \cite{MUG2004}. Looking at the complex conjugated versions
 of our equation set, we see that we have
   \begin{align*}
     B_m		&= S_{mm'}(n,k)A_{m'}	\\
@@ -670,7 +671,7 @@ on the absorption. It thus becomes rather hard to extract any meaningful
 information for the \gls{qMatrix} for a general, complex, potential. 
 
 \label{sec:passive.formalism.SpoleStructure}The \gls{sMatrix} also suffers some dramatic changes in its pole structure
-\cite{JOF1973,KOK1981}, but the fact remains that the poles can still be
+\cite{JOF1973,KOK1981,CAS1982}, but the fact remains that the poles can still be
 interpreted as the resonances of the cavity, and that the complex positions
 yield information about the lifetimes of those resonances. Taking everything
 into consideration, it seems that, for complex potentials, it is easier to 
@@ -1268,7 +1269,7 @@ far-field radiation pattern. Since most applications (particularly lasers)
 require a certain directionality in the emission, our goal is to break 
 the circular symmetry in such a way as to minimize the degradation of the
 finesse ($Q$-factor) and maximizing the output directionality. Historically, 
-this goal has spawned the research field of \glspl{arc} wherein the boundary
+this goal has spawned the research field of \glspl{arc} \cite{NOC1997,HEN2002b,SCH2004a,TUR2005,HIS2013,SHU2013} wherein the boundary
 of the circular cavity is parametrically deformed to yield limaçon, stadium, 
 elliptical, quadrupolar, and other shapes. 
 

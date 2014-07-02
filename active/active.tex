@@ -52,7 +52,8 @@ the first describes the details of the interaction of light with
 the quantum gain medium and provides a steady-state solution
 of the resulting Maxwell-Bloch equations. The second
 discusses the constant-flux states\index{constant-flux states} and their computation
-using the aforementioned numerical methods. 
+using the aforementioned numerical methods. This section is based
+in part on \cite{GE2010a,GE2010b,CHO2012}.
 
 \paragraph{Solving the Matter Equations}
 Our starting point, as always, is
@@ -92,7 +93,7 @@ from the cross-product and curl in \eqref{eq:active.salt.TEeqn} possess
 only a $z$-component, as needed. 
 
 To go any further, we must compute the value of the non-linear electric
-susceptibility tensor. 
+susceptibility tensor \cite{BOY2003}. 
 To show the main features of the theory, we assume a two-level quantum 
 system as the gain medium, although the method is generalizable to 
 multi-level systems \cite[\S2.3]{GE2010b}. 
@@ -953,7 +954,7 @@ our particular case.}, direct integration Helmholtz's or Maxwell's equations
 is usually unstable\footnote{Not always however, as the FDTD method does just that.
 It requires, however, some numerical legwork.} and it is notoriously difficult
 to incorporate boundary conditions naturally in the framework of the Fredholm 
-integral methods \cite{MAR2003}. This leaves us with two choices: the \gls{fdtd}
+integral methods \cite{VAN1991,MAR2003}. This leaves us with two choices: the \gls{fdtd}
 method and the \gls{fem}. The former can deal with arbitrary boundary conditions
 rather easily, but generates a fixed scale mesh \cite{OSK2010}. The latter, by the use of the weak
 form of Maxwell's equations, can easily incorporate any type of boundary conditions
