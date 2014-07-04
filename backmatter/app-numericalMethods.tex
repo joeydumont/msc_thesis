@@ -811,4 +811,77 @@ parts of the kernel.
 
 \section{Lippmann-Schwinger Copmputation of the Scattering Matrix: Vector Case}
 We repeat the procedure of the previous section, but for the complete 3D vector
-field. Similar methods are presented in \cite{deL2013,FAL2013}. 
+field. Similar methods are presented in \cite{deL2013,FAL2013}. As always, 
+our starting point is the couple
+	\begin{align}
+		\nabla\times\bo{E}	& =ik\mu\bo{H}	& \nabla\times\bo{H}	&=-ik\epsilon\bo{E}.
+	\end{align}
+Taking the curl of the first equation and going through the motions, 
+we can obtain the equation
+	\begin{align}
+		\label{eq:app.numMethods.LS.inhomogeneousPDE}
+		\nabla^2\bo{E}+k^2\epsilon_\text{B}\mu_\text{B}\bo{E}	&=	-k^2\mu_\text{B}\Delta\epsilon\bo{E}
+																	+\nabla\left\{\frac{1}{\epsilon_c}\bo{E}\cdot\nabla\epsilon_c\right\}	
+																	+\mu_\text{B}\nabla\times\left(\Delta\mu^{-1}\nabla\times\bo{E}\right)
+	\end{align}
+where $\mu_\text{B}$ and $\epsilon_\text{B}$ are the permeability and permittivity
+of the environment and where the supports of the functions
+	\begin{align}
+		\Delta\epsilon &= \epsilon_c-\epsilon_\text{B}	&	\Delta\mu^{-1}	&=\mu_c^{-1}-\mu_\text{B}^{-1}
+	\end{align}
+are supposed to coincide with the cavity region $\mathcal{C}$, 
+with, now, $\mathcal{C}\subset\mathbb{R}^3$. $\epsilon_c$ 
+and $\mu_c$ are the physical parameters of the cavity 
+region and allowed to be non-linear, position- and frequency-dependent.
+Once again, we have to solve an inhomogeneous partial differential equation.
+We will use the tensorial Green's function\footnote{In the literature, it is called a dyadic 
+Green's function. This nomenclature is archaic and should not be used in 
+modern texts.}, given by \cite{NOV2012}
+	\begin{equation}
+		\mat{G}(\bo{r}',\bo{r}') = -\mat{I}\frac{e^{ikn_\text{B}|\bo{r}-\bo{r}'|}}{4\pi|\bo{r}-\bo{r}'|}.
+	\end{equation}
+where $n_B=\sqrt{\epsilon_B\mu_B}$. We can thus write a formal solution 
+to the scattering problem as
+	\begin{equation}
+		\bo{E}(\bo{r}) = \bo{E}^i(\bo{r})
+						+\mathop{\iiint}_\mathcal{C}\mat{G}(\bo{r},\bo{r}')\left[V(\bo{r}')\bo{E}(\bo{r}')\right]d^3\bo{r}'
+	\end{equation}
+where we have written the r.h.s. of \eqref{eq:app.numMethods.LS.inhomogeneousPDE}
+as the operator
+	\begin{equation}
+		V(\bo{r}) = -k^2\mu_B\Delta\epsilon\left\{\right\}
+					+\nabla\left\{\frac{1}{\epsilon_c}\left\{\right\}\cdot\nabla\epsilon_c\right\}
+					+\mu_B\nabla\times\left(\Delta\mu^{-1}\nabla\times\left\{\right\}\right).
+	\end{equation}
+Once again, this Lippmann-Schwinger equation can be used to compute the scattering tensor
+of the problem. If we use the eigenfunction as the incoming field, we have
+	\begin{equation}
+		\bo{E}(\bo{r}) = j_L(n_Bkr)\bo{Y}^L_{JM}(\theta,\varphi)
+						+\mathop{\iiint}_\mathcal{C}\mat{G}(\bo{r},\bo{r}')\left[V(\bo{r}')\bo{E}(\bo{r}')\right]d^3\bo{r}'
+	\end{equation}
+where the vector spherical harmonics are given by a combination of the
+scalar spherical harmonics
+	\begin{equation}
+		\bo{Y}^\ell_{jm} = \sum_{m'}\sum_{\sigma}C^{jm}_{lm',1\sigma}Y_\ell^{m'}(\theta,\varphi)\bou{e}_\sigma
+	\end{equation}
+where $C^{j_3m_3}_{j_1m_1,j_2m_2}$ are the Clebsch-Gordan coefficients and where
+the $\bou{e}_\sigma$ are the unit vectors of the covariant spherical coordinate system \cite{VAR1988}.
+We will use the expansion
+	\begin{align}
+		\mat{G}(\bo{r},\bo{r}')	&= -ik\sum_{j,\ell,m} j_\ell(n_Bkr_<)h^{(+)}_\ell(n_Bkr_>)
+													\bo{Y}^{\ell}_{jm}(\theta,\varphi)\otimes\bo{Y}^{\ell*}_{jm}(\theta',\varphi').
+	\end{align}
+Using the same technique as before, i.e. substituting the expansion in the integral equation
+for the field outside the \gls{lss} and invoking the definition of the scattering matrix, 
+we obtain
+	\begin{equation}
+		S_{j\ell m,JLM} = \delta_{j\ell m,JLM}
+			-2ik\mathop{\iiint}_\mathcal{C}j_\ell(kn_Br')\bo{Y}^{j*}_{\ell m}V(\bo{r}')\bo{E}(\bo{r}')d^3\bo{r}'.
+	\end{equation}
+To compute the scattering tensor, however, we must necessarily solve an integro-differential equation.
+We will not delve into the subject, as it is beyond the scope of this essay. However, 
+it could be solved via a Galerkin method. 
+
+The curl-curl equation yields a simple integral method when the material
+is non-magnetic, but it seems impossible to recover our simple expression
+for the scattering tensor.

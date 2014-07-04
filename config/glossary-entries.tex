@@ -1,6 +1,5 @@
 % !TeX root = ../msc_thesis_jayd.tex
 \newacronym{sqa}{SQA}{the $\mathbf{S}$- and $\mathbf{Q}$-matrix algorithm}
-\newacronym{lss}{LSS}{last scattering surface}
 \newacronym{salt}{SALT}{steady-state \textit{ab initio} laser theory}
 \newacronym[\glslongpluralkey={asymmetric resonant cavities}]{arc}{ARC}{asymmetric resonant cavity}
 \newacronym[\glslongpluralkey={leaky coax antennae}]{lcx}{LCX}{leaky coax antenna}
@@ -56,7 +55,7 @@
   plural={calibration phases},
   description={Wherein a numerical algorithm is tested against a problem with a%
 		known solution. Oftentimes, convergence properties of the algorithm
-		are determined using this (usually) trivial scenari.}
+		are determined using this (usually) trivial scenario}
 }
 
 \newglossaryentry{gerschgorin}%
@@ -71,6 +70,7 @@
 }
 
 \newglossaryentry{boundaryCondition}{name={Boundary conditions},description={Conditions on the values of the solution and its normal derivative on specific parts of the domain of definition of the solution. They are necessary to make the PDE well-posed and thus uniquely solvable}}
+
 \newglossaryentry{dirichletBC}%
 {%
 	name={Dirichlet},
@@ -95,4 +95,18 @@
 	parent={boundaryCondition}
 }
 
+\newglossaryentry{lss}
+{
+	name={last scattering surface},
+	%text={LSS},
+	description={Fictitious surface that encloses the scattering potential. In quantum scattering,
+					since the potential usually decreases as $r^{-1-\epsilon}$, it is a
+					sphere whose radius tends to infinity. In electromagnetic scattering, 
+					the potential is zero outside the cavity region; the LSS is then 
+					the smallest sphere that encloses the cavity region. The LSS can be 
+					any closed surface, but it is easier to work with spheres, as the differential
+					equations usually separate on this surface}
+	first={last scattering surface},
+	symbol={LSS} 
+}
   
