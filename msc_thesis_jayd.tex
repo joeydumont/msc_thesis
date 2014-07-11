@@ -22,7 +22,8 @@
 \usepackage[bottom,multiple,stable]{footmisc}	% Force les notes de bas de page à être en bas de la page.
 \usepackage{bibentry}\nobibliography*			% Inline bibliographic entries.
 \usepackage[unicode=true,
-	    pdfusetitle,
+	    pdfauthor={Joey Dumont},
+	    pdftitle={On the Modelization of Optical Devices},
 	    bookmarks=true,
 	    bookmarksnumbered=true,
 	    bookmarksopen=true,
@@ -31,8 +32,9 @@
 	    pdfborder={0 0 0},
 	    backref=false,
 	    colorlinks=true,
-	    linkcolor=black,
-	    citecolor=black,
+	    linktoc=page,
+	    linkcolor=red,
+	    citecolor=blue,
 	    urlcolor=blue]
  {hyperref}										% Defines the formatting of the PDF.
 
@@ -61,7 +63,7 @@
 			acronym,
 			section]{glossaries}				% Glossary and indexing capabilities.
 \usepackage{glossary-mcols}
-
+\glsdisablehyper
 % Bibliography package.
 \usepackage[square,
 	    numbers,
