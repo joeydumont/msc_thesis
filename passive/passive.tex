@@ -1,10 +1,14 @@
 % !TeX root = ../msc_thesis_jayd.tex
 \chapter{Passive Media}
 \epigraph{
-The scientist does not study nature because it is useful to do so. He studies
-it because he takes pleasure in it, and he takes pleasure in it because it is
-beautiful. If nature were not beautiful it would not be worth knowing, and
-life would not be worth living.}
+Le savant n'étudie pas la nature parce que cela est utile; il l'étudie parce qu'il y prend plaisir 
+et il y prend plaisir parce qu'elle est belle. Si la nature n'était pas belle, elle ne vaudrait 
+pas la peine d'être connue, la vie ne vaudrait pas la peine d'être vécue. 
+%Je ne parle pas ici, bien entendu, de cette beauté qui frappe les sens, 
+%de la beauté des qualités et des apparences; non que j'en fasse fi, loin de là, 
+%mais elle n'a rien à faire avec la science; je veux parler de cette beauté plus 
+%intime qui vient de l'ordre harmonieux des parties, et qu'une intelligence pure peut saisir.
+}
 {Henri Poincaré, Science et méthode, 1908.}
 
 This chapter is devoted to the study of light propagation in 
@@ -14,8 +18,8 @@ the wave behaviour in cavities having spatially-varying
 refractive index profiles (henceforth referred to as 
 \textit{inhomogeneous cavities}). This set of reduced equations
 serves as the basis for a semi-analytical solution method 
-that uses the quantum machinery of the \gls{sMatrix}
-and its associated \gls{qMatrix} to yield information
+that uses the quantum machinery of the scattering matrix \gls{sMatrix}
+and its associated \gls{qMatrix} ($\mat{Q}$-matrix) to yield information
 about the cavity modes. The numerical implementation of the
 method is discussed and and is then demonstrated for a selected
 set of microcavities. 
@@ -41,8 +45,8 @@ the magnetic field, $\bo{B}$ the magnetic induction and where
 $\bo{j}$ and $\rho$ are the current and charge densities, respectively. 
 The distinction between a source current, $\bo{j}_s$ and an induced conduction
 current, $\bo{j}_c$, is arbitrary but will prove conceptually useful when dealing
-with radiating structures (see next chapter).
-In this thesis, we will generally take $\rho=0$ and $\bo{j}_s=\bo{0}$
+with radiating structures.
+In this essay, we will generally take $\rho=0$ and $\bo{j}_s=\bo{0}$
 as there will be no physical charges/currents in our problems.
 
 This very general set of equations does not make any assumption on the 
@@ -91,7 +95,7 @@ us to write the constitutive relations in the much simpler form
   \end{align}
   \end{subequations}
 \index{constitutive relations|)}
-where the integration limits follow the causality requirement.
+\noindent where the integration limits follow from the causality requirement.
 Substituting these results into the Maxwell equations and 
 and using the Fourier transform\index{Fourier transform} yields the set\footnote{Notice that, in our system of units, $\omega=k$ and thus
 we will make use of frequency and wavenumber interchangeably.
@@ -132,8 +136,8 @@ for the electromagnetic field in an infinitely long
 dielectric cylinder of arbitrary cross-section and arbitrary
 physical parameters $\epsilon$ and $\mu$. There is no gain medium.
 Consequently, $\bo{P}^{NL}=\bo{K}=\Sigma\equiv0$ in our previous equations.
-We also require translational symmetry, i.e. that there exist no parametric dependence
-on $z$.
+We also require longitudinal symmetry, i.e. that the geometry and 
+physical parameters do not depend on $z$. 
 
 \begin{figure}
  \centering
@@ -286,26 +290,26 @@ world and the quantum world. Specifically, the scalar version of
 Maxwell's equations, the Helmholtz equations above, can be written 
 as a Schrödinger equation
 	\begin{equation}
-		\left[\nabla^2+k^2\right]\psi = k^2\left(1-n^2(r,\theta)\right)\psi - V(\bo{r})
+		\left[\nabla^2+k^2\right]\psi = k^2\left(n_0^2-n_c^2(r,\theta)\right)\psi - V(\bo{r})
 	\end{equation}
 where $V(\boldsymbol{r})$  is the additional potential term just mentioned.
 If the r.h.s. is such that equation is amenable to a solution by 
 separation of variables, one obtains a radial potential of the form
 	\begin{equation}
-		V_\text{eff}(r) = k^2(1-n^2(r))+\frac{m^2-1/4}{r^2}-V(r).
+		V_\text{eff}(r) = k^2(n_0^2-n_c^2(r))+\frac{m^2-1/4}{r^2}-V(r).
 	\end{equation}
 For instance, the homogeneous, circular cavity yields a
-potential as seen in Figure \ref{fig:passive.formalism.quantumConnection}. 
+potential as seen in Fig. \ref{fig:passive.formalism.quantumConnection}. 
 The jump at the boundary allows the existence of quasi-bound (QB) states\index{quasi-bound states} inside
 the cavity, as opposed to bound states, as the light can tunnel outside the
 potential barrier.
 
-It is worth mentioning that the TM polarization behaves exactly has a 
-quantum wavefunction does, the field and its normal derivative being
-continuous at the interface, while the TE polarization is akin to 
-a sonorous vibrations, as they may also obey ``jump'' conditions
+It is worth mentioning that the TM polarized waves behave exactly as 
+quantum wavefunctions do, the field and its normal derivative being
+continuous at the interface, while the TE waves are akin to 
+sonorous vibrations, as they may also obey ``jump'' conditions
 at an interface \cite{COL2013}. Because of this, the TM polarization
-is more present in the microcavities literature than the TE polarization.
+is more present in the microcavities literature than the TE one.
 
 \begin{figure}
 	\centering
@@ -330,9 +334,10 @@ is more present in the microcavities literature than the TE polarization.
 
 We now return to the solution of the differential equations. 
 We will adopt a scattering viewpoint. 
-Imagine that the dielectric cavity is embedded in an infinite
+Imagine that the dielectric cavity with boundary $\mathcal{C}$
+an refractive index profile $n_c=n_c(r,\theta)$ inside $\mathcal{C}$ is embedded in an infinite
 medium of constant refractive index  $n_o=\sqrt{\epsilon\mu}$, 
-as seen in Figure \ref{fig:passive.formalism.geometry}. 
+as seen in Fig. \ref{fig:passive.formalism.geometry}. 
 Outside the cavity, $\bo{r}\not\in{\mathcal{C}}$, 
 the r.h.s. of \eqref{eq:passive.formalism.fieldEquations} vanish. 
 We call the surface that bounds the support of the function 
@@ -349,7 +354,7 @@ have incoming/outgoing cylindrical wave character,
 $H_m^{(\pm)}\propto \exp(\pm ikr)/\sqrt{r}$, thus ensuring that
 the Sommerfeld radiation condition\index{Sommerfeld radiation condition} is fulfilled. The scattering
 viewpoint essentially describes the relationship between the 
-outgoing coefficients, $B_m$, and the incoming coefficients, $A_m$
+outgoing coefficients, $B_m$, and the incoming coefficients, $A_m$,
 via the \textit{scattering matrix}\index{scattering matrix}
   \begin{equation}
   	\label{eq:passive.formalism.defSmatrix}
@@ -367,16 +372,16 @@ be written as
   \end{equation}
 where we have written $S_{mm}=e^{i\delta_m}$ with $\delta_m\in\mathbb{R}$ 
 as per the unitarity condition. The non-diagonal
-generalization $S_{mm'}$ describes the coupling between angular
-momenta $m\rightarrow m'$ and can be interpreted as a transition
-probability.
+elements $S_{mm'}$ describe the coupling between angular
+momenta $m\rightarrow m'$ and can be interpreted as transition
+probabilities.
 
 When the \gls{sMatrix} is defined by the pair \eqref{eq:passive.formalism.hankelSolution}
 and \eqref{eq:passive.formalism.defSmatrix}, it contains all near- and
 far-field information. This is sharp contrast with the usual quantum 
 scattering matrix, which is usually defined for a \gls{lss} having 
 $r\rightarrow\infty$, i.e. in the far-field \cite{ROD1967,JOA1975,NEW1982}. In the scattering off dielectric structures, the potential 
-$1-n^2$ has compact support in $\mathbb{R}^d$ and the \gls{lss} is taken to be 
+$n_0^2-n_c^2$ has compact support in $\mathbb{R}^d$ and the \gls{lss} is taken to be 
 a $(d-1)$-sphere containing the support of the potential.
 
 In most applications (see the Introduction), we wish to find the \textit{resonances} of the
@@ -400,7 +405,7 @@ for the poles of the \gls{sMatrix}. The solutions to this equation
 are known as QB states\index{quasi-bound states} as their intensity is usually larger
 in the vicinity of the cavity and, contrary to their truly bound counterparts, 
 have a small but non-zero value outside it. The ever so slowly decaying wavefunction
-is thus non-normalizable (i.e. $\psi\notin L^2$). In this formulation, the field
+is thus non-normalizable (i.e. $\psi\notin L^2$). In this formulation, the field even
 has the following non-physical behaviour in the far-field
   \begin{align*}
    \psi_\text{FF}(\bo{r},t) 			&= \psi(\bo{r})e^{-i\omega t}	\\
@@ -447,14 +452,14 @@ We form the energy matrix
 We will carry out the rest of the computation for the TM mode ($H_z=E_r=E_\theta=0$);
 the argument holds for TE polarization \textit{mutatis mutandis} because of the
 $k$-independence of the additional potential term in \eqref{eq:passive.formalism.TEequationPrime}
-and also because $\bo{h}\propto\bo{H}$ for $r>R_0$. We thus have 
+and also because $\bo{h}\propto\bo{H}$ outside the \gls{lss}. We thus have 
   \begin{align*}
     \bo{E}	&= \psi\bou{z}	\\
     \bo{H}	&= \frac{1}{ik}\nabla\times\bo{E}
   \end{align*}
 and the energy matrix becomes
 \begin{align}
-    \mathcal{E}^V_{mm'}	&= \frac{1}{2}\mathop{\iiint}_V\left[\epsilon\psi^*_{m}\psi_{m'}+\frac{1}{k^2}\left(\nabla\times\psi_{m}\bo{\hat{z}}\right)\cdot\left(\nabla\times\psi^*_{m'}\bo{\hat{z}}\right)\right]d^3\bo{r}.	\nonumber\\
+    \mathcal{E}^V_{mm'}	&= \frac{1}{2}\mathop{\iiint}_V\left[n^2\psi^*_{m}\psi_{m'}+\frac{1}{k^2}\left(\nabla\times\psi_{m}\bo{\hat{z}}\right)\cdot\left(\nabla\times\psi^*_{m'}\bo{\hat{z}}\right)\right]d^3\bo{r}.	\nonumber\\
   \end{align}
 Taking the parametric derivative of Helmholtz' equation, we get the 
 following relations
@@ -544,10 +549,10 @@ as the proper generalization. This form was also used by Smith in
 It is possible to arrive at this result with our derivation, but
 with the extra term
 	\begin{equation}
-		-ik\mathop{\iint}_\mathcal{C}\Im{\epsilon(r,\theta)}\psi_m^*\frac{\partial\psi_{m'}}{\partial k}d^2\bo{r}
+		-ik\mathop{\iint}_\mathcal{C}\Im{n^2(r,\theta)}\psi_m^*\frac{\partial\psi_{m'}}{\partial k}d^2\bo{r}
 	\end{equation}
 where $\mathcal{C}$ is the cavity region and the support of 
-$\Im{\epsilon(r,\theta)}$. A similar result was obtained in 
+$\Im{n^2(r,\theta)}$. A similar result was obtained in 
 \cite{MAR1975} where it was shown that this augmented \gls{qMatrix}
 shares some properties of the Wigner-Smith time-delay matrix 
 \eqref{eq:passive.formalism.qMatrixDef}. We will derive some of
@@ -575,7 +580,7 @@ we can obtain the relation
     \mat{S}^{-1}(n^*,k^*) = \mat{S}^\dagger(n,k)
   \end{equation}
 which reduces to the unitarity condition when 
-the values are real. 
+$n$ and $k$ are real. 
 
 \begin{figure}
  \centering
@@ -633,7 +638,7 @@ where
   \end{equation}
 Notice that this unitary expansion on the basis of the resonance
 channels contains the mirror-symmetry of the poles and zeros of the 
-scattering matrix. Figure \ref{fig:passive.formalism.symmetrySmatrix}
+scattering matrix. Fig. \ref{fig:passive.formalism.symmetrySmatrix}
 shows this symmetry in the case of the scattering matrix of the circular
 disk. 
 
@@ -655,13 +660,13 @@ phase factor such that
 	\begin{equation}
 		\left[\psi^p_\text{in}\right]^* = e^{-i\theta_p}\psi^p_\text{out}.
 	\end{equation}
-An interaction with a general potential changes the combination
+In general, interaction with a potential changes the combination
 of angular momenta of the incoming field (essentially the coefficients
 of the Fourier-Bessel expansion, in our case) to a different one, 
 forming a distinct outgoing field. The eigenvectors of the \gls{qMatrix}
 form \textit{self-replicating modes}, as the interaction with the cavity
-leave the angular momentum distribution unchanged and only phase shifts
-the incoming wave. In turn, the energy derivative of this phase shift
+leave the angular momentum distribution unchanged (up to a phase shift). 
+In turn, the energy derivative of this phase shift
 gives information about the time-delay\index{time-delay} introduced 
 by the interaction in the form of \eqref{eq:passive.formalism.lorentzianDelays}.
 
@@ -683,6 +688,24 @@ interpreted as the resonances of the cavity, and that the complex positions
 yield information about the lifetimes of those resonances. Taking everything
 into consideration, it seems that, for complex potentials, it is easier to 
 work directly with the scattering matrix than to deal with the \gls{qMatrix}.
+
+In short, we have used a scattering formalism to solve the differential 
+equations governing the behaviour of bidimensional deilectric cavities. 
+It was shown that the poles of the scattering matrix, which lie in the 
+complex $k$-plane for real potentials, correspond to the resonances
+of the structures. Finding the resonances is of vital importance, as
+they form the backbone of the impulse response of the cavities. 
+Instead of directly computing these poles, we use the time-delay matrix
+to find the signatures of the poles onto the real $k$-line. The spectrum
+of this matrix is composed of a superposition of Lorentzian curves
+and the maxima of these curves, of which there is a countably finite number, 
+correspond to the poles of the scattering matrix. The eigenvectors of the 
+time-delay matrix define the modes of the cavity as a set of 
+\textit{self-replicating modes}. The use of this matrix 
+in the general case (when the potential is complex) is complicated
+by a number of factors, most notably the sudden and major change to the
+pole structure of the scattering matrix. We thus conclude that, in this case, 
+it is best to directly compute the poles of the scattering matrix.
 
 \section{Numerical Method I: SQA}
 The numerical computation of the scattering matrix 
@@ -734,10 +757,13 @@ the outer and inner limits of the domains, respectively. Moreover, $r_{N+1}-r_N=
 As our first approximation, we suppose that the refractive index
 inside the inner circle is constant and call it $n_\text{in}$. The Helmholtz equation then merely
 becomes the Bessel equation \eqref{eq:app.Bessel.diffEquation}. Enforcing
-finiteness of the field at $r=0$, we have the solution
+finiteness of the field at $r=0$, we have the solution\footnote{Even though all summations
+are formally infinite, we will truncate them to a maximum momentum $M$ in the numerical
+implementation. The summations will thus contain $2M+1$ terms and will run from $m=-M$ to 
+$m=M$.}
   \begin{equation}
   	\label{eq:passive.formalism.innerCircleSoln}
-   \Ket{\psi(r)} = \sum_{m}2a_m^0J_m(n_\text{in}kr)\Ket{\Phi_m^0}	\qquad (r<r_0)
+   \Ket{\psi(r)} = \sum_{m=-\infty}^\infty2a_m^0J_m(n_\text{in}kr)\Ket{\Phi_m^0}	\qquad (r<r_0)
   \end{equation}
 where we have introduced bra-ket notation for the angular part of the 
 solution. In that case, 
@@ -848,9 +874,8 @@ we thus came across two potential problems: the inversion of the
 $\mat{K}$ matrix (defined below) and the final Hadamard product
 $\mathcal{H}\circ\mat{S}^{0,N}_{22}$. We analyze the two issues
 and provide solutions to the instabilities they cause. We also 
-calibrate the method with systems whose analytical solution
-is known: the homogeneous circular cavity and the annular cavity.
-We also compare our method to results obtained in the literature. 
+calibrate the method with the homogeneous circular cavity and 
+also compare our method to results obtained in the literature. 
 
 \subsubsection{Numerical Back and Forth}
 For the computation of each $\mat{S}_j$, we must invert
@@ -914,7 +939,7 @@ of square matrices by simply examining its entries.
     \label{eq:passive.numerical.exampleMatrixGerschgorin}
     \mat{A} = \begin{pmatrix} 5 & 1 & 1 \\ 0 & 6 & 1 \\ 1 & 0 & -5 \end{pmatrix}.
   \end{equation}
-  Its associated Gerschgorin circles are shown in Figure \ref{fig:passive.numerical.gerschgorinCircles}. 
+  Its associated Gerschgorin circles are shown in Fig. \ref{fig:passive.numerical.gerschgorinCircles}. 
   We see that the row and column circles give different bounds on the eigenvalues and their intersection 
   yields the best possible approximations for the eigenvalues. 
 \end{exmp}
@@ -960,18 +985,18 @@ Fourier coefficients \cite{JAC1920}
   \begin{equation}
    |n_m| \leq \frac{V}{2m\pi}
   \end{equation}
-where $V$ is the variation of the refractive index and is define as
+where $V$ is the variation of the refractive index and is defined as
   \begin{equation}
    V(r) = \int_0^{2\pi}\left|\partial_\theta n^2(r,\theta)\right|d\theta.
   \end{equation}
 To go further, we must realize the mixed blessing of the logarithmic
 divergence of the harmonic series\footnote{A better bound could be obtained, but requires conditions
-on the behaviour $n^2(r,\theta)$ that the author is not comfortable assuming.}. We estimate the radius
+on the behaviour of $n^2(r,\theta)$ that the author is not comfortable assuming.}. We estimate the radius
 of the Gerschgorin circle by taking $M=500$, an arbitrary bound
-that is unattainable by our algorithm\footnote{The Bessel functions overflow our floating representation at approximately $M\sim250$,
-rendering the algorithm useless.}
+that is unattainable by our algorithm\footnote{The Bessel functions overflow the \texttt{double} floating-point 
+representation at approximately $M\sim250$, rendering the algorithm useless.}
 such that the upper bound for the radius becomes $r\leq 3V/\pi$. Taking the annular
-cavity as an example, the variation is approximately given by 
+cavity, a circular cavity of constant refractive index of which a circular hole as been cut \cite{HEN2002b}, as an example, the variation is approximately given by 
 $2n^2$. Pulling everything together, this yields an approximate upper
 bound for the largest eigenvalue as
   \begin{equation}
