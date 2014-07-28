@@ -6,21 +6,45 @@
 
 % -- Loading packages.
 % Math symbols and such.
-\usepackage{amsthm,amsmath,amssymb}				% Math symbols and commands.
-\usepackage{units}								% Typographie des unités dans les équations.
-\usepackage{braket}								% Braket notation.
-\usepackage{mathdots}							% Better rendering of dots in math mode. 
+\usepackage{amsthm,amsmath,amssymb}   % Math symbols and commands.
+\usepackage{units}								    % Typographie des unités dans les équations.
+\usepackage{braket}								    % Braket notation.
+\usepackage{mathdots}							    % Better rendering of dots in math mode. 
 
 % Font packages.
-\usepackage[charter]{mathdesign}				% Font package (including math font).
+\usepackage[charter]{mathdesign}			% Font package (including math font).
 \usepackage[utf8]{inputenc}						% UTF8 encoding for accents.
-\usepackage[T1]{fontenc}						% Vectorial fonts.
-\renewcommand*\sfdefault{lmss}					% Latin Modern Sans Serif as default sans serif font
+\usepackage[T1]{fontenc}						  % Vectorial fonts.
+\renewcommand*\sfdefault{lmss}				% Latin Modern Sans Serif as default sans serif font
 
 % Style and PDF formatting options.
-\usepackage[compact,sf]{titlesec}				% Use sans serif fonts in section headings.
-\usepackage[bottom,multiple,stable]{footmisc}	% Force les notes de bas de page à être en bas de la page.
-\usepackage{bibentry}\nobibliography*			% Inline bibliographic entries.
+\usepackage[compact,sf]{titlesec}			% Use sans serif fonts in section headings.
+\usepackage[bottom,
+            multiple,
+            stable]
+            {footmisc}	              % Force les notes de bas de page à être en bas de la page.
+            
+\usepackage[switch,mathlines,displaymath]{lineno}
+% % CAN BE REMOVED WITH LINENUMBERS
+\newcommand*\patchAmsMathEnvironmentForLineno[1]{%
+ \expandafter\let\csname old#1\expandafter\endcsname\csname #1\endcsname
+ \expandafter\let\csname oldend#1\expandafter\endcsname\csname end#1\endcsname
+ \renewenvironment{#1}%
+    {\linenomath\csname old#1\endcsname}%
+    {\csname oldend#1\endcsname\endlinenomath}}% 
+\newcommand*\patchBothAmsMathEnvironmentsForLineno[1]{%
+ \patchAmsMathEnvironmentForLineno{#1}%
+ \patchAmsMathEnvironmentForLineno{#1*}}%
+\AtBeginDocument{%
+\patchBothAmsMathEnvironmentsForLineno{equation}%
+\patchBothAmsMathEnvironmentsForLineno{align}%
+\patchBothAmsMathEnvironmentsForLineno{flalign}%
+\patchBothAmsMathEnvironmentsForLineno{alignat}%
+\patchBothAmsMathEnvironmentsForLineno{gather}%
+\patchBothAmsMathEnvironmentsForLineno{multline}%
+}
+\linenumbers
+\usepackage{bibentry}\nobibliography*	% Inline bibliographic entries.
 \usepackage[unicode=true,
 	    pdfauthor={Joey Dumont},
 	    pdftitle={On the Modelization of Optical Devices},
@@ -36,17 +60,18 @@
 	    linkcolor=red,
 	    citecolor=blue,
 	    urlcolor=blue]
- {hyperref}										% Defines the formatting of the PDF.
+ {hyperref}										        % Defines the formatting of the PDF.
 
 % Custom environments
-\usepackage[ruled,vlined]{algorithm2e}			% Used to typeset pseudocode
-\usepackage{tabularx}							% Tools to format tables.
-\usepackage{multirow}							% More tools to format tables.
-\usepackage{dcolumn}							% Allows novel formatting for columns of tables, e.g. aligning numbers with decimal point.
-\usepackage{tikz}								% Drawing program. 
-\usepackage[customcolors]{hf-tikz}				% Extension of TikZ to highlight formulas and formula parts.
-\usepackage[labelformat=simple]{subcaption}		% Manages subfigure, subtables and subcaption environements.
-\usepackage{parnotes}							% Notes in tables.
+\usepackage[ruled,vlined]{algorithm2e}% Used to typeset pseudocode
+\usepackage{tabularx}							    % Tools to format tables.
+\usepackage{multirow}							    % More tools to format tables.
+\usepackage{dcolumn}							    % Allows novel formatting for columns of tables, e.g. aligning numbers with decimal point.
+\usepackage{tikz}								      % Drawing program.
+\usepackage[customcolors]{hf-tikz}		% Extension of TikZ to highlight formulas and formula parts.
+\usepackage[labelformat=simple]
+            {subcaption}		          % Manages subfigure, subtables and subcaption environements.
+\usepackage{parnotes}							    % Notes in tables.
 
 % Configuration of subcaptions.
 \renewcommand\thesubfigure{(\alph{subfigure})}
