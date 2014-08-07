@@ -15,7 +15,7 @@ We wish to solve Helmholtz's equation
 where we write the exterior solution ($\bo{r}\notin\mathcal{C}$) as $\ket{\psi}=\ket{\psi^\text{inc}}+\ket{\psi^\text{sca}}$
 and the interior solution as $\ket{\psi}=\ket{\psi^i}$. The potential operator has the form
 	\begin{equation*}
-		V(\bo{r}) = \frac{2}{n}\nabla n\cdot\nabla\{\}
+		V(\bo{r})\{\} = \frac{2}{n}\nabla n\cdot\nabla\{\}
 	\end{equation*}
 in TE polarization, but vanishes in the TM one. Together with the transmission conditions
 	\begin{align}
@@ -23,14 +23,14 @@ in TE polarization, but vanishes in the TM one. Together with the transmission c
 		\eta_c^2\frac{d\ket{\psi^i}}{dn}	& = \eta_o^2\frac{d}{dn}\left(\ket{\psi^\text{inc}}+\ket{\psi^\text{sca}}\right) &\bo{r}\in\partial\mathcal{C},
 	\end{align}
 	\end{subequations}
-where $\eta_i = 1\,(1/n_i^)$ in the TM (or TE) polarization, 
+where $\eta_i = 1\,(1/n_i)$ in the TM (or TE) polarization, 
 these equations form the general scattering problem for 2D microcavities. 
 
 The scattering matrix depends on the various parameters defined above. The environment
 is considered to be infinite and featureless, i.e. $\mathcal{C}^c=\mathbb{R}^2$ and 
 $n_0$ is a constant. The cavity region, $\mathcal{C}$, can be any bounded, connected set
 (or a collection of such sets) and endowed with a refractive index $n_c=n_c(r,\theta)$, 
-which is allowed to a function of position and frequency. The support of the function 
+which is allowed to be a function of position and frequency. The support of the function 
 $n_o^2-n_c^2$ coincides with the cavity region $\mathcal{C}$. The scattering operator 
 is defined by the relationship
 	\begin{equation}
@@ -79,10 +79,10 @@ For the TE polarization, the pair is
 	\end{subequations}
 The substitution of the expansion 
 	\begin{equation}
-		\Braket{\theta|\Phi_\mu^j} = \frac{1}{\sqrt{2\pi}}\sum_{m=-\infty}^\infty c^j_{m\mu}e^{im\theta}
+		\Braket{\theta|\Phi_\mu^j} = \frac{1}{\sqrt{2\pi}}\sum_{m=-\infty}^\infty c^j_{\mu m}e^{im\theta}
 	\end{equation}
 in both angular equations yields an eigenvalue problem for the separation constants $\xi^j$ and the 
-expansion coefficients $c^j_{m\mu}$ of the form
+expansion coefficients $c^j_{\mu m}$ of the form
 	\begin{equation}
 		\mat{L}^j_\text{\{TE,TM\}}\bo{c}^j_\mu = \xi^j_\mu\bo{c}^j_\mu
 	\end{equation}
@@ -646,7 +646,7 @@ $\delta(\bo{r}-\bo{r}')$ a Dirac delta function, used to model
 a point source. To solve the equation, we must enforce Sommerfeld's
 radiation condition. The well-known solution is \cite{GAG2012} is
 	\begin{equation}
-		G_\omega(\bo{r}-\bo{r}') = -\frac{i}{4}H_0^{(\omega)}(kn_0|\bo{r}-\bo{r}').
+		G_\omega(\bo{r}-\bo{r}') = -\frac{i}{4}H_0^{(\omega)}(kn_0|\bo{r}-\bo{r}'|).
 	\end{equation}
 Because we deal with outgoing waves at infinity, we take $G=G_+$. 
 Multiplying \eqref{eq:app.numMethods.greenFunctionEqn} by $\psi$, 
@@ -674,7 +674,7 @@ need to use the partial wave expansion of Green's function, given by
 \cite{ECO2006}
 	\begin{equation}
 		\label{eq:app.numMethods.eigenbasisExpansionGreen}
-		G(\bo{r},\bo{r}') = -\frac{i}{4}H_0^{(+)}(kn_0|\bo{r}-\bo{r}') = -\frac{i}{4}\sum_m J_m(kn_0r_<)H_m^{(+)}(kn_0r_>)e^{im(\theta-\theta')}
+		G(\bo{r},\bo{r}') = -\frac{i}{4}H_0^{(+)}(kn_0|\bo{r}-\bo{r}'|) = -\frac{i}{4}\sum_m J_m(kn_0r_<)H_m^{(+)}(kn_0r_>)e^{im(\theta-\theta')}
 	\end{equation}
 where $r_<=\min(|\bo{r}|,|\bo{r}'|)$ and $r_>=\max(|\bo{r}|,|\bo{r}'|)$.
 We can now write an equation for the field outside the \gls{lss} (where
@@ -693,12 +693,12 @@ $r_>=r$ outside the \gls{lss}. We can rewrite this as
 	\end{multline}
 We can now invoke the definition of the \gls{sMatrix}
 	\begin{equation}
-		2\psi(\bo{r}) = H_M^{(-)}(kn_0r)e^{iM\theta}+\sum_m S_{mM}(k)H_m^{(+)}(kn_0r)e^{im\theta}.
+		2\psi(\bo{r}) = H_M^{(-)}(kn_0r)e^{iM\theta}+\sum_m S_{Mm}(k)H_m^{(+)}(kn_0r)e^{im\theta}.
 	\end{equation}
 We can now ``read off'' the elements of the \gls{sMatrix}
 from the previous equation as
 	\begin{equation}
-		S_{mM} = \delta_{mM}-\frac{ik^2}{2}\mathop{\iint}_\mathcal{C}J_m(kn_0r')e^{-im\theta'}\Delta n^2(\bo{r}')\psi(\bo{r}')d^2\bo{r}'.
+		S_{Mm} = \delta_{Mm}-\frac{ik^2}{2}\mathop{\iint}_\mathcal{C}J_m(kn_0r')e^{-im\theta'}\Delta n^2(\bo{r}')\psi(\bo{r}')d^2\bo{r}'.
 	\end{equation}
 
 \subsection{Numerical Solution}
@@ -707,7 +707,7 @@ However, since we are mostly interested in linear scatterers, we will turn the i
 into a system of linear equations\footnote{We could also use the eigenbasis expansion
 of the Green's function \eqref{eq:app.numMethods.eigenbasisExpansionGreen} and of
 the field and solve for the eigenmodes. This proves to be unstable, however, and
-difficult to generalize in the 3D cylindrical coordinates \cite{BEN1968}.}
+difficult to generalize in the 3D cylindrical coordinates \cite{BEN1968}.}.
 
 To do so, we must mesh the cavity region $\mathcal{C}$. We use a simple Delaunay triangulation, 
 with points distributed uniformly in the area of $\mathcal{C}$. We then suppose that the field
@@ -760,7 +760,7 @@ and compute the elements of the scattering matrix.
 
 Figures \ref{fig:app.numMethods.fields} shows the field intensity
 inside the cavity when $\phi(\bo{r})=J_0(kn_0r)$, i.e. the only
-eigenfunction with vanishing angular momentum. We see that field
+eigenfunction with vanishing angular momentum. We see that the field
 maintains its main features when a finer mesh is used, indicative
 of the convergence of the method. 
 
@@ -809,7 +809,7 @@ parts of the kernel.
 	\label{fig:app.numMethods.convergenceIntegralMethod}
 \end{figure}
 
-\section{Lippmann-Schwinger Copmputation of the Scattering Matrix: Vector Case}
+\section{Lippmann-Schwinger Computation of the Scattering Matrix: Vector Case}
 We repeat the procedure of the previous section, but for the complete 3D vector
 field. Similar methods are presented in \cite{deL2013,FAL2013}. As always, 
 our starting point is the couple
@@ -849,7 +849,7 @@ to the scattering problem as
 where we have written the r.h.s. of \eqref{eq:app.numMethods.LS.inhomogeneousPDE}
 as the operator
 	\begin{equation}
-		V(\bo{r}) = -k^2\mu_B\Delta\epsilon\left\{\right\}
+		V(\bo{r})\{\} = -k^2\mu_B\Delta\epsilon\left\{\right\}
 					+\nabla\left\{\frac{1}{\epsilon_c}\left\{\right\}\cdot\nabla\epsilon_c\right\}
 					+\mu_B\nabla\times\left(\Delta\mu^{-1}\nabla\times\left\{\right\}\right).
 	\end{equation}

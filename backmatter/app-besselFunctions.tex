@@ -31,7 +31,7 @@ via Fröbenius' method, it yields the solution
    \label{eq:app.Bessel.seriesJ}
    J_\nu(z) = \sum_{k=0}^\infty \frac{(-1)^k\left(\frac{1}{2}z\right)^{\nu+2k}}{k!\Gamma(\nu+k+1)}.
   \end{equation}
-This is the Bessel function of the first kind. A second, linearly independant
+This is the Bessel function of the first kind. A second, linearly independent
 is defined by
   \begin{equation}
    Y_\nu(z) = \frac{J_\nu(z)\cos\pi\nu-J_{-\nu}(z)}{\sin\pi\nu}
@@ -59,6 +59,7 @@ recurrence relations that the whole family of Bessel functions
 obey. If $\mathcal{C}$ denotes $J$, $Y$, $H^{(\pm)}$ or any 
 linear combination of the four functions, we have
   \begin{subequations}
+   \label{eq:app.Bessel.recurrence}
   \begin{align}
    \mathcal{C}_{\nu-1}(z)+\mathcal{C}_{\nu+1}(z)		&= \frac{2\nu}{z}\mathcal{C}_\nu(z)	\label{eq:app.Bessel.recurrenceBessel}\\
    \mathcal{C}_{\nu-1}(z)-\mathcal{C}_{\nu+1}(z)		&= 2\mathcal{C}_\nu'(z)			\label{eq:app.Bessel.recurrenceDiffBessel}\\
@@ -67,7 +68,7 @@ linear combination of the four functions, we have
   \end{align}
   \end{subequations}
 However, the minimal solution to these recurrence relations is 
-$J_\nu(z)$, so any attempt at numerically evaluating $Y$ or $H_\nu^{(\pm)}$
+$J_\nu(z)$, so any attempt at numerically evaluating $Y_\nu$ or $H_\nu^{(\pm)}$
 using these is foiled (see \S\ref{sec:app.numTools.logDeriv} for details). 
 
 \subsection{Relations between Solutions}
@@ -122,7 +123,7 @@ is the digamma function. The cases $n=0$ and $n\neq0$ differ
    Y_n(z)	&= -\frac{(n-1)!}{\pi}\left(\frac{z}{2}\right)^{-n} +\mathcal{O}(z^{-n+2}).
   \end{align}
 
-The expansions of the Hankel functions is found by using 
+The expansions of the Hankel functions are found by using 
 their definition \eqref{eq:app.Bessel.hankelDef}:
   \begin{align}
    H_0^{(\omega)}(z)	&=1+\frac{2i\omega}{\pi}\left(\ln\frac{z}{2}+\gamma\right)+\mathcal{O}(z^2)	\\

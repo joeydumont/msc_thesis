@@ -153,7 +153,7 @@ physical parameters do not depend on $z$.
 
 To this effect, it will be useful to separate the field 
 in transverse and longitudinal components. Following \cite{JAC1962,SCH2004b}, 
-we suppose the fields can be written as 
+we suppose that the fields can be written as 
   \begin{equation}
     \begin{Bmatrix}\bo{E}(\bo{r}_\perp,z)\\\bo{H}(\bo{r}_\perp,z)\end{Bmatrix} = \begin{Bmatrix}\bo{E}(\bo{r}_\perp)\\\bo{H}(\bo{r}_\perp)\end{Bmatrix}e^{i\beta z}
   \end{equation}
@@ -409,13 +409,13 @@ is thus non-normalizable (i.e. $\psi\notin L^2$). In this formulation, the field
 has the following non-physical behaviour in the far-field
   \begin{align*}
    \psi_\text{FF}(\bo{r},t) 			&= \psi(\bo{r})e^{-i\omega t}	\\
-						&\propto \exp\left[i(k'-ik'')r\right]\exp\left[-ic(k'-ik'')t\right]\exp[im\theta]	\\
-   \left|\psi_\text{FF}(\bo{r},t)\right|^2 	&\propto e^{2k''r}e^{-2ck''t} 
+						&\propto \exp\left[i(k'-ik'')r\right]\exp\left[-i(k'-ik'')t\right]\exp[im\theta]	\\
+   \left|\psi_\text{FF}(\bo{r},t)\right|^2 	&\propto e^{2k''r}e^{-2k''t} 
   \end{align*}
 where $k=k'-ik''$. The field thus exponentially increases with $r$, 
 but exponentially \textit{decreases} with $t$. We can see, however, 
 that the time scale of the exponential decrease is linked to the
-imaginary part of the wavenumber by $\tau=\left(2ck''\right)^{-1}$.
+imaginary part of the wavenumber by $\tau=\left(2k''\right)^{-1}$.
 We will use this relationship later in this essay.
 
 It is interesting to note that the kind of resonances\index{resonance} supported
@@ -723,7 +723,7 @@ For easier reference, we dub the method \gls{sqa}.
 	 have a constant refractive index denoted $n_\text{in}$. The full grey lines represent
 	 the physical boundaries of each shell while the dotted blue lines represent their
 	 center. \textbf{(a)} The central radius $r_j$ is the radial position at which the 
-	 refractive index is sampled. Theh boundary conditions are enforced at $r=r_j\pm\epsilon$.
+	 refractive index is sampled. The boundary conditions are enforced at $r=r_j\pm\epsilon$.
 	 \textbf{(b)} Note the alternating propagation directions of the solutions inside each shell.
 	 This reflects the local definition of ``incoming'' vs ``outgoing waves'' for each $r_j$.}
   \label{fig:passive.numerical.radialDiscretization}
@@ -790,7 +790,7 @@ These equations can readily be solved by noticing that
 $\Phi^j(\theta+2\pi)=\Phi^j(\theta)$. We expand the solution
 in a Fourier series
   \begin{equation}
-   \Braket{\theta|\Phi_\mu^j} = \frac{1}{\sqrt{2\pi}}\sum_{m=-\infty}^\infty c_{m\mu}^je^{im\theta}
+   \Braket{\theta|\Phi_\mu^j} = \frac{1}{\sqrt{2\pi}}\sum_{m=-\infty}^\infty c_{\mu m}^je^{im\theta}
   \end{equation}
 Projecting onto $\Ket{\Phi_m'^0}$ yields
 \begin{equation}
@@ -798,11 +798,11 @@ Projecting onto $\Ket{\Phi_m'^0}$ yields
   \end{equation}
 Noticing that 
   \begin{equation}
-    \Braket{\Phi_{m'}^0|\Phi_{m}^j} = \sum_{m=-\infty}^\infty c_{m\mu}^j \delta_{mm'}
+    \Braket{\Phi_{m'}^0|\Phi_{m}^j} = \sum_{m=-\infty}^\infty c_{\mu m}^j \delta_{mm'}
   \end{equation}
 we can write
   \begin{equation}
-    \sum_m\left[-m^2\delta_{mm'}+\xi^j\delta_{mm'} + \frac{k^2r_j^2}{2\pi}\int_{0}^{2\pi}n^2(r,\theta)e^{i(m-m')\theta}d\theta\right]c_{m\mu}^j =0.
+    \sum_m\left[-m^2\delta_{mm'}+\xi^j\delta_{mm'} + \frac{k^2r_j^2}{2\pi}\int_{0}^{2\pi}n^2(r,\theta)e^{i(m-m')\theta}d\theta\right]c_{\mu m}^j =0.
   \end{equation}
 Using this last equation, we can set up an eigenvalue 
 problem for the separation constant and the Fourier coefficients
@@ -1127,7 +1127,7 @@ time delay spectrum of the homogeneous disk. The corresponding poles of the \gls
 by squares\footnote{The poles are computed via the zeros of the denominator of \eqref{eq:passive.numerical.sMatrixHomo}
 using a Newton-Raphson algorithm. The initial guesses are provided by the asymptotic ($kR_0\gg m$) zeros
 of the denominator. See \cite[Annexe A.2.4]{GAG2011} for a derivation.}. There seems to be a problem with the very high-$Q$ ones, but this is only due to the fact
-that we have not used a proper discretization $\Delta k$. The other ones line up perfectly with the peaks
+that we have not used a sufficiently small discretization $\Delta k$. The other ones line up perfectly with the peaks
 of the time delay. 
 
 In Fig.~\ref{fig:passive.numerical.convergenceHomogeneousDisk}, we compare the analytical scattering
@@ -1300,7 +1300,7 @@ implies circular symmetry of the fields and hence of the
 far-field radiation pattern. Since most applications (particularly lasers)
 require a certain directionality in the emission, our goal is to break 
 the circular symmetry in such a way as to minimize the degradation of the
-finesse ($Q$-factor) and maximizing the output directionality. Historically, 
+$Q$-factor and maximizing the output directionality. Historically, 
 this goal has spawned the research field of \glspl{arc} \cite{NOC1997,HEN2002b,SCH2004a,TUR2005,HIS2013,SHU2013} wherein the boundary
 of the circular cavity is parametrically deformed to yield limaçon, stadium, 
 elliptical, quadrupolar, and other shapes. 
@@ -1477,7 +1477,7 @@ dielectric cavities\index{dielectric resonators}. Using information on the real 
 the \gls{qMatrix} allows for the computation of the complex poles
 of the scattering matrix, which in turn correspond to the resonances
 of the scatterer. The eigenvectors of the \gls{qMatrix} define 
-a set of modes that exist each real value of $k$. The eigenvectors
+a set of modes that exists for each real value of $k$. The eigenvectors
 which correspond to peaks in the time delay spectrum can be associated
 with the complex poles of $\mat{S}(k)$.
 
@@ -1495,7 +1495,7 @@ an optimization problem with one or several cost functions
 that quantify the performance of the scatterer for a
 given application. A few examples spring to mind, such as
 a dielectric optical switch, beam splitters, biosensors and others. 
-If the material is active, one cold optimize the form of the pump 
+If the material is active, one could optimize the form of the pump 
 profile to minimize thresholds and maximizing, for instance, output
 directionality and power. This will be discussed in the following chapter.
 

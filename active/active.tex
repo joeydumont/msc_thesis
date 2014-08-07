@@ -26,7 +26,7 @@ integral method is developed to replace it.
 
 The second section studies the experimental response
 of different realizations of a specific type of antenna
-known as \glspl{lcx}. The genesis of this study lies in
+known as \glsfirstplural{lcx}. The genesis of this study lies in
 the hopes of designing an antenna that can be seamlessly
 integrated into textile. The sheer complexity of the
 antenna, as we will show, bars the use of the methods developed
@@ -50,7 +50,7 @@ Our brief incursion into the rich field of integral equations
 is a rather recent one, and might leave the reader hungry for more.
 
 \subsection{Primer on Steady State ab initio Laser Theory (SALT)}
-Here, we briefly expose the parts of SALT that we will need.
+We briefly expose the parts of SALT that we will need.
 Our exposition of \gls{salt} is divided into two main sections:
 the first describes the details of the interaction of light with
 the quantum gain medium and provides a steady-state solution
@@ -91,8 +91,8 @@ non-linear electric susceptibility tensor,
 	\end{equation}
 is either a diagonal tensor or a scalar. In the TM polarization, 
 $E_r=E_\theta=0\Rightarrow P_r=P_\theta=0$, such that $\bo{P}^{NL}$
-has a single non-zero component, $P_z$ while in the TE polarization it is
-the $P_r$ and $P_\theta$ components are non-zero. The vectors resulting
+has a single non-zero component, $P_z$, while it is the
+the $P_r$ and $P_\theta$ components that are non-zero in the TE polarization. The vectors resulting
 from the cross-product and curl in \eqref{eq:active.salt.TEeqn} possess
 only a $z$-component, as needed. 
 
@@ -119,25 +119,25 @@ multi-level systems \cite[\S2.3]{GE2010b}.
 	 {Pictorial representation of the interaction between the
 	 quantum gain medium and the incoming field. The quantum system has 
 	 two levels, the wavefunction being either $\Ket{1}$ or $\Ket{2}$. The relaxation
-	 rate from level 2 to level 1 is given by $1/\Gamma_{21}$.}
+	 rate from level 2 to level 1 is given by $1/\gamma_\parallel$.}
  \label{fig:active.salt.twoLevelSystem}
 \end{figure}
 
 Solving Schrödinger's equation for a ``bare'', i.e. non-interacting
 two-level system yields
   \begin{equation}
-   H_0\Ket{\psi}=\omega_j\Ket{\psi}	\qquad j=0,1
+   H_0\Ket{j}=\omega_j\Ket{j}	\qquad j=1,2
   \end{equation}
 and corresponding eigenfunctions $\Ket{1}$ and $\Ket{2}$. 
 The incoming light field acts as a perturbation and source of energy
-that stimulates a population transfer from level 1 to level 2 that decay
-at rate $1/\gamma_\parallel$. The perturbation can be written as
+that stimulates a population transfer from level 1 to level 2 decaying
+at a rate $1/\gamma_\parallel$. The perturbation can be written as
   \begin{equation}
    H_1 = e\bo{\mu}\cdot\bo{E}
   \end{equation}
 where $e$ is the electric charge and $\bo{\mu}$ is the 
 dipole moment tensor of the material.  We expand the solution 
-of the perturbed in the states of the unperturbed system
+of the perturbed system in the states of the unperturbed system
   \begin{equation}
    \Ket{\psi_1(t)}=C_1(t)\Ket{1}+C_2(t)\Ket{2}
   \end{equation}
@@ -175,7 +175,7 @@ leads to the relationship\footnote{We have skipped some steps. See \cite[\S2.2]{
   \end{equation}
 In the TM polarization, this leads to the equation
   \begin{equation}
-   \left[\nabla^2+k^2\left(\epsilon(\bo{r})+\frac{g^2}{\hbar}\frac{1}{k_\mu-k+i\gamma_\perp}\frac{D(\bo{r})}{1+\sum_\mu\frac{4g^2}{\gamma_\perp\gamma_\parallel\Gamma(k_\mu)}\left|\Psi_\mu(\bo{r})\right|^2}\right)\right]\Psi_\mu(\bo{r})=0
+   \left[\nabla^2+k^2\left(\epsilon(\bo{r})+\frac{g^2}{\hbar}\frac{1}{k_\mu-k+i\gamma_\perp}\frac{D(\bo{r})}{1+\sum_\mu\frac{4g^2}{\gamma_\perp\gamma_\parallel}\Gamma(k_\mu)\left|\Psi_\mu(\bo{r})\right|^2}\right)\right]\Psi_\mu(\bo{r})=0
   \end{equation}
 where
 	\begin{equation}
@@ -198,7 +198,7 @@ states, which are defined by
 	\begin{subequations}
 	\begin{align}
 		\left[\nabla^2+\epsilon(\bo{r})K^2(k)\right]\psi(\bo{r})	&=	0	& \bo{r}\in\mathcal{C}		\label{eq:active.salt.cfCavity}\\
-		\left[\nabla^2+\epsilon(\bo{r})k^2\right]\psi(\bo{r})		&=	0	& \bo{r}\notin\mathcal{C}	\label{eq:active.salt.cfOutside}
+		\left[\nabla^2+\epsilon(\bo{r})k^2\right]\psi(\bo{r})		  &=	0	& \bo{r}\notin\mathcal{C}	\label{eq:active.salt.cfOutside}
 	\end{align}
 	\end{subequations}
 where $\mathcal{C}$ is the cavity region. Inside $\mathcal{C}$, 
@@ -210,9 +210,11 @@ the CF states can be used as a basis for the laser modes, and can even
 take into account saturation, spatial hole burning and non-uniform
 pumps through the 
 	\begin{equation*}
-		\frac{D(\bo{r})}{1+\sum_\mu\frac{4g^2}{\gamma_\perp\gamma_\parallel}\left|\Psi_\mu\right|^2}
+		\frac{D(\bo{r})}{1+\sum_\mu\frac{4g^2}{\gamma_\perp\gamma_\parallel}\Gamma(k_\mu)\left|\Psi_\mu\right|^2}
 	\end{equation*}
-term. If we restrict our analysis to near-threshold modes, we can neglect the sum in the previous term
+term. If we restrict our analysis to near-threshold modes, where the lasing field intensity
+is very low,  we can neglect the interaction between the different modes. This allows us
+to entirely neglect the summation from the previous term
 and, writing the pump profile as a pump strength multiplied by a shape function $D(\bo{r})=D_0F(\bo{r})$, 
 we obtain
 	\begin{align}
@@ -221,7 +223,9 @@ we obtain
 	\end{align}
 where now the fields and the pump strength are dimensionless parameters measured in units of 
 $e_c = \hbar\sqrt{\gamma_\parallel\gamma_\perp}/(2g)$ and 
-$D_{0c}=\hbar\gamma_\perp/(4\pi g^2)$, respectively \cite[p.~19--20]{GE2010b}. 
+$D_{0c}=\hbar\gamma_\perp/(4\pi g^2)$, respectively. 
+Notice that $\gamma_\parallel$ does not appear explicitly in our set of equations; 
+it has become a mere scaling factor \cite[p.~19--20]{GE2010b}.
 The solutions of this equation describe the lasing action near lasing thresholds, the threshold lasing modes (TLMs). 
 In the case of uniform pumping, i.e. $F(\bo{r})=1$,
 the CFs are in a one-to-one correspondence with the TLMs, as we can see by comparing
@@ -332,7 +336,7 @@ then on the brink of despair, first took notice of the
 power of integral methods. Simply rewriting Helmholtz's 
 equation as
   \begin{equation}
-   \left[\nabla^2+n_0^2(\omega)k^2\right]\psi=-k^2\Delta\epsilon(\bo{r};\omega)\psi
+   \left[\nabla^2+n_0^2(\omega)k^2\right]\psi=-k^2\Delta n^2(\bo{r};\omega)\psi
   \end{equation}
 where 
   \begin{equation}
@@ -343,7 +347,7 @@ and $n^2_0(\omega)$ the constant permittivity of the environment, or background.
 This allows to write a formal solution using the Green's function of Helmholtz's equation
   \begin{equation}
   	\label{eq:active.vpm.fredholmEqn}
-  	\psi(\bo{r}) = \phi(\bo{r}) - k^2\mathop{\iint}_\mathcal{C}G_{+}(\bo{r},\bo{r}')\Delta\epsilon(\bo{r}';\omega)\psi(\bo{r}')d^2\bo{r}'
+  	\psi(\bo{r}) = \phi(\bo{r}) - k^2\mathop{\iint}_\mathcal{C}G_{+}(\bo{r},\bo{r}')\Delta n^2(\bo{r}';\omega)\psi(\bo{r}')d^2\bo{r}'
   \end{equation}
 where $\phi(\bo{r})$ is a solution of the homogeneous problem and
   \begin{equation}
@@ -391,7 +395,7 @@ use
 as the ``incoming'' field, one may find that the scattering
 matrix can be computed via
 	\begin{equation}
-		S_{mM} = \delta_{mM} - \frac{ik^2}{2}\mathop{\iint}_\mathcal{C}e^{-im{\theta'}}J_m(kr')\Delta\epsilon(\bo{r}')\psi^{(M)}(\bo{r}')d^2\bo{r}'.
+		S_{Mm} = \delta_{Mm} - \frac{ik^2}{2}\mathop{\iint}_\mathcal{C}e^{-im{\theta'}}J_m(kr')\Delta\epsilon(\bo{r}')\psi^{(M)}(\bo{r}')d^2\bo{r}'.
 	\end{equation}
 In Appendix \ref{sec:app.numTools.lippmannSchwinger}, we lay out the method in more detail, 
 discuss the numerical implementation and present a generalization for the complete 
@@ -448,7 +452,7 @@ so to speak, a seamless integration of the antenna.
 
 Most solutions today merely affix a patch antenna to a less 
 encumbered part of the textile \cite{CAT2004,JAI2013}, e.g. 
-on the should pads of a shirt or the front of a t-shirt.
+on the shoulder pads of a shirt or the front of a t-shirt.
 A metallic plate shields the user from the electronic components 
 of the patch antenna. Because the properties of patch antennas are
 well known \cite{ELL2003}, very little engineering is required and this solution
@@ -518,7 +522,7 @@ where $G$ is the Green's function of the problem
 
 These two equations are rigorous solutions of Maxwell's equations. 
 They can be used with any antenna and provide ways to compute the 
-current distribution if is unknown (constitutes an integral equation in the current\footnote{
+current distribution if it is unknown (constitutes an integral equation in the current\footnote{
 This is the basis of the popular computational method known as the \textit{method of moments}
 \cite[\S7.5]{ELL2003}.})
 and can be used to compute the far-field of antennae when either 
@@ -605,10 +609,10 @@ to the power accepted by the antenna \cite{IEEE145-1993}.
 					\caption[Geometry of the dipole antenna]
 							{Geometry of the dipole antenna. It consists of a pair of thin
 							wires whose diameters are much smaller than their length $\ell$.
-							They are actually separated by an infinitesimal drawing. It has
+							They are actually separated by an infinitesimal spacing. It has
 							been made visible for the drawing. Current is fed to the antenna
 							from one of the incoming wires. The $z$-coordinate has its origin
-							directly in between the two wires.}
+							directly between the two wires.}
 					\label{fig:active.antennae.dipoleAntenna}
 				\end{figure}
 		
@@ -649,8 +653,9 @@ to the power accepted by the antenna \cite{IEEE145-1993}.
 	
 		\begin{exmp}[Near- to Far-Field Transformation]\label{ex:active.antennae.nearToFarTrans}
 			If, instead of knowing the currents and charges in a given volume $V$, we know the 
-			fields on the boundaries $S_i$ of a given number of volumes $V_i$ in which there supposedly exist
-			unknown charges and currents producing those fields. This often arises when using \gls{fem}
+			fields on the boundaries $S_i$ of a given number of volumes $V_i$ in which there (supposedly) exist
+			unknown charges and currents producing those fields, we can use the boundary terms in the Stratton-Chu
+			equation to compute the field outside the antenna. This often arises when using \gls{fem}
 			and \gls{fdtd} software, as both methods solve the fields in a given computational volume. The
 			far-field is not directly available to them, as this would require a very large computational volume.
 			Usually, then, one can specify a boundary which encloses all scattering objects (the \gls{lss}). 
@@ -885,7 +890,7 @@ shortly.
  \begin{subtable}[t]{0.65\textwidth}
  \caption[Geometric parameters of the RF21/RF33 fibre designs]
 	  {Geometric parameters of the fibre designs. 
-	  The thicknesses of the layers are listed in order, stating
+	  The thicknesses of the layers are listed in order, starting
 	  from the inner layer to the outer layer of the fibre-antenna.}
  \label{tab:active.antennae.rfxx-parameters}
  \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}c@{\extracolsep{\fill}}d@{\extracolsep{\fill}}d@{\extracolsep{\fill}}d@{\extracolsep{\fill}}d}
@@ -942,7 +947,7 @@ The LCXs to be modeled have a decidedly complex geometry that
 no possess no symmetry and metallic layers of high, though not infinite,
 conductivity. To properly take the effects of both situations into account, 
 one would need, at the very least, to use multi-scale discretization techniques.
-Unfortunately, the extremely wild range in the characteristic sizes of the structures
+Unfortunately, the extremely wide range in the characteristic sizes of the structures
 (from the nanometer to the millimeter) makes meshing the LCX geometry a Herculean, 
 if not even Sisyphean, task. 
 The issue of meshing thin silvers layers has already been solved in the literature
@@ -998,7 +1003,7 @@ using the environment's boundary as the \gls{lss}.
 
 The traces of the $S$-parameters, i.e. the value of $S_{ij}$ as a function of 
 the frequency of the input fields, will be of primary interest. The frequency
-response can give information about the finesse of the resonances, as well as
+response can give information about the quality factor of the resonances, as well as
 hinting at specific radiation mechanisms. The analysis below will be divided
 in two parts: the analysis of the traces on their own, and comparison with the 
 theoretical/simulation traces. Notice that our device is reciprocal, such that
@@ -1079,7 +1084,6 @@ the losses to the metallic layers (they are thinner than the skin depth, minimiz
 we can assume that the lost energy is radiated away through the windows. This design thus 
 has two operating frequencies, both outside the desired range, however. 
 
-
 \begin{figure}[h]
  \centering
  \includegraphics{figs/active/RF21-sParameters.pdf}
@@ -1148,7 +1152,7 @@ that the dip is not due to the geometry of the fibre-antenna.
 The RF33 fibre-antenna, the final antenna produced, is the most mature
 one in terms of experimental protocol and is therefore most
 worthy of study. Notice that the baseline for this fibre is 
-higher than that of the other fibres. The dips also show lower finesse,
+higher than that of the other fibres. The dips also show lower quality,
 although it is possible to make the LCX operate as an antenna
 at some of the frequency dips. Specifically, there is a dip at
 $f\sim2.6\,\unit{GHz}$, which is close to our requirements. 
@@ -1329,14 +1333,10 @@ to changes in the $S$-parameters.
 \begin{figure}
   \centering
   \includegraphics[width=0.9\textwidth]{figs/active/comparisonThickness.pdf}
-  \caption[Thickness ratios as a function of the silver concentration]
-	  {We show multiple ratios as a function of the silver concentration,
-	  $\delta_1$. The blue line shows the ratio between the effective
-	  conductivities for a choice of $d=2$ and $d=3$. The black and 
-	  green lines show the ratio of the thickness predicted by using
-	  the Fuchs-Sondheimer conductivity in Eq. \eqref{eq:active.antennae.thickGeneralEquations}
-	  to the thickness predicted by using the bulk conductivity.
-	  The red line shows the ratio of the green line to the black line.}
+  \caption[Thickness and conductivity as a function of the silver concentration]
+	  {Conductivities and thicknesses predicted by the Bruggeman and Fuchs-Sondheimer
+	  models as a function of the silver concentration, $\delta_1$. Conductivity increases
+	  as $\delta_1$ increases and the thickness correspondingly decreases.}
   \label{fig:antenna.thicknessRatios}
 \end{figure}
 
@@ -1361,7 +1361,7 @@ Figure \ref{fig:active.lcx.rf21sParameters-sim} shows the experimental and simul
 $S_{11}$ parameter. At first look, it might seem like the general form 
 of the curves are similar, but our quantitative analysis shows
 that that would be wrong. To make sure that our simulation data was not simply
-shifted in frequency due to an small error in the geometry, we have
+shifted in frequency due to a small error in the geometry, we have
 also calculated the correlation for a shifted dataset 
 \footnote{To do so, we simply right-shifted the arrays containing
 the simulation data and removed the data that fell outside the frequency range 
@@ -1396,7 +1396,7 @@ and simulation datasets. The models do predict dramatically different properties
 for the metallic layers, but it seems that this does not affect the $S$-parameters
 all that much. One explanation is that the effect of the surface inhomogeneities
 are \textit{not} taken into account when computing the thicknesses; they are only
-accounted for \textit{a posteriori} in the FEM software. By using a
+accounted for \textit{a posteriori} in the FEM software. By using an
 \textit{ab initio} model to compute the effects of randomly distributed inhomogeneities
 on the base conductivity $\sigma_0$ of the metallic layers \cite{CUR2012}, one could obtain a better
 estimate of the thicknesses and possibly a better fit between the experimental and simulated datasets.

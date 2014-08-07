@@ -1,6 +1,6 @@
 % !TeX root = ../msc_thesis_jayd.tex
 \chapter{Numerical Tools}
-The numerical tools developed here are printed here 
+The numerical tools developed here are printed in this essay
 for future reference. They all have some part to play 
 in the generalization to three dimensions 
 of the numerical methods discussed in this essay. 
@@ -108,7 +108,7 @@ Iterating yields the CFE
    \frac{y_n}{y_{n-1}} = \bigk_{m=n}^\infty\left(\frac{-b_m}{a_m}\right).
   \end{equation}
 Given our goal of computing $[H^{(\pm)}_\nu(z)]'/H^{(\pm)}_\nu(z)$
-and in light of (ref to recurrence relation of Bessel functions), it seems that
+and in light of \eqref{eq:app.Bessel.recurrence}, it seems that
 we have won. The next theorem, however, will prove us wrong.
    \begin{thm}[Pincherle's Theorem \cite{CUY2008}]
     If there exists a \textit{minimal solution} $u_n$ of the three-term
@@ -129,15 +129,25 @@ Hankel functions and confluent hypergeometric functions.
 
 \subsection{CFE and Other Expansions}
 In this brief foray into the vast subject
-of hypergeometric functions, we will introduce Kummer's 
-function and its link to the evaluation of the logarithmic
-derivative.
+of hypergeometric functions, we will introduce Kummer's
+confluent hypergeometric function of the second kind 
+and its link to the evaluation of the logarithmic derivative.
 
 Kummer's function solves the differential equation \cite[\S13.1.1]{ABR1965}
   \begin{equation}
     z\frac{d^2y}{dz^2}+(b-z)\frac{dy}{dz}-ay=0
   \end{equation}
-and is noted $U(a,b,z)$. It can be shown that that $u_k=(a)_kU(a+k,b,z)$
+and is noted $U(a,b,z)$\footnote{In fact, there are two functions
+known as ``Kummer's function''. The first is the confluent hypergeometric
+function of the first kind, defined by
+  \begin{equation*}
+    M(a,b,z) = {}_1F_1(a;b;z) = \sum_{k=0}^\infty\frac{(a)_k}{(b)_k}\frac{z^k}{k!}.
+  \end{equation*}
+We use the confluent hypergeometric function of the second kind, or
+  \begin{equation*}
+    U(a,b,z) = \frac{\Gamma(1-b)}{\Gamma(a-b+1)}{}_1F_1(a;b;z)+z^{1-b}\frac{\Gamma(b-1)}{\Gamma(a)}{}_1F_1(a-b+1;2-b;z).
+  \end{equation*}}. 
+It can be shown that that $u_k=(a)_kU(a+k,b,z)$
 is the minimal solution of the recurrence \cite{TEM1983}
   \begin{equation}
     u_{n+1} = \frac{2a-b+2n+z}{a-b+n+1}u_n - \frac{a+n-1}{a-b+n+1}u_{n-1}
@@ -180,7 +190,7 @@ To test the precision of the algorithm, we have evaluated the CFE for $z\in\{0,1
 and $\nu\in\{-100,100\}\in\mathbb{N}$ and compared it to the values obtained via
 Amos' library for a range of tolerances. It can be seen that the maximum deviation 
 decreases until our set tolerance hits $10^{-12}$ and then plateaus. Because 
-convergence of \ref{eq:app.numTools.cfeHankel} is mathematically insured, we 
+convergence of \ref{eq:app.numTools.cfeHankel} is mathematically ensured, we 
 conclude that Amos's library evaluate the logarithmic derivative up to 
 a precision of $10^{-12}$. This is probably due to the propagation 
 of errors in the floating point operations, as we use relation
@@ -198,7 +208,6 @@ to evaluate the derivative.
 	 the plateau in maximum deviation as the error committed by Amos' implementation, i.e.
 	 Amos' implementation has a precision of $\sim10^{-10}$ on the evaluation of the logarithmic derivative.}
 \end{figure}
-
 
 \begin{figure}
  \centering
@@ -270,7 +279,7 @@ as
     C^{j_3m_3}_{j_1m_1,j_2m_2} = \braket{j_1m_1j_2m_2|j_3m_3}.
   \end{equation}
 
-We can now introduce the Wigner $3j$-symbols. They can be related
+We can now introduce the Wigner $3j$-symbols. They are be related
 to the Clebsch-Gordan coefficients through
   \begin{equation}
    \begin{pmatrix} j_1 & j_2 & j_3 \\
@@ -331,7 +340,7 @@ subject, we will now discuss the actual evaluation of these
 numbers. 
 
 We note that the Condon-Shortley phase convention 
-assures us all Clebsch-Gordan coefficients and 
+ensures that all Clebsch-Gordan coefficients and 
 Wigner symbols are real, which is a real numerical
 advantage. 
 
@@ -413,7 +422,7 @@ to evaluate the $3j$-symbols
    \begin{pmatrix} l_3 & 0 & l_3 \\ -m_3 & 0 & m_3 \end{pmatrix} &= \begin{pmatrix} l_3 & l_3 & 0 \\ m_3 & -m_3 & 0\end{pmatrix}=\frac{(-1)^{l_3-m_3}}{\sqrt{2l_3+1}}	\\
    \begin{pmatrix} l_2 & l_2 & 0 \\ -m_2 & m_2 & 0 \end{pmatrix} &= (-1)^{-2l_2}\begin{pmatrix} l_2 & l_2 & 0 \\ m_2 & -m_2 & 0\end{pmatrix}\\&=\frac{(-1)^{-l_2-m_3}}{\sqrt{2l_2+1}}
   \end{align*}
-When the size is 2, we simply the two-term recursion formula with an arbitrary 
+When the size is 2, we simply use the two-term recursion formula with an arbitrary 
 initial condition and normalize the two coefficients obtained. 
 
 \begin{figure}
