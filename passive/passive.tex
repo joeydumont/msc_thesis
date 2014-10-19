@@ -882,8 +882,10 @@ For the computation of each $\mat{S}_j$, we must invert
 a matrix of the form 
   \begin{equation}
   \mat{K}^{j,j+1} = \left(\frac{r_j-\epsilon}{r_j+\epsilon}\right)^{\bo{\Lambda}^j}
-		    -\tilde{\mat{S}}^{j+1}_{11}\left(\frac{r_j+\epsilon}{r_j-\epsilon}\right)^{\bo{\Lambda}^j}\tilde{\mat{S}}^{0,j}_{22}.
+		    -\tilde{\mat{S}}^{j+1}_{11}\left(\frac{r_j+\epsilon}{r_j-\epsilon}\right)^{\bo{\Lambda}^j}\tilde{\mat{S}}^{0,j}_{22}
   \end{equation}
+where the $\tilde{\mat{S}}$ are internal scattering matrices, 
+defined in Appendix \ref{sec:app.numTools.scatMat}.
 Given that the elements of this matrix highly depend upon the discretization
 parameter $\epsilon$, the half-width of the shells, we can use the
 condition number $W$ of this matrix as an indicator of the quality
@@ -990,8 +992,9 @@ where $V$ is the variation of the refractive index and is defined as
    V(r) = \int_0^{2\pi}\left|\partial_\theta n^2(r,\theta)\right|d\theta.
   \end{equation}
 To go further, we must realize the mixed blessing of the logarithmic
-divergence of the harmonic series\footnote{A better bound could be obtained, but requires conditions
-on the behaviour of $n^2(r,\theta)$ that the author is not comfortable assuming.}. We estimate the radius
+divergence of the harmonic series\footnote{A better bound could be obtained, but requires more
+stringent conditions on the behaviour of $n^2(r,\theta)$ that the author is not comfortable assuming, given
+typical experimental conditions.}. We estimate the radius
 of the Gerschgorin circle by taking $M=500$, an arbitrary bound
 that is unattainable by our algorithm\footnote{The Bessel functions overflow the \texttt{double} floating-point 
 representation at approximately $M\sim250$, rendering the algorithm useless.}
