@@ -22,28 +22,6 @@
             multiple,
             stable]
             {footmisc}                 % Force les notes de bas de page à être en bas de la page.
-            
-\usepackage[switch,mathlines,displaymath]{lineno}
-
-% % PATCH FOR LINENO TO WITH WITH ALINGED EQUATIONS
-\newcommand*\patchAmsMathEnvironmentForLineno[1]{%
- \expandafter\let\csname old#1\expandafter\endcsname\csname #1\endcsname
- \expandafter\let\csname oldend#1\expandafter\endcsname\csname end#1\endcsname
- \renewenvironment{#1}%
-    {\linenomath\csname old#1\endcsname}%
-    {\csname oldend#1\endcsname\endlinenomath}}% 
-\newcommand*\patchBothAmsMathEnvironmentsForLineno[1]{%
- \patchAmsMathEnvironmentForLineno{#1}%
- \patchAmsMathEnvironmentForLineno{#1*}}%
-\AtBeginDocument{%
-\patchBothAmsMathEnvironmentsForLineno{equation}%
-\patchBothAmsMathEnvironmentsForLineno{align}%
-\patchBothAmsMathEnvironmentsForLineno{flalign}%
-\patchBothAmsMathEnvironmentsForLineno{alignat}%
-\patchBothAmsMathEnvironmentsForLineno{gather}%
-\patchBothAmsMathEnvironmentsForLineno{multline}%
-}
-\linenumbers
 
 \usepackage{bibentry}\nobibliography* % Inline bibliographic entries.
 \usepackage[unicode=true,
@@ -128,8 +106,8 @@
 \makeoddfoot{jayd_headings}{}{}{}
 
 % --------------- Document Information ----------------	%
-% We define the title, subtitles and other such info 	%
-% in this section. 										%
+% We define the title, subtitles and other such info    %
+% in this section.                                      %
 % -----------------------------------------------------	%
 \titre{On the Modelization of Optical Devices}
 \soustitre{From Dielectric Cavities to Radiating Structures}
@@ -143,7 +121,7 @@
 
 % ------------------- Front Matter --------------------	%
 % Here lie the titlepage, abstracts, tables of contents	%
-% figures and tables and definition of notation.		%
+% figures and tables and definition of notation.        %
 % -----------------------------------------------------	%
 \frontmatter
 
@@ -151,8 +129,8 @@
 \pagetitre
 
 % -- Abstracts
-\include{frontmatter/abstract-fr}
-\include{frontmatter/abstract-en}
+\include{abstract-fr}
+\include{abstract-en}
 \cleardoublepage
 
 % -- Table of Contents and Lists.
@@ -181,7 +159,7 @@
 {\textit{The Devil's Dictionary}\\Ambrose Bierce}
 \cleardoublepage
 
-\include{frontmatter/notation}
+\include{notation}
 \cleardoublepage
 
 \setlength{\glspagelistwidth}{2.5cm}
@@ -191,35 +169,35 @@
 
 % -- A preface contains an explanation of the thesis' contents
 % -- and acknowledgements. 
-\include{frontmatter/preface}
+\include{preface}
 
 % -- Summary of Contributions
-\include{frontmatter/contributions}
+\include{contributions}
 
 % -------------------- Main Matter --------------------	%
 % Here lies the body of the text. It is divided into	%
-% four chapters: an introduction, a chapter on 			%
+% four chapters: an introduction, a chapter on          %
 % scattering methods, a chapter on antenna theory and 	%
-% design and a conclusion. 								%
+% design and a conclusion.                              %
 % -----------------------------------------------------	%
 \mainmatter
 \pagestyle{jayd_headings}
 %\setlength\epigraphwidth{0.4\linewidth}
 \renewcommand*{\thefootnote}{\arabic{footnote}}
-\include{intro/intro}
-\include{passive/passive}
-\include{active/active}
-\include{conclusion/conclusion}
+\include{intro}
+\include{passive}
+\include{active}
+\include{conclusion}
 
 % -------------------- Appendices ---------------------	%
 % Due to the technical nature of the work done, the 	%
 % appendices mostly contain derivations and notes on 	%
-% numerical implementations of algorithms.				%
+% numerical implementations of algorithms.              %
 % -----------------------------------------------------	%
 \appendix
-\include{backmatter/app-besselFunctions}
-\include{backmatter/app-numericalMethods}
-\include{backmatter/app-numericalTools}
+\include{app-besselFunctions}
+\include{app-numericalMethods}
+\include{app-numericalTools}
 
 \bibliographystyle{osajnl}
 \bibliography{memoir_jayd}
