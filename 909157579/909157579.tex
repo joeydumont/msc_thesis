@@ -99,11 +99,10 @@
 % -- Headers/footers customization
 \copypagestyle{jayd_headings}{ul}
 \nouppercaseheads
-\makeevenhead{jayd_headings}{\textbf{\thepage}\hspace{1cm}{\sffamily\leftmark}}{}{}
-\makeoddhead{jayd_headings}{}{}{{\sffamily\rightmark}\hspace{1cm}\textbf{\thepage}}
+\makeevenhead{jayd_headings}{{\sffamily\leftmark}}{}{}
+\makeoddhead{jayd_headings}{}{}{{\sffamily\rightmark}}
 \makeheadrule{jayd_headings}{\textwidth}{\normalrulethickness}
-\makeevenfoot{jayd_headings}{}{}{}
-\makeoddfoot{jayd_headings}{}{}{}
+
 
 % --------------- Document Information ----------------	%
 % We define the title, subtitles and other such info    %
@@ -172,7 +171,7 @@
 \include{preface}
 
 % -- Summary of Contributions
-\include{contributions}
+%\include{contributions}
 
 % -------------------- Main Matter --------------------	%
 % Here lies the body of the text. It is divided into	%
